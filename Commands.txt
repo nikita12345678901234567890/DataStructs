@@ -1,1 +1,1 @@
-git------>	status	add .	commit -m ""	push	pull	yeet
+git------>	status       	add .			commit -m ""	push	pull	yeet

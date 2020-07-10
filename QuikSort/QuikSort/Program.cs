@@ -5,6 +5,7 @@ using System.Linq;
 
 namespace QuikSort
 {
+  
     class Program
     {
         static List<T> Quik<T>(List<T> array) where T : IComparable
@@ -37,7 +38,7 @@ namespace QuikSort
                 {
                     l++;
                 }
-                while (r >= 0 && array[r].CompareTo(pivot) >= 0)
+                while (r > 0 && array[r].CompareTo(pivot) >= 0)
                 {
                     r--;
                 }
@@ -52,20 +53,24 @@ namespace QuikSort
                     break;
                 }
             }
-            foreach (T t in array)
+            for(int i = 0; i < array.Count; i++)
             {
-                if (t.CompareTo(pivot) < 0)
+                if (i <= r)
                 {
-                    array1.Add(t);
+                    array1.Add(array[i]);
                 }
                 else
                 {
-                    array2.Add(t);
+                    array2.Add(array[i]);
                 }
             }
+       
+            
+            
             array1 = Quik(array1);
             array2 = Quik(array2);
             array.Clear();
+          
             for (int i = 0; i < array1.Count + array2.Count; i++)
             {
                 if (i < array1.Count)
@@ -77,23 +82,39 @@ namespace QuikSort
                     array.Add(array2[i - array1.Count]);
                 }
             }
+
+
             return array;
         }
+
+
         static void Main(string[] args)
         {
-            List<int> array = new List<int>();
-            Random random = new Random();
-            for (int i = 0; i < 20; i++)
+
+            List<int> array = new List<int>()
             {
-                array.Add(random.Next(1, 101));
-                Console.WriteLine(array.Last().ToString());
+                5,
+                4,
+                3,
+                6,
+                2,
+                1,
+                7
+            };
+
+            Random random = new Random();
+            for (int i = 0; i < array.Count; i++)
+            {
+                array[i] = random.Next(1, 101);
+             //   Console.WriteLine(array.Last().ToString());
             }
-            var yeet = Quik<int>(array);
+            Console.WriteLine("yeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeet");
+            var yeet = Quik(array);
             foreach (int i in yeet)
             {
                 Console.WriteLine(i);
             }
-            Console.WriteLine("yeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeet");
+            Console.ReadLine();
         }
     }
 }
