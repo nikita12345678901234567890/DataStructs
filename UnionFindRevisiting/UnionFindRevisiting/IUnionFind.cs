@@ -9,11 +9,11 @@ namespace UnionFindRevisiting
         T[] values { get; set; }
         int[] array { get; set; }
 
-        void Union(int p, int q);
+        void Union(T p, T q);
 
         int Find(T p);
 
-        bool Connected(T p, T q);
+        bool Connected(int p, int q);
 
         int Count();
     }

@@ -13,6 +13,10 @@ namespace UnionFindRevisiting
         {
             this.values = values;
             array = new int[Count()];
+            for (int i = 0; i < Count(); i++)
+            {
+                array[i] = i;
+            }
         }
 
         public bool Connected(int p, int q)
