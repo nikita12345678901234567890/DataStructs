@@ -6,7 +6,9 @@ namespace Tries
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Tire tire = new Tire();
+            tire.Insert("fish");
+            tire.Insert("flop");
         }
     }
 }

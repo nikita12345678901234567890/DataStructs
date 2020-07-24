@@ -9,6 +9,7 @@ namespace Tries
         public char letter;
         public Dictionary<char, Node> Children;
         public bool end;
+        public Node parent;
 
         public Node(char letter)
         {
@@ -21,6 +22,20 @@ namespace Tries
             this.letter = letter;
             Children = new Dictionary<char, Node>();
             this.end = end;
+        }
+        public Node(char letter, Node parent)
+        {
+            this.letter = letter;
+            Children = new Dictionary<char, Node>();
+            end = false;
+            this.parent = parent;
+        }
+        public Node(char letter, bool end, Node parent)
+        {
+            this.letter = letter;
+            Children = new Dictionary<char, Node>();
+            this.end = end;
+            this.parent = parent;
         }
     }
 }
