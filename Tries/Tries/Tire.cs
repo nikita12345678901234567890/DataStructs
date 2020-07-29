@@ -76,22 +76,46 @@ namespace Tries
                 }
                 else
                 {
-                    return fish;
+                    return null;
                 }
             }
-            return root;
+            return fish;
         }
 
         public List<string> GetAllMatchingPrefix(string prefix)
         {
             List<string> yeet = new List<string>();
             Node fish = Search(prefix);
-            
+            GitAllMatchingPrefix(fish, yeet, prefix);
+            return yeet;
+        }
+
+        public bool IsWord(string prefix)
+        {
+            var node = Search(prefix);
+
+            if (node is null)
+                return false;
+
+            return node.end;
         }
 
         private void GitAllMatchingPrefix(Node fish, List<string> yeet, string prefix)
         {
-            
+            if (fish == null)
+            {
+                return;
+            }
+
+            foreach ((char letter, Node node) in fish.Children)
+            {
+                GitAllMatchingPrefix(node, yeet, prefix + letter);
+            }
+
+            if (fish.end)
+            {
+                yeet.Add(prefix);
+            }
         }
 
         public bool Remove(string prefix)

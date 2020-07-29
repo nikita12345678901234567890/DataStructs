@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Tries
@@ -36,6 +37,12 @@ namespace Tries
             Children = new Dictionary<char, Node>();
             this.end = end;
             this.parent = parent;
+        }
+
+
+        public override string ToString()
+        {
+            return $"Letter: {letter}, IsWord: {end}, Children: {string.Join(',', Children.Select(kvp => kvp.Key))}";
         }
     }
 }
