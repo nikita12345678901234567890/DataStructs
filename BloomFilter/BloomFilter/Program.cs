@@ -12,7 +12,7 @@ namespace BloomFilter
             List<int> yeet = new List<int>();
             for (int i = 0; i < 100; i++)
             {
-                int yoot = random.Next(int.MinValue, int.MaxValue);
+                int yoot = random.Next(int.MinValue, 500);
                 BoomFilter.Insert(yoot);
                 if (i % 10 == 0)
                 {
@@ -23,8 +23,24 @@ namespace BloomFilter
             {
                 Console.WriteLine(BoomFilter.ProbablyContains(yeet[i]));
             }
-            Console.WriteLine(BoomFilter.ProbablyContains(150));
-            
+
+            for (int i = 0; i < 5; i++)
+            {
+                Console.WriteLine();
+            }
+
+            for (int i = 0; i < 20; i++)
+            {
+                Console.WriteLine(BoomFilter.ProbablyContains(500 + (i * 32)));
+            }
+
+            for (int i = 0; i < 5; i++)
+            {
+                Console.WriteLine();
+            }
+
+            Console.WriteLine(BoomFilter.OofRate());
+
         }
     }
 }

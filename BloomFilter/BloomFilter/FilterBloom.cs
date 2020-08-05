@@ -7,10 +7,10 @@ namespace BloomFilter
     class FilterBloom<T>
     {
         List<Func<T, int>> funcS;
-        int M = 0;
-        int N = 0;
-        int K = 3;
-        bool[] array;
+        private int M = 0;
+        private int N = 0;
+        private int K = 3;
+        private bool[] array;
 
         public FilterBloom(int cap)
         {
@@ -64,6 +64,11 @@ namespace BloomFilter
         private int HashFuncThree(T item)
         {
             return int.Parse(HashFuncOne(item).ToString()).GetHashCode();
+        }
+
+        public double OofRate()
+        {
+            return Math.Pow((1 - Math.Pow(Math.E, (-1 * K * N) / M)), K);
         }
     }
 }
