@@ -12,9 +12,9 @@ namespace LRUCache
     }
     class LRUCache<TKey, TValue> : ICache<TKey, TValue>
     {
-        Dictionary<TKey, TValue> thing;
-        LinkedList<TValue> thingy;
-        private int max;
+        public Dictionary<TKey, TValue> thing;
+        public LinkedList<TValue> thingy;
+        public int max;
 
         public LRUCache(int maxAmount)
         {
@@ -44,8 +44,16 @@ namespace LRUCache
                 var yeet = thing[key];
                 thingy.Remove(yeet);
                 thingy.AddFirst(yeet);
-                value = yeet;
-                return true;
+            }
+
+            else
+            {
+                if (thing.Count == max)
+                {
+                    thingy.RemoveLast();
+                }
+                thingy.AddFirst(value);
+                thing.Add(key, value);
             }
         }
     }
