@@ -4,10 +4,11 @@ using System.Text;
 
 namespace Un_Graphs
 {
-    class Vertex<T>
+    class Vertex<T> where T : IComparable
     {
         public T value;
         public List<Vertex<T>> Neighbors;
+        public bool visited;
 
         public Vertex(T value)
         {
