@@ -67,28 +67,49 @@ namespace WD_Graphs
 
         public bool AddEdge(Vertex<T> a, Vertex<T> b, double distance)
         {
-            if (Exist(a, b) && !Edges.Contains(new Edge<T>(a, b, distance)))
+            bool thing = false;
+            foreach (var edge in Edges)
             {
-                a.Neighbors.Add(b);
-                b.Neighbors.Add(a);
+                if (edge.StartingPoint == a && edge.EndingPoint == b && edge.Distance == distance)
+                {
+                    thing = true;
+                }
+            }
+            if (Exist(a, b) && !thing)
+            {
+                a.Neighbors.Add(new Edge<T>(a, b, distance));
+                b.Neighbors.Add(new Edge<T>(a, b, distance));
                 return true;
             }
             return false;
         }
 
-        public bool AddEdge(T a, T b)
+        public bool AddEdge(T a, T b, double distance)
         {
             var one = Search(a);
             var two = Search(b);
-            return AddEdge(one, two);
+            return AddEdge(one, two, distance);
+        }
+
+        public void TwoWayEdge(Vertex<T> a, Vertex<T> b, double distance)
+        {
+            AddEdge(a, b, distance);
+            AddEdge(b, a, distance);
+        }
+
+        public void TwoWayEdge(T a, T b, double distance)
+        {
+            TwoWayEdge(Search(a), Search(b), distance);
         }
 
         public bool RemoveEdge(Edge<T> edge)
         {
-            if (Exist(a, b) && a.Neighbors.Contains(b) && b.Neighbors.Contains(a))
+            var a = edge.StartingPoint;
+            var b = edge.EndingPoint;
+            if (Exist(a, b) && a.Neighbors.Contains(edge) && b.Neighbors.Contains(edge))
             {
-                a.Neighbors.Remove(b);
-                b.Neighbors.Remove(a);
+                a.Neighbors.Remove(edge);
+                b.Neighbors.Remove(edge);
                 return true;
             }
             return false;
@@ -132,34 +153,94 @@ namespace WD_Graphs
             return false;
         }
 
-        //public List<Vertex<T>> DepthFirst(Vertex<T> start)
-        //{
-        //    Stack<Vertex<T>> stuck = new Stack<Vertex<T>>();
-        //    List<Vertex<T>> list = new List<Vertex<T>>();
-        //    foreach (Vertex<T> vertex in vertices)
-        //    {
-        //        vertex.visited = false;
-        //    }
-        //    stuck.Push(start);
+        public IEnumerable<T> DepthFirst(Vertex<T> start, Vertex<T> end)
+        {
+            List<T> items = new List<T>();
+
+            if (!Exist(start, end))
+            {
+                return items;
+            }
+
+            HashSet<Vertex<T>> visited = new HashSet<Vertex<T>>();
+            Stack<Vertex<T>> stack = new Stack<Vertex<T>>();
+            stack.Push(start);
+
+            while (stack.Count > 0)
+            {
+                var node = stack.Pop();
+
+                visited.Add(node);
+                items.Add(node.value);
+
+                if (node == end)
+                {
+                    break;
+                }
+
+                foreach (var neighbor in node.Neighbors)
+                {
+                    if (!visited.Contains(neighbor.EndingPoint))
+                    {
+                        stack.Push(neighbor.EndingPoint);
+                    }
+                }
+
+            }
 
 
 
-        //    while (stuck.Count > 0)
-        //    {
-        //        var curent = stuck.Pop();
-        //        curent.visited = true;
-        //        foreach (Vertex<T> vertex in curent.Neighbors)
-        //        {
-        //            if (!vertex.visited)
-        //            {
-        //                stuck.Push(vertex);
-        //            }
-        //        }
-        //        list.Add(curent);
-        //    }
+            return items;
+        }
 
-        //    return list;
-        //}
+        public IEnumerable<T> DepthFirst(T start, T end)
+        {
+            return DepthFirst(Search(start), Search(end));
+        } 
+        public IEnumerable<T> BreathFirst(T start, T end)
+        {
+            return BreathFirst(Search(start), Search(end));
+        }
+
+        public IEnumerable<T> BreathFirst(Vertex<T> start, Vertex<T> end)
+        {
+            List<T> items = new List<T>();
+
+            if (!Exist(start, end))
+            {
+                return items;
+            }
+
+            HashSet<Vertex<T>> visited = new HashSet<Vertex<T>>();
+            Queue<Vertex<T>> queue = new Queue<Vertex<T>>();
+            queue.Enqueue(start);
+
+            while (queue.Count > 0)
+            {
+                var node = queue.Dequeue();
+
+                visited.Add(node);
+                items.Add(node.value);
+
+                if (node == end)
+                {
+                    break;
+                }
+
+                foreach (var neighbor in node.Neighbors)
+                {
+                    if (!visited.Contains(neighbor.EndingPoint))
+                    {
+                        queue.Enqueue(neighbor.EndingPoint);
+                    }
+                }
+
+            }
+
+
+
+            return items;
+        }
 
         //public List<Vertex<T>> RecursiveDepthFirstSearch(Vertex<T> start)
         //{
@@ -168,7 +249,7 @@ namespace WD_Graphs
         //    {
         //        vertex.visited = false;
         //    }
-          
+
         //    yeet(start, list);
 
         //    return list;

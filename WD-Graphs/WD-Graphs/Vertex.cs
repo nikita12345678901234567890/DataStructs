@@ -8,6 +8,7 @@ namespace WD_Graphs
     {
         public T value;
         public List<Edge<T>> Neighbors;
+        public bool visited;
 
         public Vertex(T Value)
         {
