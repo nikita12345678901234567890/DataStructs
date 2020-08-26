@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Pathfinding
 {
-    class Edge<T> where T : IComparable
+    class Edge<T>
     {
         public Vertex<T> StartingPoint;
         public Vertex<T> EndingPoint;

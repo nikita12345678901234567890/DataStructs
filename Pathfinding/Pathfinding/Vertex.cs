@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Pathfinding
 {
-    class Vertex<T> : IComparable where T : IComparable
+    class Vertex<T> : IComparable<Vertex<T>>
     {
         public T value;
         public List<Edge<T>> Neighbors;
@@ -18,10 +18,9 @@ namespace Pathfinding
             value = Value;
         }
 
-        public int CompareTo(object obj)
+        public int CompareTo(Vertex<T> other)
         {
-            var temp = (Vertex<T>)obj;
-            return distance.CompareTo(temp.distance);
+            return distance.CompareTo(other.distance);
         }
     }
 }

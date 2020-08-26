@@ -78,7 +78,6 @@ namespace Pathfinding
             if (Exist(a, b) && !thing)
             {
                 a.Neighbors.Add(new Edge<T>(a, b, distance));
-                b.Neighbors.Add(new Edge<T>(a, b, distance));
                 return true;
             }
             return false;
@@ -259,19 +258,42 @@ namespace Pathfinding
             TreeHeap<Vertex<T>> heap = new TreeHeap<Vertex<T>>(true);
             heap.Insert(start);
 
-            //3.
-            var yeet = heap.Pop();
-
-            //4.
-            foreach (var neighbor in yeet.Neighbors)
+            //6.
+            while (heap.Count > 0)
             {
-                double tentative = yeet.distance + neighbor.Distance;
-                if (tentative < neighbor.EndingPoint.distance)
+                //3.
+                var yeet = heap.Pop();
+                yeet.visited = true;
+
+                //4.
+                foreach (var neighbor in yeet.Neighbors)
                 {
-                    neighbor.EndingPoint.distance = tentative;
-                    neighbor.EndingPoint.founder = yeet;
+                    double tentative = yeet.distance + neighbor.Distance;
+                    if (tentative < neighbor.EndingPoint.distance)
+                    {
+                        neighbor.EndingPoint.distance = tentative;
+                        neighbor.EndingPoint.founder = yeet;
+                        neighbor.EndingPoint.visited = false;
+                    }
+
+                    //5.
+                    if (neighbor.EndingPoint.visited == false && !heap.Contains(neighbor.EndingPoint))
+                    {
+                        heap.Insert(neighbor.EndingPoint);
+                    }
                 }
             }
+
+            //7.
+            Stack<T> yuut = new Stack<T>();
+            var yoot = end;
+            while (yoot != start)
+            {
+                yuut.Push(yoot.value);
+                yoot = yoot.founder;
+            }
+            yuut.Push(start.value);
+            return yuut;
         }
     }
 }

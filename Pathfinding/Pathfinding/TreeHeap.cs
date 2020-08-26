@@ -4,10 +4,18 @@ using System.Text;
 
 namespace Pathfinding
 {
-    class TreeHeap<T> where T : IComparable
+    class TreeHeap<T> where T : IComparable<T>
     {
         List<T> array;
         bool min;
+
+        public int Count
+        {
+            get
+            {
+                return array.Count;
+            }
+        }
         public TreeHeap(bool min)
         {
             array = new List<T>();
@@ -132,6 +140,11 @@ namespace Pathfinding
                 yeeter.Add(tree.Pop());
             }
             return yeeter;  
+        }
+
+        public bool Contains(T thing)
+        {
+            return array.Contains(thing);
         }
     }
 }
