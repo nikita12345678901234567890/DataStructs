@@ -77,14 +77,14 @@ namespace Pathfinding
             {
                 if (min)
                 {
-                    if ((FindLeft(index) < array.Count && FindRight(index) < array.Count && array[FindLeft(index)].CompareTo(array[FindRight(index)]) < 0) || FindLeft(index) < array.Count && FindRight(index) >= array.Count || (FindLeft(index) < array.Count && FindRight(index) >= array.Count && array[index].CompareTo(array[FindLeft(index)]) > 0) || (FindLeft(index) >= array.Count && FindRight(index) < array.Count && array[index].CompareTo(array[FindRight(index)]) > 0))
+                    if ((FindLeft(index) < array.Count && FindRight(index) < array.Count && array[FindLeft(index)].CompareTo(array[FindRight(index)]) < 0) || FindLeft(index) < array.Count && FindRight(index) >= array.Count || (FindLeft(index) < array.Count && FindRight(index) > array.Count && array[index].CompareTo(array[FindLeft(index)]) > 0) || (FindLeft(index) >= array.Count && FindRight(index) < array.Count && array[index].CompareTo(array[FindRight(index)]) > 0))
                     {
                         T thing = array[index];
                         array[index] = array[FindLeft(index)];
                         array[FindLeft(index)] = thing;
                         index = FindLeft(index);
                     }
-                    if ((FindLeft(index) < array.Count && FindRight(index) < array.Count && array[FindLeft(index)].CompareTo(array[FindRight(index)]) > 0) || FindLeft(index) >= array.Count && FindRight(index) < array.Count || (FindLeft(index) < array.Count && FindRight(index) >= array.Count && array[index].CompareTo(array[FindLeft(index)]) > 0) || (FindLeft(index) >= array.Count && FindRight(index) < array.Count && array[index].CompareTo(array[FindRight(index)]) > 0))
+                    if ((FindLeft(index) < array.Count && FindRight(index) < array.Count && array[FindLeft(index)].CompareTo(array[FindRight(index)]) > 0) || FindLeft(index) >= array.Count && FindRight(index) < array.Count || (FindLeft(index) < array.Count && FindRight(index) > array.Count && array[index].CompareTo(array[FindLeft(index)]) > 0) || (FindLeft(index) >= array.Count && FindRight(index) < array.Count && array[index].CompareTo(array[FindRight(index)]) > 0))
                     {
                         T thing = array[index];
                         array[index] = array[FindRight(index)];

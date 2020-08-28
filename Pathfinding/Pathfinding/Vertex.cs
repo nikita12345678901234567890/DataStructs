@@ -9,7 +9,9 @@ namespace Pathfinding
         public T value;
         public List<Edge<T>> Neighbors;
         public bool visited;
-        public double distance;
+        public double startDistance;
+        public double endDistance;
+        public bool open = true;
         public Vertex<T> founder;
 
         public Vertex(T Value)
@@ -20,7 +22,7 @@ namespace Pathfinding
 
         public int CompareTo(Vertex<T> other)
         {
-            return distance.CompareTo(other.distance);
+            return startDistance.CompareTo(other.startDistance);
         }
     }
 }
