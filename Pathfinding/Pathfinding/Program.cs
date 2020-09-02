@@ -2,6 +2,7 @@
 using System.IO;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
+using System.Data;
 
 namespace Pathfinding
 {
@@ -36,9 +37,6 @@ namespace Pathfinding
             graph.AddVertex("SAT");
             graph.AddVertex("PHL");
             graph.AddVertex("DCA");
-
-            graph.Close("SAT");
-            graph.Close("ELP");
 
             for (int i = 0; i < lines.Length; i++)
             {

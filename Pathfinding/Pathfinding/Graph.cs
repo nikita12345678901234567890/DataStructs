@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.SqlTypes;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace Pathfinding
@@ -250,6 +251,80 @@ namespace Pathfinding
             return items;
         }
 
+        public IEnumerable<T> BreathFirstShortest(T start, T end)
+        {
+            return BreathFirstShortest(Search(start), Search(end));
+        }
+
+        public IEnumerable<T> BreathFirstShortest(Vertex<T> start, Vertex<T> end)
+        {
+            List<T> items = new List<T>();
+
+            if (!Exist(start, end))
+            {
+                return items;
+            }
+
+            HashSet<Vertex<T>> visited = new HashSet<Vertex<T>>();
+            Queue<Vertex<T>> queue = new Queue<Vertex<T>>();
+            Vertex<T>[] parents = new Vertex<T>[vertices.Count];
+
+
+            queue.Enqueue(start);
+            visited.Add(start);
+
+
+            while (queue.Count > 0)
+            {
+                var node = queue.Dequeue();
+
+                //items.Add(node.value);
+
+                if (node == end)
+                {
+                    break;
+                }
+
+                foreach (var neighbor in node.Neighbors)
+                {
+                    if (!visited.Contains(neighbor.EndingPoint))
+                    {
+                        visited.Add(neighbor.EndingPoint);
+
+                        int neighborIndex = vertices.IndexOf(neighbor.EndingPoint);
+                        parents[neighborIndex] = node;
+
+                        queue.Enqueue(neighbor.EndingPoint);
+                    }
+                }
+            }
+
+            if (!visited.Contains(end))
+            {
+                return items;
+            }
+
+            // reconstruct the path from the end to the start
+
+            var temp = end;
+            int tempIndex = vertices.IndexOf(temp);
+
+            do
+            {
+                items.Add(temp.value);
+                // update temp and tempindex
+                var parent = parents[tempIndex];
+                var parentIndex = vertices.IndexOf(parent);
+                temp = parent;
+                tempIndex = parentIndex;
+            } while (temp != null);
+
+            items.Reverse();
+
+            return items;
+
+        }
+
         public IEnumerable<T> Dijkstras(T start, T end)
         {
             return Dijkstras(Search(start), Search(end));
@@ -266,7 +341,7 @@ namespace Pathfinding
             }
 
             //2.
-            start.distance = 0;//!
+            start.distance = 0;
             TreeHeap<Vertex<T>> heap = new TreeHeap<Vertex<T>>(true);
             heap.Insert(start);
 
