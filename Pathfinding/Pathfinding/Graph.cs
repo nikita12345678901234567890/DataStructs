@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Pathfinding
 {
-    class Graph<T> where T : IComparable
+    class Graph<T> 
     {
         private List<Vertex<T>> vertices;
         public IReadOnlyList<Vertex<T>> Vertices { get { return vertices; } }
@@ -336,12 +336,12 @@ namespace Pathfinding
             foreach (Vertex<T> vertex in Vertices)
             {
                 vertex.visited = false;
-                vertex.distance = double.PositiveInfinity;
+                vertex.startDistance = double.PositiveInfinity;
                 vertex.founder = null;
             }
 
             //2.
-            start.distance = 0;
+            start.startDistance = 0;
             TreeHeap<Vertex<T>> heap = new TreeHeap<Vertex<T>>(true);
             heap.Insert(start);
 
@@ -357,71 +357,10 @@ namespace Pathfinding
                 {
                     if (neighbor.EndingPoint.open)
                     {
-                        double tentative = yeet.distance + neighbor.Distance;
-                        if (tentative < neighbor.EndingPoint.distance)
+                        double tentative = yeet.startDistance + neighbor.Distance;
+                        if (tentative < neighbor.EndingPoint.startDistance)
                         {
-                            neighbor.EndingPoint.distance = tentative;
-                            neighbor.EndingPoint.founder = yeet;
-                            neighbor.EndingPoint.visited = false;
-                        }
-
-                        //5.
-                        if (neighbor.EndingPoint.visited == false && !heap.Contains(neighbor.EndingPoint))
-                        {
-                            heap.Insert(neighbor.EndingPoint);
-                        }
-                    }
-                }
-            }
-
-            //7.
-            Stack<T> yuut = new Stack<T>();
-            var yoot = end;
-            while (yoot != start)
-            {
-                yuut.Push(yoot.value);
-                yoot = yoot.founder;
-            }
-            yuut.Push(start.value);
-            return yuut;
-        }
-
-        public IEnumerable<T> aStar(T start, T end)
-        {
-            return aStar(Search(start), Search(end));
-        }
-
-        public IEnumerable<T> aStar(Vertex<T> start, Vertex<T> end)
-        {
-            //1.
-            foreach (Vertex<T> vertex in Vertices)
-            {
-                vertex.visited = false;
-                vertex.distance = double.PositiveInfinity;
-                vertex.founder = null;
-            }
-
-            //2.
-            start.distance = 0;//!
-            TreeHeap<Vertex<T>> heap = new TreeHeap<Vertex<T>>(true);
-            heap.Insert(start);
-
-            //6.
-            while (heap.Count > 0)
-            {
-                //3.
-                var yeet = heap.Pop();
-                yeet.visited = true;
-
-                //4.
-                foreach (var neighbor in yeet.Neighbors)
-                {
-                    if (neighbor.EndingPoint.open)
-                    {
-                        double tentative = yeet.distance + neighbor.Distance;
-                        if (tentative < neighbor.EndingPoint.distance)
-                        {
-                            neighbor.EndingPoint.distance = tentative;
+                            neighbor.EndingPoint.startDistance = tentative;
                             neighbor.EndingPoint.founder = yeet;
                             neighbor.EndingPoint.visited = false;
                         }
