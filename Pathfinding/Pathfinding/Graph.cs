@@ -385,5 +385,61 @@ namespace Pathfinding
             yuut.Push(start.value);
             return yuut;
         }
+
+        public IEnumerable<T> Bellman(T start, T end)
+        {
+            return Bellman(Search(start), Search(end));
+        }
+
+        public IEnumerable<T> Bellman(Vertex<T> start, Vertex<T> end)
+        {
+            Queue<Vertex<T>> queue = new Queue<Vertex<T>>();
+            foreach (Vertex<T> vertex in Vertices)
+            {
+                queue.Enqueue(vertex);
+            }
+
+            var starty = queue.Dequeue();
+
+            foreach (Vertex<T> vertex in Vertices)
+            {
+                vertex.startDistance = double.PositiveInfinity;
+                vertex.founder = null;
+            }
+
+            start.startDistance = 0;
+
+            for (int i = 1; i < Vertices.Count - 1; i++)
+            {
+                foreach (Edge<T> edge in Edges)
+                {
+                    if (edge.StartingPoint.open && edge.EndingPoint.open)
+                    {
+                        if (edge.StartingPoint.startDistance + edge.Distance < edge.EndingPoint.startDistance)
+                        {
+                            edge.EndingPoint.founder = edge.StartingPoint;
+                        }
+                    }
+                }
+            }
+
+            foreach (Edge<T> edge in Edges)
+            {
+                if (edge.StartingPoint.startDistance + edge.Distance < edge.EndingPoint.startDistance)
+                {
+                    //throw new Exception("Negative-weight cycle detected");
+                }
+            }
+
+            Stack<T> yuut = new Stack<T>();
+            var yoot = end;
+            while (yoot != start)
+            {
+                yuut.Push(yoot.value);
+                yoot = yoot.founder;
+            }
+            yuut.Push(start.value);
+            return yuut;
+        }
     }
 }

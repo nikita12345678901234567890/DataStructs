@@ -14,91 +14,123 @@ namespace Pathfinding
         static void Main(string[] args)
         {
             #region Dijkstras
-            string[] lines = File.ReadAllLines("GraphData.txt");
+            //string[] lines = File.ReadAllLines("GraphData.txt");
 
-            Graph<string> graph = new Graph<string>();
-            graph.AddVertex("PDX");
-            graph.AddVertex("SMF");
-            graph.AddVertex("SEA");
-            graph.AddVertex("MSP");
-            graph.AddVertex("DTW");
-            graph.AddVertex("MDW");
-            graph.AddVertex("IND");
-            graph.AddVertex("SFO");
-            graph.AddVertex("LAS");
-            graph.AddVertex("DEN");
-            graph.AddVertex("MKC");
-            graph.AddVertex("STL");
-            graph.AddVertex("CVG");
-            graph.AddVertex("LAX");
-            graph.AddVertex("PHX");
-            graph.AddVertex("ABQ");
-            graph.AddVertex("DFW");
-            graph.AddVertex("HOU");
-            graph.AddVertex("JFK");
-            graph.AddVertex("SAN");
-            graph.AddVertex("ELP");
-            graph.AddVertex("SAT");
-            graph.AddVertex("PHL");
-            graph.AddVertex("DCA");
+            //Graph<string> graph = new Graph<string>();
+            //graph.AddVertex("PDX");
+            //graph.AddVertex("SMF");
+            //graph.AddVertex("SEA");
+            //graph.AddVertex("MSP");
+            //graph.AddVertex("DTW");
+            //graph.AddVertex("MDW");
+            //graph.AddVertex("IND");
+            //graph.AddVertex("SFO");
+            //graph.AddVertex("LAS");
+            //graph.AddVertex("DEN");
+            //graph.AddVertex("MKC");
+            //graph.AddVertex("STL");
+            //graph.AddVertex("CVG");
+            //graph.AddVertex("LAX");
+            //graph.AddVertex("PHX");
+            //graph.AddVertex("ABQ");
+            //graph.AddVertex("DFW");
+            //graph.AddVertex("HOU");
+            //graph.AddVertex("JFK");
+            //graph.AddVertex("SAN");
+            //graph.AddVertex("ELP");
+            //graph.AddVertex("SAT");
+            //graph.AddVertex("PHL");
+            //graph.AddVertex("DCA");
 
-            for (int i = 0; i < lines.Length; i++)
-            {
-                string[] line = lines[i].Split(',');
-                graph.AddEdge(line[0], line[1], double.Parse(line[2]));
-            }
-            var yaat =  graph.Dijkstras("PHL", "MDW");
+            //for (int i = 0; i < lines.Length; i++)
+            //{
+            //    string[] line = lines[i].Split(',');
+            //    graph.AddEdge(line[0], line[1], double.Parse(line[2]));
+            //}
+            //var yaat = graph.Dijkstras("PHL", "MDW");
 
-            foreach (var thing in yaat)
+            //foreach (var thing in yaat)
+            //{
+            //    Console.Write($"{thing}->");
+            //}
+            //Console.WriteLine();
+            #endregion
+
+            #region AStar
+            //string[] mazeLines = System.IO.File.ReadAllLines("Maze.txt");
+
+            ////4x2 loop
+            //Graph<Point> aStarGraph = new Graph<Point>();
+            //for(int i = 0; i <= 4; i++)
+            //{
+            //    for(int j = 0; j <= 2; j++)
+            //    {
+            //        aStarGraph.AddVertex(new Vertex<Point>(new Point(i, j)));
+            //    }
+            //}
+
+            //foreach(var line in mazeLines)
+            //{
+            //    Point p1 = default;
+            //    Point p2 = default;
+            //    double weight = 0;
+            //    int count = 0;
+            //    List<int> vals = new List<int>();
+
+            //    foreach(var character in line)
+            //    {
+            //        int value = (int)char.GetNumericValue(character);
+            //        if (value == -1) continue;
+            //        count++;
+            //        vals.Add(value);
+
+            //        if(count == 2)
+            //        {
+            //            p1 = new Point(vals[0], vals[1]);
+            //        }
+            //        else if(count == 4)
+            //        {
+            //            p2 = new Point(vals[2], vals[3]);
+            //        }
+            //        else if(count == 5)
+            //        {
+            //            weight = vals[4];
+            //        }
+            //    }
+            //    aStarGraph.AddEdge(aStarGraph.Search(p1), aStarGraph.Search(p2), weight);
+            //}
+
+            //var yeet = AStar.aStar(new Point(2, 1), new Point(1, 1), aStarGraph);
+
+            //foreach (var thing in yeet)
+            //{
+            //    Console.Write($"{thing}->");
+            //}
+            //Console.WriteLine();
+            #endregion
+
+            #region Bellman
+            Graph<char> BellmanGraph = new Graph<char>();
+            BellmanGraph.AddVertex('A');
+            BellmanGraph.AddVertex('B');
+            BellmanGraph.AddVertex('C');
+            BellmanGraph.AddVertex('D');
+            BellmanGraph.AddVertex('E');
+
+            BellmanGraph.AddEdge('A', 'B', 2);
+            BellmanGraph.AddEdge('B', 'D', 1);
+            BellmanGraph.AddEdge('D', 'B', 1);
+            BellmanGraph.AddEdge('B', 'C', 2);
+            BellmanGraph.AddEdge('C', 'D', -4);
+            BellmanGraph.AddEdge('D', 'E', 3);
+
+            var yeet = BellmanGraph.Bellman('A', 'E');
+
+            foreach (var thing in yeet)
             {
                 Console.Write($"{thing}->");
             }
             Console.WriteLine();
-            #endregion
-
-            #region AStar
-            string[] mazeLines = System.IO.File.ReadAllLines("Maze.txt");
-
-            //4x2 loop
-            Graph<Point> aStarGraph = new Graph<Point>();
-            for(int i = 0; i <= 4; i++)
-            {
-                for(int j = 0; j <= 2; j++)
-                {
-                    aStarGraph.AddVertex(new Vertex<Point>(new Point(i, j)));
-                }
-            }
-
-            foreach(var line in mazeLines)
-            {
-                Point p1 = default;
-                Point p2 = default;
-                double weight = 0;
-                int count = 0;
-                List<int> vals = new List<int>();
-
-                foreach(var character in line)
-                {
-                    int value = (int)char.GetNumericValue(character);
-                    if (value == -1) continue;
-                    count++;
-                    vals.Add(value);
-
-                    if(count == 2)
-                    {
-                        p1 = new Point(vals[0], vals[1]);
-                    }
-                    else if(count == 4)
-                    {
-                        p2 = new Point(vals[2], vals[3]);
-                    }
-                    else if(count == 5)
-                    {
-                        weight = vals[4];
-                    }
-                }
-                aStarGraph.AddEdge(aStarGraph.Search(p1), aStarGraph.Search(p2), weight);
-            }
             #endregion
             ;
         }
