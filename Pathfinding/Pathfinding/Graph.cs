@@ -386,12 +386,12 @@ namespace Pathfinding
             return yuut;
         }
 
-        public IEnumerable<T> Bellman(T start, T end)
+        public bool Bellman(T start, T end)
         {
             return Bellman(Search(start), Search(end));
         }
 
-        public IEnumerable<T> Bellman(Vertex<T> start, Vertex<T> end)
+        public bool Bellman(Vertex<T> start, Vertex<T> end)
         {
             Queue<Vertex<T>> queue = new Queue<Vertex<T>>();
             foreach (Vertex<T> vertex in Vertices)
@@ -409,14 +409,15 @@ namespace Pathfinding
 
             start.startDistance = 0;
 
-            for (int i = 1; i < Vertices.Count - 1; i++)
+            foreach (Vertex<T> vertex in Vertices)
             {
-                foreach (Edge<T> edge in Edges)
+                foreach (Edge<T> edge in vertex.Neighbors)
                 {
                     if (edge.StartingPoint.open && edge.EndingPoint.open)
                     {
                         if (edge.StartingPoint.startDistance + edge.Distance < edge.EndingPoint.startDistance)
                         {
+                            edge.EndingPoint.startDistance = edge.StartingPoint.startDistance + edge.Distance;
                             edge.EndingPoint.founder = edge.StartingPoint;
                         }
                     }
@@ -427,19 +428,22 @@ namespace Pathfinding
             {
                 if (edge.StartingPoint.startDistance + edge.Distance < edge.EndingPoint.startDistance)
                 {
-                    //throw new Exception("Negative-weight cycle detected");
+                    return false;
                 }
             }
 
             Stack<T> yuut = new Stack<T>();
             var yoot = end;
-            while (yoot != start)
+            while (yoot != null && yoot != start)
             {
                 yuut.Push(yoot.value);
                 yoot = yoot.founder;
             }
-            yuut.Push(start.value);
-            return yuut;
+            if (yuut.Count > 0)
+            {
+                yuut.Push(start.value);
+            }
+            return true;
         }
     }
 }

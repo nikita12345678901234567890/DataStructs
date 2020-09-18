@@ -121,24 +121,17 @@ namespace Pathfinding
             BellmanGraph.AddEdge('B', 'D', 1);
             BellmanGraph.AddEdge('D', 'B', 1);
             BellmanGraph.AddEdge('B', 'C', 2);
-            BellmanGraph.AddEdge('C', 'D', -4);
+            BellmanGraph.AddEdge('C', 'D', -14);
             BellmanGraph.AddEdge('D', 'E', 3);
 
             var yeet = BellmanGraph.Bellman('A', 'E');
 
-            foreach (var thing in yeet)
-            {
-                Console.Write($"{thing}->");
-            }
+            Console.WriteLine(yeet);
             Console.WriteLine();
             #endregion
             ;
         }
     }
-
-
-
-    //Do Tuple Thingy next project         (int, bool) thing;
 
     class AStar
     {
