@@ -1,6 +1,7 @@
 #include <iostream>
 #include <array>
 #include <string>
+#include <vector>
 #include <cmath>
 
 int sum(int* numbers, int size)
@@ -35,13 +36,13 @@ void swap(int& x, int& y)
 int hecDec(std::string hex)
 {
 	int thing = 0;
-	int count = 0;
+	int count = hex.length()-1;
 	for (char c : hex)
 	{
 		int temp = 0;
-		if (c >= 0 && c < 10)
+		if (c >= '0' && c < '9')
 		{
-			temp = c;
+			temp = c-48;
 		}
 		else
 		{
@@ -70,14 +71,31 @@ int hecDec(std::string hex)
 
 		thing += temp * std::pow(16, count);
 
-		count++;
+		count--;
 	}
 	return thing;
 }
 
+void sort(std::vector<int>* list)
+{
+	int counter = 0;
+	for (size_t j = 0; j < list->size(); j++)
+	{
+		for (size_t i = 0; i < list->size() - j - 1; i++)
+		{
+			if (list->at(i) > list->at(i + 1))
+			{
+				auto temp = list->at(i);
+				list->at(i) = list->at(i + 1);
+				list->at(i + 1) = temp;
+			}
+		}
+	}
+}
+
 int main()
 {
-
+	/*
 	//int numbers[3];	// allocate an array of length 3 on the stack
 
 
@@ -86,12 +104,11 @@ int main()
 	//int arr[size];
 
 
-	/*int numbers[] = { 5,6,3,3 };
+	int numbers[] = { 5,6,3,3 };
 	for (auto& num : numbers)
 	{
 		std::cout << num << std::endl;
 	}
-	*/
 
 	//int x = 5;
 
@@ -112,12 +129,12 @@ int main()
 	//*xpointer = 6;
 
 
-	/*int numbers[] = { 5,6,-1 };
+	int numbers[] = { 5,6,-1 };
 
-	std::cout << sum(numbers, 3) << std::endl;*/
+	std::cout << sum(numbers, 3) << std::endl;
 
 
-	/*for (size_t i = 0; i < 3; i++)
+	for (size_t i = 0; i < 3; i++)
 	{
 		std::cout << numbers[i] << " = " << &numbers[i] << std::endl;
 	}
@@ -129,7 +146,7 @@ int main()
 	int* numberarray = numbers;
 
 	std::cout << numberarray << std::endl;
-	std::cout << *numberarray << std::endl;*/
+	std::cout << *numberarray << std::endl;
 
 
 	//std::array<int, 3> numbers = { 4,5,6 };
@@ -145,7 +162,7 @@ int main()
 
 	// ask the user for 5 numbers and store them in an array, print out their valuse and their memory address
 
-	/*std::array<int, 5> numbers{};
+	std::array<int, 5> numbers{};
 
 	for (size_t i = 0; i < numbers.size(); i++)
 	{
@@ -157,7 +174,7 @@ int main()
 	for (size_t i = 0; i < numbers.size(); i++)
 	{
 		std::cout << numbers[i] << "\n" << &numbers[i] << "\n";
-	}*/
+	}
 
 
 	// create a function called swap, that takes in two int pointers and swaps their values
@@ -169,13 +186,45 @@ int main()
 	//swap(x, y);
 
 	//std::cout << x << "\n" << y << "\n";
+	*/
 
-	// ask the user for a hex string, convert it to decimal
+	/* ask the user for a hex string, convert it to decimal
 
 	std::string thing;
 	std::cin >> thing;
 
-	std::cout << hecDec(thing);
+	std::cout << hecDec(thing);*/
+
+	//Create a simple sort function
+
+
+	std::vector<int> list{};
+
+	list.push_back(2);
+	list.push_back(83);
+	list.push_back(1);
+	list.push_back(8);
+	list.push_back(6);
+	/*
+
+	for (size_t i = 0; i < list.size(); i++)
+	{
+		std::cout << list[i] << "\n";
+	}
+
+	for (auto thing : list)
+	{
+		std::cout << thing << "\n";
+	}
+
+	list.erase(list.begin()+1);
+
+	for (size_t i = 0; i < list.size(); i++)
+	{
+		std::cout << list[i] << "\n";
+	}*/
+
+	sort(&list);
 
 	return 0;
 }
