@@ -76,21 +76,90 @@ int hecDec(std::string hex)
 	return thing;
 }
 
-void sort(std::vector<int>* list)
+void sort(std::vector<int>& list)
 {
 	int counter = 0;
-	for (size_t j = 0; j < list->size(); j++)
+	for (size_t j = 0; j < list.size(); j++)
 	{
-		for (size_t i = 0; i < list->size() - j - 1; i++)
+		for (size_t i = 0; i < list.size() - j - 1; i++)
 		{
-			if (list->at(i) > list->at(i + 1))
+			if (list[i] > list[i + 1])
 			{
-				auto temp = list->at(i);
-				list->at(i) = list->at(i + 1);
-				list->at(i + 1) = temp;
+				auto temp = list[i];
+				list[i] = list[i + 1];
+				list[i + 1] = temp;
 			}
 		}
 	}
+}
+
+bool IsSorted(std::vector<int>& list)
+{
+	int prev = list[0];
+	for (int thing : list)
+	{
+		if (thing < prev)
+		{
+			return false;
+		}
+		prev = thing;
+	}
+	return true;
+}
+
+bool linearSearch(std::vector<int>& list, int thing)
+{
+	for (int thingy : list)
+	{
+		if (thingy == thing)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+bool binarySearch(std::vector<int>& list, int thing)
+{
+	if (IsSorted(list))
+	{
+		/*int thingy = list.size() / 2;
+		for (int i = 0; i < list.size(); i++)
+		{
+			if (list[thingy] == thing)
+			{
+				return true;
+			}
+			else if (list[thingy] < thing)
+			{
+				thingy = (list.size() - thingy) / 2;
+			}
+			else
+			{
+				thingy = ((list.size() - thingy) / 2) + thingy;
+			}
+		}
+		return false;*/
+		int min = 0;
+		int max = list.size();
+		while (min < max)
+		{
+			int center = (min + max) / 2;
+			if (list[center] == thing)
+			{
+				return true;
+			}
+			if (thing > list[center])
+			{
+				min = center + 1;
+			}
+			if (thing < list[center])
+			{
+				max = center - 1;
+			}
+		}
+	}
+	return false;
 }
 
 int main()
@@ -205,26 +274,40 @@ int main()
 	list.push_back(1);
 	list.push_back(8);
 	list.push_back(6);
-	/*
+	///*
 
-	for (size_t i = 0; i < list.size(); i++)
+	//for (size_t i = 0; i < list.size(); i++)
+	//{
+	//	std::cout << list[i] << "\n";
+	//}
+
+	//for (auto thing : list)
+	//{
+	//	std::cout << thing << "\n";
+	//}
+
+	//list.erase(list.begin()+1);
+
+	//for (size_t i = 0; i < list.size(); i++)
+	//{
+	//	std::cout << list[i] << "\n";
+	//}*/
+
+	sort(list);
+	bool temp = binarySearch(list, 3);
+
+
+
+	for (int i = 0; i < 100; i++)
 	{
-		std::cout << list[i] << "\n";
+		bool result = linearSearch(list, i);
+
+		if (result == true)
+		{
+			std::cout << i << std::endl;
+		}
 	}
 
-	for (auto thing : list)
-	{
-		std::cout << thing << "\n";
-	}
-
-	list.erase(list.begin()+1);
-
-	for (size_t i = 0; i < list.size(); i++)
-	{
-		std::cout << list[i] << "\n";
-	}*/
-
-	sort(&list);
 
 	return 0;
 }
