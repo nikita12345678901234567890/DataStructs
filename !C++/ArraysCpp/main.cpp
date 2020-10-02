@@ -36,13 +36,13 @@ void swap(int& x, int& y)
 int hecDec(std::string hex)
 {
 	int thing = 0;
-	int count = hex.length() - 1;
+	int count = hex.length()-1;
 	for (char c : hex)
 	{
 		int temp = 0;
 		if (c >= '0' && c < '9')
 		{
-			temp = c - 48;
+			temp = c-48;
 		}
 		else
 		{
@@ -161,59 +161,9 @@ bool binarySearch(std::vector<int>& list, int thing)
 	}
 	return false;
 }
-//
-//class yeet
-//{
-//public:
-//	yeet(int x = 0, int y = 0) : z(x), y(y)
-//	{
-//	
-//	}
-//
-//	int test() { return z; }
-//private:
-//
-//	int z;
-//	int y;
-//};
-
-class Persoin
-{
-	private:
-		std::string name;
-		int age;
-		int height;
-	public:
-		Persoin(std::string name, int age, int height) : name(name), age(age), height(height)
-		{
-
-		}
-		std::string GetName();
-		int GetAge();
-		int GetHeight();
-};
-
-std::string Persoin::GetName()
-{
-	return name;
-}
-
-int Persoin::GetAge()
-{
-	return age;
-}
-
-int Persoin::GetHeight()
-{
-	return height;
-}
 
 int main()
 {
-	//Create a Class Person
-	//Name, Age, Height
-	//Get Functions
-
 	/*
 	//int numbers[3];	// allocate an array of length 3 on the stack
 
@@ -315,14 +265,6 @@ int main()
 	std::cout << hecDec(thing);*/
 
 	//Create a simple sort function
-	/*yeet Yeet(3, 4);
-
-	yeet yt();*/
-
-	std::vector<Persoin> peoples{};
-	peoples.push_back(Persoin("Bob", 2, 83));
-	peoples.push_back(Persoin("Bill", 1, 8));
-	peoples.push_back(Persoin("Chris", 6, 10));
 
 
 	std::vector<int> list{};
@@ -332,8 +274,8 @@ int main()
 	list.push_back(1);
 	list.push_back(8);
 	list.push_back(6);
-	/*
-	/// 
+	///*
+
 	//for (size_t i = 0; i < list.size(); i++)
 	//{
 	//	std::cout << list[i] << "\n";
@@ -349,7 +291,7 @@ int main()
 	//for (size_t i = 0; i < list.size(); i++)
 	//{
 	//	std::cout << list[i] << "\n";
-	//}
+	//}*/
 
 	sort(list);
 	bool temp = binarySearch(list, 3);
@@ -358,17 +300,12 @@ int main()
 
 	for (int i = 0; i < 100; i++)
 	{
-		if (linearSearch(list, i))
+		bool result = linearSearch(list, i);
+
+		if (result == true)
 		{
 			std::cout << i << std::endl;
 		}
-	}
-
-	*/
-
-	for (Persoin person : peoples)
-	{
-		std::cout << person.GetName() << ": " << person.GetAge() << " years old, " << person.GetHeight() << " units tall\n";
 	}
 
 
