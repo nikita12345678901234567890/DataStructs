@@ -3,6 +3,22 @@
 #include <string>
 #include <vector>
 #include <cmath>
+#include <random>
+#include <ctime>
+
+class Rectangle
+{
+public:
+	int width;
+	int height;
+	Rectangle(int height, int width) : height(height), width(width)
+	{
+
+	}
+	int Area();
+	int Perimeter();
+};
+
 
 int sum(int* numbers, size_t size)
 {
@@ -76,7 +92,7 @@ int hecDec(std::string hex)
 	return thing;
 }
 
-void sort(std::vector<int>& list)
+void sort3(std::vector<int>& list)
 {
 	int counter = 0;
 	for (size_t j = 0; j < list.size(); j++)
@@ -88,6 +104,24 @@ void sort(std::vector<int>& list)
 				auto temp = list[i];
 				list[i] = list[i + 1];
 				list[i + 1] = temp;
+			}
+		}
+	}
+}
+
+void sort2(std::vector<Rectangle>& list)
+{
+	int counter = 0;
+	for (size_t j = 0; j < list.size(); j++)
+	{
+		for (size_t i = 0; i < list.size() - j - 1; i++)
+		{
+			if (list[i].Area() > list[i + 1].Area())
+			{
+				std::swap(list[i], list[i + 1]);
+				/*auto temp = list[i];
+				list[i] = list[i + 1];
+				list[i + 1] = temp;*/
 			}
 		}
 	}
@@ -179,41 +213,58 @@ bool binarySearch(std::vector<int>& list, int thing)
 
 class Persoin
 {
-	private:
-		std::string name;
-		int age;
-		int height;
-	public:
-		Persoin(std::string name, int age, int height) : name(name), age(age), height(height)
-		{
+private:
+	std::string name;
+	int age;
+	int height;
+public:
+	Persoin(std::string name, int age, int height) : name(name), age(age), height(height)
+	{
 
-		}
-		std::string GetName();
-		int GetAge();
-		int GetHeight();
+	}
+	std::string GetName() const;
+	int GetAge() const;
+	int GetHeight() const;
 };
 
-std::string Persoin::GetName()
+
+int Rectangle::Area()
+{
+	return width * height;
+}
+
+int Rectangle::Perimeter()
+{
+	return 2 * (width + height);
+}
+
+std::string Persoin::GetName() const
 {
 	return name;
 }
 
-int Persoin::GetAge()
+int Persoin::GetAge() const
 {
 	return age;
 }
 
-int Persoin::GetHeight()
+int Persoin::GetHeight() const
 {
 	return height;
 }
 
+
+int nextInt(int min, int max)
+{
+	return std::rand() % (max - min) + min;
+}
+
 int main()
 {
+	std::srand(std::time(nullptr));
 	//Create a Class Person
 	//Name, Age, Height
 	//Get Functions
-
 	/*
 	//int numbers[3];	// allocate an array of length 3 on the stack
 
@@ -306,19 +357,16 @@ int main()
 
 	//std::cout << x << "\n" << y << "\n";
 	*/
-
 	/* ask the user for a hex string, convert it to decimal
 
 	std::string thing;
 	std::cin >> thing;
 
 	std::cout << hecDec(thing);*/
-
-	//Create a simple sort function
 	/*yeet Yeet(3, 4);
 
 	yeet yt();*/
-
+	/*
 	std::vector<Persoin> peoples{};
 	peoples.push_back(Persoin("Bob", 2, 83));
 	peoples.push_back(Persoin("Bill", 1, 8));
@@ -332,8 +380,8 @@ int main()
 	list.push_back(1);
 	list.push_back(8);
 	list.push_back(6);
-	/*
-	/// 
+
+	///
 	//for (size_t i = 0; i < list.size(); i++)
 	//{
 	//	std::cout << list[i] << "\n";
@@ -366,11 +414,36 @@ int main()
 
 	*/
 
-	for (Persoin person : peoples)
+
+	typedef size_t bob;
+	std::vector<Rectangle> rects{};
+	for (bob i = 0; i < 50; i++)
 	{
-		std::cout << person.GetName() << ": " << person.GetAge() << " years old, " << person.GetHeight() << " units tall\n";
+		rects.push_back(Rectangle(nextInt(7, 140), nextInt(27, 72)));
 	}
 
+	sort2(rects);
+	for (Rectangle rect : rects)
+	{
+		std::cout << rect.height << ", " << rect.width << std::endl;
+	}
+
+	Rectangle bigBoi = rects[0];
+	Rectangle longBoi = rects[0];
+	for (Rectangle rect : rects)
+	{
+		if (rect.Area() > bigBoi.Area())
+		{
+			bigBoi = rect;
+		}
+		if (rect.Perimeter() > longBoi.Perimeter())
+		{
+			longBoi = rect;
+		}
+	}
+
+	std::cout << bigBoi.Area() << std::endl;
+	std::cout << longBoi.Perimeter() << std::endl;
 
 	return 0;
 }
