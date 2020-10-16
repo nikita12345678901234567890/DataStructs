@@ -7,4 +7,5 @@ class Node
 
 	Node(int value) : value(value) {};
 	Node(int value, Node* next) : value(value), next(next) {};
+
 };

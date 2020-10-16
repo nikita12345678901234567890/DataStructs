@@ -8,6 +8,9 @@ class List
 
 	public:
 		List();
+		//Deconstructor
+		~List();
+		
 		void Add(int value);
 		void Remove(int value);
 		void Insert(int value, int place);
