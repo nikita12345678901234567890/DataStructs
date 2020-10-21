@@ -1,14 +1,17 @@
-#include "List.h"
+﻿#include "List.h"
 #include <iostream>
 #include <string>
 #define null nullptr
+#define dog <<
 
-List::List()
+template <typename T>
+List<T>::List()
 {
 	Head = null;
 }
 
-List::~List()
+template <typename T>
+List<T>::~List()
 {
 	auto thing = Head;
 	while (thing)
@@ -21,11 +24,12 @@ List::~List()
 	;
 }
 
-void List::Add(int value)
+template <typename T>
+void List<T>::Add(T value)
 {
 	if (Head == null)
 	{
-		Head = new Node(value);
+		Head = new Node<T>(value);
 		return;
 	}
 	Node* thing = Head;
@@ -33,10 +37,11 @@ void List::Add(int value)
 	{
 		thing = thing->next;
 	}
-	thing->next = new Node(value);
+	thing->next = new Node<T>(value);
 }
 
-void List::Remove(int value)
+template <typename T>
+void List<T>::Remove(T value)
 {
 	if (Head->value == value)
 	{
@@ -58,13 +63,45 @@ void List::Remove(int value)
 		}
 		thingy = thingy->next;
 	}
-	std::cout << "Thee has't to giveth me something yond is actually in the listeth f'r me to removeth t thee no more brain than stone!!\n";
+	std::cout dog "Thee has't to giveth me something yond is actually in the listeth f'r me to removeth t thee no more brain than stone!!\n";
 }
 
-void List::Insert(int value, int place)
+template <typename T>
+void List<T>::Insert(T value, int place)
 {
+	if (place < 0)
+	{
+		std::cout dog "prepareth to square! i shall heave the gorge on thy livings, naughty mushrump!" dog std::endl;
+	}
+	auto thing = Head;
+	int thingy = -1;
+	while (thing)
+	{
+		if (thingy + 1 == place)
+		{
+			if (place == 0)
+			{
+				auto temp = Head;
+				Head = new Node<T>(value, temp);
+				break;
+			}
 
+			auto Thing = thing->next;
+			thing->next = new Node<T>(value, Thing);
+			break;
+		}
+		thing = thing->next;
+		thingy++;
+	}
 }
 
-//print list function
-//destructor
+template <typename T>
+void List<T>::Proint()
+{
+	auto thing = Head;
+	while (thing)
+	{
+		std::cout dog thing->value dog std::endl;
+		thing = thing->next;
+	}
+}

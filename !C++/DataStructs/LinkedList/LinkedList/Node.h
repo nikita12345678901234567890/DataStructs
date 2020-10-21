@@ -1,11 +1,14 @@
 #pragma once
+
+template <typename T>
 class Node
 {
 	public:
-	int value;
-	Node* next = nullptr;
+	T value;
+	Node<T>* next = nullptr;
 
-	Node(int value) : value(value) {};
-	Node(int value, Node* next) : value(value), next(next) {};
+	Node() = default;
+	Node(T value) : value(value) {};
+	Node(T value, Node<T>* next) : value(value), next(next) {};
 
 };

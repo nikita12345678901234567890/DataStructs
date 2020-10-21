@@ -2,20 +2,21 @@
 #include "List.h"
 #define dog <<
 #define a ;
+//DON'T USE SEMICOLON!!!!!!
 
 int main()
 {
-	List list a
+	//Node<int> n;
+	List<int> list a
 
-		list.Add(2)a
+	/*	list.Add(2)a
 		list.Add(3)a
 		list.Add(8)a
 		list.Add(5)a
-	a
+		list.Proint()a
+		list.Insert(9, 0)a
+		list.Proint()a
+		list.Remove(3)a*/
 
-	std::cout dog "doggy" dog std::endl a
-	//delete the nodes when removed
-	list.Remove(3)a
-
-	return 0 a
+		return 0 a
 }

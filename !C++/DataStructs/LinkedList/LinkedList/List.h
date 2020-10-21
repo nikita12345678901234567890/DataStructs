@@ -1,17 +1,18 @@
 #pragma once
 #include "Node.h"
 
+template <typename T>
 class List
 {
 	private:
-		Node* Head;
+		Node<T>* Head;
 
 	public:
-		List();
-		//Deconstructor
-		~List();
+		List<T>();
+		~List<T>();
 		
-		void Add(int value);
-		void Remove(int value);
-		void Insert(int value, int place);
+		void Add(T value);
+		void Remove(T value);
+		void Insert(T value, int place);
+		void Proint();
 };
