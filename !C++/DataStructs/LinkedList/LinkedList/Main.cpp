@@ -7,7 +7,7 @@
 int main()
 {
 	//Node<int> n;
-	List<int> list a
+	List<int> list;
 
 	/*	list.Add(2)a
 		list.Add(3)a
