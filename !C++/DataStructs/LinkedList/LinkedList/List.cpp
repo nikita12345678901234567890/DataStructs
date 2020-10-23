@@ -1,15 +1,13 @@
-﻿#include "List.h"
-#include <iostream>
-#include <string>
-#define null nullptr
-#define dog <<
-
+﻿//#include "List.h"
+//#define null nullptr
+//#define dog <<
+//
 //template <typename T>
 //List<T>::List()
 //{
 //	Head = null;
 //}
-
+//
 //template <typename T>
 //List<T>::~List()
 //{
