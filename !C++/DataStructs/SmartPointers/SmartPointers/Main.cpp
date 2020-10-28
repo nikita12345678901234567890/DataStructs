@@ -5,16 +5,6 @@
 
 int main()
 {
-	int b = 5;
-
-	//int* a = new int[b];
-
-	//a[0] = 1;
-	//a[1] = 2;
-	//a[2] = 3;
-	//a[3] = 4;
-	//a[4] = 5;
-
 	//unique, shared, weak
 	/*std::unique_ptr<Node> myUnique = std::make_unique<Node>();
 
@@ -39,7 +29,36 @@ int main()
 
 	ShoppingList<double> shopping{};
 	
+	shopping.Add(5.0);
+	shopping.Print();
+	shopping.Add(430.0);
+	shopping.Print();
+	shopping.Add(1027.0);
+	shopping.Print();
+	shopping.Add(201.0);
+	shopping.Print();
+	shopping.Add(3.14);
+	shopping.Print();
+	shopping.Add(72.0);
+	shopping.Print();
+	shopping.Add(16.34789);
+	shopping.Print();
+	shopping.Add(21.3333);
+	shopping.Print();
+	shopping.Add(2.7159);
+	shopping.Print();
 
+	
+	shopping.Remove(430.0);
+	shopping.Print();
+	/*const long long size = 1000000000;
+
+	int* mem = new int[size];
+	delete[] mem;*/
+
+	//int* memref = (int*)std::calloc(size, sizeof(int));
+
+	//free(memref);
 
 	return 3;
 }
