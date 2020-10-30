@@ -2,6 +2,8 @@
 #include <memory>
 #include <iostream>
 
+#define s std::
+
 template <typename T>
 class ShoppingList
 {
@@ -43,7 +45,7 @@ void ShoppingList<T>::Remove(T thing)
 	size--;
 	std::unique_ptr<T[]> thigny = std::make_unique <T[]>(size);
 
-	for (size_t i = 0, j = 0; i < size + 1; i++, j++)
+	for (size_t i = 0, j = 0; i < size; i++, j++)
 	{
 		if (List[j] == thing)
 		{
@@ -51,8 +53,6 @@ void ShoppingList<T>::Remove(T thing)
 		}
 		thigny[i] = List[j];
 	}
-
-	thigny[size - 1] = thing;
 
 	List = std::move(thigny);
 }

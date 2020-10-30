@@ -2,11 +2,14 @@
 #include <string>
 #include <memory>
 #include "ShoppingList.h"
+#include "Stack.h"
+
 
 int main()
 {
+	/*
 	//unique, shared, weak
-	/*std::unique_ptr<Node> myUnique = std::make_unique<Node>();
+	std::unique_ptr<Node> myUnique = std::make_unique<Node>();
 
 	std::unique_ptr<int[]> a = std::make_unique<int[]>(b);
 	a.get()[0] = 1;
@@ -18,7 +21,7 @@ int main()
 	for (size_t i = 0; i < b; i++)
 	{  
 		std::cout << a.get()[i] << std::endl;
-	}*/
+	}
 
 	//Do a shopping List Program with unique pointers
 	//ShoppiNg LIST clasS
@@ -26,6 +29,8 @@ int main()
 	//Add functioN which increaseS the ArraY SIZe and aDds aN elemENt to The arRay
 	//RemOVE functIon whicH decREAsEs the SizE of tHE aRray AnD remOvES aN ElemeNt from tHe array
 	//Print function whicH priNtS the liSt
+
+
 
 	ShoppingList<double> shopping{};
 	
@@ -51,14 +56,20 @@ int main()
 	
 	shopping.Remove(430.0);
 	shopping.Print();
-	/*const long long size = 1000000000;
+	const long long size = 1000000000;
 
 	int* mem = new int[size];
-	delete[] mem;*/
+	delete[] mem;
 
 	//int* memref = (int*)std::calloc(size, sizeof(int));
 
 	//free(memref);
+	*/
+	//Array Backed Stack.  Must use a unique ptr
+
+	Stack<double> stack{};
+
+	stack.Pop();
 
 	return 3;
 }
