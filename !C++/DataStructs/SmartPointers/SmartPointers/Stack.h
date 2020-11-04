@@ -43,7 +43,7 @@ T Stack<T>::Pop()
 {
 	if (size == 0)
 	{
-		std::cout << "From the landing the black trunk fell. Booze the slang word for raw whiskey is. Hmm.";
+		std::cout << "And daysa no liken da gungans.  Da naboo think daysa  more smart den us";
 		throw;
 	}
 	size--;
