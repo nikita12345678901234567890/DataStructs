@@ -3,6 +3,8 @@
 #include <iostream>
 #include "Node.h"
 
+#define null nullptr
+
 //#define s std::	// dont do this
 // dont do this part too, but just to avoid the above
 using namespace std;
@@ -11,12 +13,12 @@ template <typename T>
 class DoubleLinkList
 {
 	private:
-	std::unique_ptr<Node<T>> Head;
-	std::unique_ptr<Node<T>> Tail;
+	std::shared_ptr<Node<T>> Head;
+	std::shared_ptr<Node<T>> Tail;
 	int size;
 	public:
 
-	DoubleLinkList() : size(0), List(std::make_unique <T[]>(size))
+	DoubleLinkList() : size(0)
 	{
 
 	}
@@ -26,8 +28,8 @@ class DoubleLinkList
 	void AddBefore(T thing, T value);
 	void AddAfter(T thing, T value);
 
-	void RemoveFirst(T thing);
-	void RemoveLast(T thing);
+	void RemoveFirst();
+	void RemoveLast();
 	void Remove(T thing);
 
 	Node<T>* Search(T thing);
@@ -35,22 +37,17 @@ class DoubleLinkList
 	void Print();
 };
 
-//not circle!!!!!!
-
 template <typename T>
 void DoubleLinkList<T>::AddFirst(T thing)
 {
 	if (size == 0)
 	{
-		Head = make_unique<Node<T>>(thing);
+		Head = make_shared<Node<T>>(thing);
+		auto t = Head.get()->prev.lock();
 		Tail = Head;
-		Head.next = Tail;
-		Head.prev = Tail;
-		Tail.next = Head;
-		Tail.prev = Head;
 		return;
 	}
-	Head = make_unique<Node<T>>(thing, Head, Tail);
+	Head = make_shared<Node<T>>(thing, Head, null);
 }
 
 template <typename T>
@@ -61,58 +58,134 @@ void DoubleLinkList<T>::AddLast(T thing)
 		Head = make_unique<Node<T>>(thing);
 		Tail = Head;
 		Head.next = Tail;
-		Head.prev = Tail;
-		Tail.next = Head;
 		Tail.prev = Head;
 		return;
 	}
-	Head = make_unique<Node<T>>(thing, Head, Tail);
+	Tail = make_unique<Node<T>>(thing, null, Tail);
 }
 
 template <typename T>
 void DoubleLinkList<T>::AddBefore(T thing, T value)
 {
-
+	if (size == 0)
+	{
+		Head = make_unique<Node<T>>(thing);
+		Tail = Head;
+		Head.next = Tail;
+		Tail.prev = Head;
+		return;
+	}
+	auto word = Head;
+	for (size_t i = 0; i < size; i++)
+	{
+		if (word.value == thing)
+		{
+			word.prev = make_unique<Node<T>>(value, word, word.prev);
+		}
+		word = word.next;
+	}
 }
 
 template <typename T>
 void DoubleLinkList<T>::AddAfter(T thing, T value)
 {
-
+	if (size == 0)
+	{
+		Head = make_unique<Node<T>>(thing);
+		Tail = Head;
+		Head.next = Tail;
+		Tail.prev = Head;
+		return;
+	}
+	auto word = Head;
+	for (size_t i = 0; i < size; i++)
+	{
+		if (word.value == thing)
+		{
+			word.next = make_unique<Node<T>>(value, word.next, word);
+		}
+		word = word.next;
+	}
 }
 
 template <typename T>
-void DoubleLinkList<T>::RemoveFirst(T thing)
+void DoubleLinkList<T>::RemoveFirst()
 {
-
+	if (size == 0)
+	{
+		std::cout << "Stop removing from an empty array you muffin!" << std::endl;
+		return;
+	}
+	Head = Head.next;
+	Head.prev = null;
 }
 
 template <typename T>
-void DoubleLinkList<T>::RemoveLast(T thing)
+void DoubleLinkList<T>::RemoveLast()
 {
-
+	if (size == 0)
+	{
+		std::cout << "Stop removing from an empty array you muffin!" << std::endl;
+		return;
+	}
+	Tail = Tail.prev;
+	Tail.next = null;
 }
 
 template <typename T>
 void DoubleLinkList<T>::Remove(T thing)
 {
+	if (size == 0)
+	{
+		std::cout << "Stop removing from an empty array you muffin!" << std::endl;
+		return;
+	}
 
+	auto word = Head;
+	for (size_t i = 0; i < size; i++)
+	{
+		if (word.value == thing)
+		{
+			word.prev.next = word.next;
+			word.next.prev = word.prev;
+		}
+	}
 }
 
 template <typename T>
 Node<T>* DoubleLinkList<T>::Search(T thing)
 {
-
+	auto word = Head;
+	for (size_t i = 0; i < size; i++)
+	{
+		if (word.value == thing)
+		{
+			return *word;
+		}
+	}
+	return null;
 }
 
 template <typename T>
 bool DoubleLinkList<T>::Contains(T thing)
 {
-
+	auto word = Head;
+	for (size_t i = 0; i < size; i++)
+	{
+		if (word.value == thing)
+		{
+			return true;
+		}
+	}
+	return false;
 }
 
 template <typename T>
 void DoubleLinkList<T>::Print()
 {
-
+	auto word = Head;
+	for (size_t i = 0; i < size; i++)
+	{
+		std::cout << word.value << std::endl;
+	}
 }

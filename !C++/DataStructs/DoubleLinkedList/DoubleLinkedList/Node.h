@@ -8,15 +8,15 @@ class Node
 
 	public:
 	T value;
-	std::unique_ptr<Node> next;
-	std::unique_ptr<Node> prev;
+	std::shared_ptr<Node<T>> next;
+	std::weak_ptr<Node<T>> prev;
 
-	Node() : value(value), next(next), prev(prev)
+	Node(T value, std::shared_ptr<Node<T>> next, std::shared_ptr<Node<T>> prev) : value(value), next(next), prev(prev)
 	{
-	
+
 	}
 
-	Node() : value(value)
+	Node(T value) : value(value)
 	{
 
 	}
