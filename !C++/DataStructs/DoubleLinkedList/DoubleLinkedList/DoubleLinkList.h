@@ -4,6 +4,7 @@
 #include "Node.h"
 
 #define null nullptr
+#define brek break
 
 //#define s std::	// dont do this
 // dont do this part too, but just to avoid the above
@@ -13,9 +14,9 @@ template <typename T>
 class DoubleLinkList
 {
 	private:
-	std::shared_ptr<Node<T>> Head;
-	std::shared_ptr<Node<T>> Tail;
-	int size;
+		std::shared_ptr<Node<T>> Head{};
+		std::shared_ptr<Node<T>> Tail{};
+	int size{};
 	public:
 
 	DoubleLinkList() : size(0)
@@ -45,9 +46,12 @@ void DoubleLinkList<T>::AddFirst(T thing)
 		Head = make_shared<Node<T>>(thing);
 		auto t = Head.get()->prev.lock();
 		Tail = Head;
+		size++;
 		return;
 	}
 	Head = make_shared<Node<T>>(thing, Head, null);
+	Head->next->prev = Head;
+	size++;
 }
 
 template <typename T>
@@ -55,13 +59,15 @@ void DoubleLinkList<T>::AddLast(T thing)
 {
 	if (size == 0)
 	{
-		Head = make_unique<Node<T>>(thing);
+		Head = make_shared<Node<T>>(thing);
+		auto t = Head.get()->prev.lock();
 		Tail = Head;
-		Head.next = Tail;
-		Tail.prev = Head;
+		size++;
 		return;
 	}
-	Tail = make_unique<Node<T>>(thing, null, Tail);
+	Tail = make_shared<Node<T>>(thing, null, Tail);
+	Tail->prev.lock()->next = Tail;
+	size++;
 }
 
 template <typename T>
@@ -69,20 +75,25 @@ void DoubleLinkList<T>::AddBefore(T thing, T value)
 {
 	if (size == 0)
 	{
-		Head = make_unique<Node<T>>(thing);
+		Head = make_shared<Node<T>>(thing);
+		auto t = Head.get()->prev.lock();
 		Tail = Head;
-		Head.next = Tail;
-		Tail.prev = Head;
+		size++;
 		return;
 	}
 	auto word = Head;
 	for (size_t i = 0; i < size; i++)
 	{
-		if (word.value == thing)
+		if (word->value == thing)
 		{
-			word.prev = make_unique<Node<T>>(value, word, word.prev);
+			auto prev = word->prev.lock();
+			prev = make_shared<Node<T>>(value, word, prev);
+			prev->prev.lock()->next = prev;
+			prev->next->prev = prev;
+			size++;
+			brek;
 		}
-		word = word.next;
+		word = word->next;
 	}
 }
 
@@ -91,20 +102,23 @@ void DoubleLinkList<T>::AddAfter(T thing, T value)
 {
 	if (size == 0)
 	{
-		Head = make_unique<Node<T>>(thing);
+		Head = make_shared<Node<T>>(thing);
+		auto t = Head.get()->prev.lock();
 		Tail = Head;
-		Head.next = Tail;
-		Tail.prev = Head;
+		size++;
 		return;
 	}
 	auto word = Head;
 	for (size_t i = 0; i < size; i++)
 	{
-		if (word.value == thing)
+		if (word->value == thing)
 		{
-			word.next = make_unique<Node<T>>(value, word.next, word);
+			word->next = make_shared<Node<T>>(value, word->next, word);
+			word->next->next->prev = word->next;
+			size++;
+			return;
 		}
-		word = word.next;
+		word = word->next;
 	}
 }
 
@@ -116,8 +130,18 @@ void DoubleLinkList<T>::RemoveFirst()
 		std::cout << "Stop removing from an empty array you muffin!" << std::endl;
 		return;
 	}
-	Head = Head.next;
-	Head.prev = null;
+	if (size == 1)
+	{
+		Head = std::move(nullptr);
+		Tail = std::move(nullptr);
+		size = 0;
+		return;
+	}
+	auto word = Head;
+	Head = Head->next;
+	Head->prev.reset();
+	word = std::move(nullptr);
+	size--;
 }
 
 template <typename T>
@@ -128,8 +152,18 @@ void DoubleLinkList<T>::RemoveLast()
 		std::cout << "Stop removing from an empty array you muffin!" << std::endl;
 		return;
 	}
-	Tail = Tail.prev;
-	Tail.next = null;
+	if (size == 1)
+	{
+		Head = std::move(nullptr);
+		Tail = std::move(nullptr);
+		size = 0;
+		return;
+	}
+	auto word = Tail;
+	Tail = Tail->prev.lock();
+	Tail->next = null;
+	word = std::move(nullptr);
+	size--;
 }
 
 template <typename T>
@@ -144,11 +178,25 @@ void DoubleLinkList<T>::Remove(T thing)
 	auto word = Head;
 	for (size_t i = 0; i < size; i++)
 	{
-		if (word.value == thing)
+		if (word->value == thing)
 		{
-			word.prev.next = word.next;
-			word.next.prev = word.prev;
+			if (word->value == Head->value)
+			{
+				RemoveFirst();
+				return;
+			}
+			if (word->value == Tail->value)
+			{
+				RemoveLast();
+				return;
+			}
+			word->prev.lock()->next = word->next;
+			word->next->prev = word->prev.lock();
+			word = std::move(nullptr);
+			size--;
+			return;
 		}
+		word = word->next;
 	}
 }
 
@@ -158,10 +206,11 @@ Node<T>* DoubleLinkList<T>::Search(T thing)
 	auto word = Head;
 	for (size_t i = 0; i < size; i++)
 	{
-		if (word.value == thing)
+		if (word->value == thing)
 		{
-			return *word;
+			return word.get();
 		}
+		word = word->next;
 	}
 	return null;
 }
@@ -172,10 +221,11 @@ bool DoubleLinkList<T>::Contains(T thing)
 	auto word = Head;
 	for (size_t i = 0; i < size; i++)
 	{
-		if (word.value == thing)
+		if (word->value == thing)
 		{
 			return true;
 		}
+		word = word->next;
 	}
 	return false;
 }
@@ -186,6 +236,8 @@ void DoubleLinkList<T>::Print()
 	auto word = Head;
 	for (size_t i = 0; i < size; i++)
 	{
-		std::cout << word.value << std::endl;
+		std::cout << word->value << std::endl;
+
+		word = word->next;
 	}
 }
