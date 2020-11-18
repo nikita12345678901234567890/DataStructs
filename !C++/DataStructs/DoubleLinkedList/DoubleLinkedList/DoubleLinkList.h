@@ -14,15 +14,18 @@ template <typename T>
 class DoubleLinkList
 {
 	private:
-		std::shared_ptr<Node<T>> Head{};
-		std::shared_ptr<Node<T>> Tail{};
-	int size{};
+
+	std::shared_ptr<Node<T>> Head{};
+	std::weak_ptr<Node<T>> Tail{};
+	size_t size{};
+
 	public:
 
 	DoubleLinkList() : size(0)
 	{
 
 	}
+	~DoubleLinkList();
 
 	void AddFirst(T thing);
 	void AddLast(T thing);
@@ -37,6 +40,18 @@ class DoubleLinkList
 	bool Contains(T thing);
 	void Print();
 };
+
+template<typename T>
+DoubleLinkList<T>::~DoubleLinkList()
+{
+	auto temp = Head;
+
+	while (temp)
+	{
+		temp = std::move(temp->next);
+	}
+
+}
 
 template <typename T>
 void DoubleLinkList<T>::AddFirst(T thing)
@@ -65,9 +80,22 @@ void DoubleLinkList<T>::AddLast(T thing)
 		size++;
 		return;
 	}
-	Tail = make_shared<Node<T>>(thing, null, Tail);
-	Tail->prev.lock()->next = Tail;
-	size++;
+	
+	if (!Tail.expired())
+	{
+		auto tempTail = Tail.lock();
+		auto newNode = make_shared<Node<T>>(thing);
+		tempTail->next = newNode;
+		newNode->prev = tempTail;
+		Tail = newNode;
+
+		size++;
+
+	}
+	
+	
+	/*Tail = make_shared<Node<T>>(thing, null, Tail.lock());
+	Tail.lock()->prev.lock()->next = Tail.lock();*/
 }
 
 template <typename T>
@@ -132,8 +160,8 @@ void DoubleLinkList<T>::RemoveFirst()
 	}
 	if (size == 1)
 	{
-		Head = std::move(nullptr);
-		Tail = std::move(nullptr);
+		Head.reset();
+		Tail.reset();
 		size = 0;
 		return;
 	}
@@ -154,15 +182,15 @@ void DoubleLinkList<T>::RemoveLast()
 	}
 	if (size == 1)
 	{
-		Head = std::move(nullptr);
-		Tail = std::move(nullptr);
+		Head.reset();
+		Tail.reset();
 		size = 0;
 		return;
 	}
 	auto word = Tail;
-	Tail = Tail->prev.lock();
-	Tail->next = null;
-	word = std::move(nullptr);
+	Tail = Tail.lock()->prev.lock();
+	Tail.lock()->next = null;
+	word.reset();
 	size--;
 }
 
@@ -185,7 +213,7 @@ void DoubleLinkList<T>::Remove(T thing)
 				RemoveFirst();
 				return;
 			}
-			if (word->value == Tail->value)
+			if (word->value == Tail.lock()->value)
 			{
 				RemoveLast();
 				return;
