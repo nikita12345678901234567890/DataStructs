@@ -93,7 +93,6 @@ void DoubleLinkList<T>::AddLast(T thing)
 
 	}
 	
-	
 	/*Tail = make_shared<Node<T>>(thing, null, Tail.lock());
 	Tail.lock()->prev.lock()->next = Tail.lock();*/
 }
