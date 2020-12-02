@@ -26,13 +26,41 @@ public:
 
 	}
 
-	Node(T value, std::shared_ptr<Node<T>> parent, std::shared_ptr<Node<T>> Lchild) : value(value), parent(parent), Lchild(Lchild)
-	{
-
-	}
-
 	Node(T value, std::shared_ptr<Node<T>> parent, std::shared_ptr<Node<T>> Rchild, std::shared_ptr<Node<T>> Lchild) : value(value), parent(parent), Rchild(Rchild), Lchild(Lchild)
 	{
 
 	}
+
+    public int ChildCount
+    {
+        get
+        {
+            int count = 0;
+
+            if (Lchild != nullptr)
+            {
+                count++;
+            }
+
+            if (Rchild != nullptr)
+            {
+                count++;
+            }
+
+            return count;
+        }
+    }
+
+    public bool IsLeftChild
+    {
+        get
+        {
+            if (parent != nullptr && parent.Lchild == this)
+            {
+                return true;
+            }
+
+            return false;
+        }
+    }
 };
