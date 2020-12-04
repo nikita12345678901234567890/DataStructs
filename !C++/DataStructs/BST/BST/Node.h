@@ -31,36 +31,30 @@ public:
 
 	}
 
-    public int ChildCount
+    int ChildCount()
     {
-        get
-        {
-            int count = 0;
+        int count = 0;
 
-            if (Lchild != nullptr)
+        if (Lchild != nullptr)
             {
                 count++;
             }
 
-            if (Rchild != nullptr)
+        if (Rchild != nullptr)
             {
                 count++;
             }
 
-            return count;
-        }
+        return count;
     }
 
-    public bool IsLeftChild
+    bool IsLeftChild()
     {
-        get
+        if (parent.lock() != nullptr && parent.lock()->Lchild.get() == this)
         {
-            if (parent != nullptr && parent.Lchild == this)
-            {
-                return true;
-            }
-
-            return false;
+            return true;
         }
+
+        return false;
     }
 };

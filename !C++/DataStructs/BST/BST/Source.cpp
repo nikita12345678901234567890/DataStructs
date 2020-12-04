@@ -3,7 +3,7 @@
 #include <string>
 #include <random>
 #include "BST.h"
-//Test this!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 int main()
 {
     BST<int> tree;
@@ -119,29 +119,16 @@ int main()
             {
                 std::cout << array[i] + ", " << std::endl;
             }
-        }
+        }*/
 
         if (input == "z")
         {
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 5000; i++)
             {
-                int thing = random.Next(0, 1000);
-                tree.Insert(thing);
-                std::cout << thing);
+                tree.Insert(i);
             }
-
-            for (int i = 0; i < 5; i++)
-            {
-                std::cout << "" << std::endl;
-            }
-
-            int[] array = tree.BreadthFirst();
-
-            for (int i = 0; i < array.Length; i++)
-            {
-                std::cout << array[i] << std::endl;
-            }
-        }*/
+            return 0;
+        }
 
 
         for (int i = 0; i < 5; i++)

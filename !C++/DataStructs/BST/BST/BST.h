@@ -9,7 +9,7 @@ class BST
 {
 private:
 	std::shared_ptr<Node<T>> Root;
-	count++;
+	int count;
 
 public:
 
@@ -17,11 +17,18 @@ public:
 	{
 	
 	}
+    ~BST();
 	void Insert(T value);
 	bool Contains(T thing);
 	void Clear();
 	void Remove(T value);
 };
+
+template <typename T>
+BST<T>::~BST()
+{
+    Clear();
+}
 
 template <typename T>
 void BST<T>::Insert(T value)
@@ -44,25 +51,25 @@ void BST<T>::Insert(T value)
 		//If the value is less than apple
 		//We go to the left or if the left is null we insert the value at the left
 		//Same thing goes for the right side
-		if (value < apple.value)
+		if (value < apple->value)
 		{
-			if (apple.Lchild == null)
+			if (apple->Lchild == null)
 			{
-				apple.Lchild = std::make_shared(value);
-				apple.Lchild.parent = apple;
+				apple->Lchild = std::make_shared<Node<T>>(value);
+				apple->Lchild->parent.lock() = apple;
 				break;
 			}
-			apple = apple.Lchild;
+			apple = apple->Lchild;
 		}
 		else
 		{
-			if (apple.Rchild == null)
+			if (apple->Rchild == null)
 			{
-				apple.Rchild = std::make_shared(value);
-				apple.Rchild.parent = apple;
+				apple->Rchild = std::make_shared<Node<T>>(value);
+				apple->Rchild->parent.lock() = apple;
 				break;
 			}
-			apple = apple.Rchild;
+			apple = apple->Rchild;
 		}
 	}
 }
@@ -70,20 +77,24 @@ void BST<T>::Insert(T value)
 template <typename T>
 bool BST<T>::Contains(T thing)
 {
+    if (count == 0)
+    {
+        return false;
+    }
 	auto apple = Root;
-	while (apple.value != value && (apple.Rchild != null || apple.Lchild != null))
+	while (apple->value != thing && (apple->Rchild != null || apple->Lchild != null))
 	{
-		if (apple.value > value)
+		if (apple->value > thing)
 		{
-			apple = apple.Lchild;
+			apple = apple->Lchild;
 		}
-		if (apple.value < value)
+		if (apple->value < thing)
 		{
-			apple = apple.Rchild;
+			apple = apple->Rchild;
 		}
 	}
 
-	if (apple.value = value)
+	if (apple->value == thing)
 	{
 		return true;
 	}
@@ -96,7 +107,37 @@ bool BST<T>::Contains(T thing)
 template <typename T>
 void BST<T>::Clear()
 {
+    if (Root == null)
+    {
+        return;
+    }
 
+    auto apple = Root;
+
+    while (Root != null)
+    {
+        if (apple->Lchild != null)
+        {
+            apple = apple->Lchild;
+        }
+        else if (apple->Rchild != null)
+        {
+            apple = apple->Rchild;
+        }
+        else
+        {
+            bool thing = apple->IsLeftChild();
+            apple = apple->parent.lock();
+            if (thing)
+            {
+                Remove(apple->Lchild);
+            }
+            else if(apple->Rchild != null)
+            {
+                Remove(apple->Rchild);
+            }
+        }
+    }
 }
 
 template <typename T>
@@ -110,74 +151,74 @@ void BST<T>::Remove(T value)
     auto apple = Root;
     for (int i = 0; i < count; i++)
     {
-        if (apple.value.Equals(value))
+        if (apple->value == value)
         {
-            if (apple.ChildCount == 0)
+            if (apple->ChildCount() == 0)
             {
-                if (apple.value < apple.parent.value)
+                if (apple->value < apple->parent.lock()->value)
                 {
-                    apple.parent.Lchild = null;
+                    apple->parent.lock()->Lchild = null;
                 }
 
-                if (apple.value > apple.parent.value)
+                if (apple->value > apple->parent.lock()->value)
                 {
-                    apple.parent.Rchild = null;
+                    apple->parent.lock()->Rchild = null;
                 }
                 count--;
                 return;
             }
 
-            if (apple.Lchild != null && apple.Rchild == null)
+            if (apple->Lchild != null && apple->Rchild == null)
             {
-                if (apple.value < apple.parent.value)
+                if (apple->value < apple->parent.lock()->value)
                 {
-                    apple.parent.Lchild = apple.Lchild;
-                    apple.Lchild.parent = apple.parent;
+                    apple->parent.lock()->Lchild = apple->Lchild;
+                    apple->Lchild->parent.lock() = apple->parent.lock();
                 }
 
-                if (apple.value > apple.parent.value)
+                if (apple->value > apple->parent.lock()->value)
                 {
-                    apple.parent.Rchild = apple.Lchild;
-                    apple.Rchild.parent = apple.parent;
+                    apple->parent.lock()->Rchild = apple->Lchild;
+                    apple->Rchild->parent.lock() = apple->parent.lock();
                 }
                 count--;
                 return;
             }
 
-            if (apple.Lchild == null && apple.Rchild != null)
+            if (apple->Lchild == null && apple->Rchild != null)
             {
-                if (apple.value < apple.parent.value)
+                if (apple->value < apple->parent.lock()->value)
                 {
-                    apple.parent.Lchild = apple.Rchild;
-                    apple.Rchild.parent = apple.parent;
+                    apple->parent.lock()->Lchild = apple->Rchild;
+                    apple->Rchild->parent.lock() = apple->parent.lock();
                 }
 
-                if (apple.value > apple.parent.value)
+                if (apple->value > apple->parent.lock()->value)
                 {
-                    apple.parent.Rchild = apple.Rchild;
-                    apple.Rchild.parent = apple.parent;
+                    apple->parent.lock()->Rchild = apple->Rchild;
+                    apple->Rchild->parent.lock() = apple->parent.lock();
                 }
                 count--;
                 return;
             }
 
-            if (apple.ChildCount == 2)
+            if (apple->ChildCount() == 2)
             {
-                auto apple2 = apple.Lchild;
+                auto apple2 = apple->Lchild;
 
-                while (apple2.Rchild != null)
+                while (apple2->Rchild != null)
                 {
-                    apple2 = apple2.Rchild;
+                    apple2 = apple2->Rchild;
                 }
 
-                apple.value = apple2.value;
-                if (apple2.IsLeftChild)
+                apple->value = apple2->value;
+                if (apple2->IsLeftChild())
                 {
-                    apple2.parent.Lchild = null;
+                    apple2->parent.lock()->Lchild = null;
                 }
                 else
                 {
-                    apple2.parent.Rchild = null;
+                    apple2->parent.lock()->Rchild = null;
                 }
                 apple2 = null;
             }
@@ -185,14 +226,14 @@ void BST<T>::Remove(T value)
             return;
         }
 
-        if (apple.value > value)
+        if (apple->value > value)
         {
-            apple = apple.Lchild;
+            apple = apple->Lchild;
         }
 
-        if (apple.value < value)
+        if (apple->value < value)
         {
-            apple = apple.Rchild;
+            apple = apple->Rchild;
         }
         count--;
     }
