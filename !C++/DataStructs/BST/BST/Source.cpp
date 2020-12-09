@@ -13,7 +13,7 @@ int main()
     while (true)
     {
         std::cout << "I = insert, D = delete, m = minimum, M = maximum, S = search, PO = pre-order, IO = in-order, pO = post-order, BF = breadth first" << std::endl;
-
+        
         //input = Console.ReadLine();
         std::cin >> input;
 

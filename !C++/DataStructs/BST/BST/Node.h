@@ -50,7 +50,7 @@ public:
 
     bool IsLeftChild()
     {
-        if (parent.lock() != nullptr && parent.lock()->Lchild.get() == this)
+        if (parent.lock() != nullptr && parent.lock()->Lchild != nullptr && parent.lock()->Lchild.get() == this)
         {
             return true;
         }

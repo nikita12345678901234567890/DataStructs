@@ -116,26 +116,9 @@ void BST<T>::Clear()
 
     while (Root != null)
     {
-        if (apple->Lchild != null)
+        if (apple.Lchild != null)
         {
-            apple = apple->Lchild;
-        }
-        else if (apple->Rchild != null)
-        {
-            apple = apple->Rchild;
-        }
-        else
-        {
-            bool thing = apple->IsLeftChild();
-            apple = apple->parent.lock();
-            if (thing)
-            {
-                Remove(apple->Lchild);
-            }
-            else if(apple->Rchild != null)
-            {
-                Remove(apple->Rchild);
-            }
+            apple = apple.Lchild;
         }
     }
 }
