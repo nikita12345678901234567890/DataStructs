@@ -114,19 +114,39 @@ void BST<T>::Clear()
 
     auto apple = Root;
 
-    while (Root != null)
+    while (count > 1)
     {
-        if (apple.Lchild != null)
+        if (apple->Lchild != null)
         {
-            apple = apple.Lchild;
+            apple = apple->Lchild;
+        }
+        else if (apple->Rchild != null)
+        {
+            apple = apple->Rchild;
+        }
+        else
+        {
+            bool orange = apple->IsLeftChild();
+            apple = apple->parent.lock();//Parent is empty!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            if (orange)
+            {
+                apple->Lchild = std::move(null);
+            }
+            else
+            {
+                apple->Rchild = std::move(null);
+            }
         }
     }
-}
 
+    Root = std::move(null);
+    count = 0;
+}
+// fix remove!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 template <typename T>
 void BST<T>::Remove(T value)
 {
-    if (Root == null)
+    if (Root == null || Contains(value))
     {
         return;
     }
@@ -208,7 +228,7 @@ void BST<T>::Remove(T value)
             count--;
             return;
         }
-
+        
         if (apple->value > value)
         {
             apple = apple->Lchild;
@@ -218,6 +238,6 @@ void BST<T>::Remove(T value)
         {
             apple = apple->Rchild;
         }
-        count--;
     }
+    count--;
 }

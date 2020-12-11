@@ -1,0 +1,4 @@
+Visual Studio:
+Ctrl+F4 - close tab
+F5 - run program
+shift+F5 - stop program
