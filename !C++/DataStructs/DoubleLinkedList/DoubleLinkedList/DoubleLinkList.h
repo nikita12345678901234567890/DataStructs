@@ -123,7 +123,7 @@ void DoubleLinkList<T>::AddBefore(T thing, T value)
 		word = word->next;
 	}
 }
-
+	
 template <typename T>
 void DoubleLinkList<T>::AddAfter(T thing, T value)
 {

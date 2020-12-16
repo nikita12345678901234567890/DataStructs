@@ -1,6 +1,8 @@
 #pragma once
 #include <iostream>
 #include <memory>
+#include <stack>
+#include <vector>
 #include "Node.h"
 #define null nullptr
 
@@ -22,6 +24,9 @@ public:
 	bool Contains(T thing);
 	void Clear();
 	void Remove(T value);
+    std::vector<std::shared_ptr<Node<T>>> PreOrder();
+    std::vector<std::shared_ptr<Node<T>>> InOrder();
+    std::vector<std::shared_ptr<Node<T>>> PostOrder();
 };
 
 template <typename T>
@@ -112,34 +117,38 @@ void BST<T>::Clear()
         return;
     }
 
-    auto apple = Root;
+    auto node = Root;
 
-    while (count > 1)
+    std::stack <std::shared_ptr<Node<T>>> stack{};
+   
+    std::shared_ptr<Node<T>> lastNodeVisited{};
+    std::shared_ptr<Node<T>> peekNode{};
+
+    while (stack.size() > 0 || node)
     {
-        if (apple->Lchild != null)
+        if (node)
         {
-            apple = apple->Lchild;
-        }
-        else if (apple->Rchild != null)
-        {
-            apple = apple->Rchild;
+            stack.push(node);
+            node = node->Lchild;
         }
         else
         {
-            bool orange = apple->IsLeftChild();
-            apple = apple->parent.lock();//Parent is empty!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            if (orange)
+            peekNode = stack.top();
+
+            if (peekNode->Rchild && lastNodeVisited != peekNode->Rchild)
             {
-                apple->Lchild = std::move(null);
+                node = peekNode->Rchild;
             }
             else
             {
-                apple->Rchild = std::move(null);
+                peekNode.reset();
+                lastNodeVisited = stack.top();
+                stack.pop();
             }
         }
     }
 
-    Root = std::move(null);
+    Root = null;
     count = 0;
 }
 // fix remove!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -240,4 +249,71 @@ void BST<T>::Remove(T value)
         }
     }
     count--;
+}
+
+template <typename T>
+std::vector<std::shared_ptr<Node<T>>> BST<T>::PreOrder()
+{
+    if (Root == null)
+    {
+        return null;
+    }
+
+    std::vector<std::shared_ptr<Node<T>>> list = new List<T>();
+    Counter = Root;
+    while (list.Count < count)
+    {
+        if (!list.Contains(Counter.value))
+        {
+            list.Add(Counter.value);
+        }
+
+        if (Counter.ChildCount == 0)
+        {
+            Counter = Counter.Parent;
+        }
+
+        if (Counter.ChildCount == 1)
+        {
+            if (Counter.LChild != null && !list.Contains(Counter.LChild.value))
+            {
+                Counter = Counter.LChild;
+            }
+            else
+            {
+                Counter = Counter.RChild;
+            }
+        }
+
+        if (Counter.ChildCount == 2)
+        {
+            if (list.Contains(Counter.value) && list.Contains(Counter.LChild.value) && list.Contains(Counter.RChild.value))
+            {
+                Counter = Counter.Parent;
+            }
+            else if (!list.Contains(Counter.LChild.value))
+            {
+                Counter = Counter.LChild;
+            }
+            else
+            {
+                Counter = Counter.RChild;
+            }
+        }
+    }
+
+
+    return list.ToArray();
+}
+
+template <typename T>
+std::vector<std::shared_ptr<Node<T>>> BST<T>::InOrder()
+{
+
+}
+
+template <typename T>
+std::vector<std::shared_ptr<Node<T>>> BST<T>::PostOrder()
+{
+
 }
