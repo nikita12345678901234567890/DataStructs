@@ -12,6 +12,7 @@ class BST
 private:
 	std::shared_ptr<Node<T>> Root;
 	int count;
+    bool Contains(std::vector<std::shared_ptr<Node<T>>> thingy, std::shared_ptr<Node<T>> thing);
 
 public:
 
@@ -28,6 +29,7 @@ public:
     std::vector<std::shared_ptr<Node<T>>> InOrder();
     std::vector<std::shared_ptr<Node<T>>> PostOrder();
 };
+
 
 template <typename T>
 BST<T>::~BST()
@@ -251,59 +253,73 @@ void BST<T>::Remove(T value)
     count--;
 }
 
+template<typename T>
+bool BST<T>::Contains(std::vector<std::shared_ptr<Node<T>>> thingy, std::shared_ptr<Node<T>> thing)
+{
+    for (size_t i = 0; i < thingy.size(); i++)
+    {
+        if (thingy[i] == thing)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
 template <typename T>
 std::vector<std::shared_ptr<Node<T>>> BST<T>::PreOrder()
 {
     if (Root == null)
     {
-        return null;
+        std::vector<std::shared_ptr<Node<T>>> empty{};
+        return empty;
     }
 
-    std::vector<std::shared_ptr<Node<T>>> list = new List<T>();
-    Counter = Root;
-    while (list.Count < count)
+    std::vector<std::shared_ptr<Node<T>>> list{};
+    auto Counter = Root;
+    while (list.size() < count)
     {
-        if (!list.Contains(Counter.value))
+        if (!Contains(list, Counter))
         {
-            list.Add(Counter.value);
+            list.push_back(Counter);
         }
 
-        if (Counter.ChildCount == 0)
+        if (Counter->ChildCount() == 0)
         {
-            Counter = Counter.Parent;
+            Counter = Counter->parent.lock();
         }
 
-        if (Counter.ChildCount == 1)
+        if (Counter->ChildCount() == 1)
         {
-            if (Counter.LChild != null && !list.Contains(Counter.LChild.value))
+            if (Counter->Lchild != null && !Contains(list, Counter->Lchild))
             {
-                Counter = Counter.LChild;
+                Counter = Counter->Lchild;
             }
             else
             {
-                Counter = Counter.RChild;
+                Counter = Counter->Rchild;
             }
         }
 
-        if (Counter.ChildCount == 2)
+        if (Counter->ChildCount() == 2)
         {
-            if (list.Contains(Counter.value) && list.Contains(Counter.LChild.value) && list.Contains(Counter.RChild.value))
+            if (Contains(list, Counter) && Contains(list, Counter->Lchild) && Contains(list, Counter->Rchild))
             {
-                Counter = Counter.Parent;
+                Counter = Counter->parent.lock();
             }
-            else if (!list.Contains(Counter.LChild.value))
+            else if (!Contains(list, Counter->Lchild))
             {
-                Counter = Counter.LChild;
+                Counter = Counter->Lchild;
             }
             else
             {
-                Counter = Counter.RChild;
+                Counter = Counter->Rchild;
             }
         }
     }
 
 
-    return list.ToArray();
+    return list;
 }
 
 template <typename T>

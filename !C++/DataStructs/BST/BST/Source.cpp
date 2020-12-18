@@ -2,7 +2,9 @@
 #include <memory>
 #include <string>
 #include <random>
+#include <vector>
 #include "BST.h"
+#include "Node.h"
 
 int main()
 {
@@ -65,21 +67,17 @@ int main()
             }
         }
 
-        /*if (input == "PO")
+        if (input == "PO")
         {
-            std::cout << "" << std::endl;
-            int[] array = new int[tree.PreOrder().Length];
-            for (int i = 0; i < array.Length; i++)
+            std::cout << std::endl;
+            std::vector<std::shared_ptr<Node<int>>> thing = tree.PreOrder();
+            for (int i = 0; i < thing.size(); i++)
             {
-                array[i] = tree.PreOrder()[i];
-            }
-            for (int i = 0; i < array.Length; i++)
-            {
-                std::cout << array[i] + ", " << std::endl;
+                std::cout << thing[i]->value + ", " << std::endl;
             }
         }
 
-        if (input == "IO")
+        /*if (input == "IO")
         {
             std::cout << "" << std::endl;
             int[] array = new int[tree.InOrder().Length];
