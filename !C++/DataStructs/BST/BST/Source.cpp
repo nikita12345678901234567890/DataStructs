@@ -70,10 +70,10 @@ int main()
         if (input == "PO")
         {
             std::cout << std::endl;
-            std::vector<std::shared_ptr<Node<int>>> thing = tree.PreOrder();
+            auto thing = tree.PreOrder();
             for (int i = 0; i < thing.size(); i++)
             {
-                std::cout << thing[i]->value + ", " << std::endl;
+                std::cout << thing[i]->value << ", " << std::endl;
             }
         }
 
@@ -121,11 +121,11 @@ int main()
 
         if (input == "z")
         {
-            for (int i = 0; i < 5000; i++)
-            {
-                tree.Insert(i);
-            }
-            return 0;
+            tree.Insert(20);
+            tree.Insert(10);
+            tree.Insert(5);
+            tree.Insert(2);
+            tree.Insert(1);
         }
 
 

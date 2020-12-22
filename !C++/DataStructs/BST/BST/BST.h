@@ -277,19 +277,19 @@ std::vector<std::shared_ptr<Node<T>>> BST<T>::PreOrder()
 
     std::vector<std::shared_ptr<Node<T>>> list{};
     auto Counter = Root;
-    while (list.size() < count)
+    while (list.size() < count && Counter != null)
     {
         if (!Contains(list, Counter))
         {
             list.push_back(Counter);
         }
 
-        if (Counter->ChildCount() == 0)
+        else if (Counter->ChildCount() == 0)
         {
             Counter = Counter->parent.lock();
         }
 
-        if (Counter->ChildCount() == 1)
+        else if (Counter->ChildCount() == 1)
         {
             if (Counter->Lchild != null && !Contains(list, Counter->Lchild))
             {
@@ -301,7 +301,7 @@ std::vector<std::shared_ptr<Node<T>>> BST<T>::PreOrder()
             }
         }
 
-        if (Counter->ChildCount() == 2)
+        else if (Counter->ChildCount() == 2)
         {
             if (Contains(list, Counter) && Contains(list, Counter->Lchild) && Contains(list, Counter->Rchild))
             {

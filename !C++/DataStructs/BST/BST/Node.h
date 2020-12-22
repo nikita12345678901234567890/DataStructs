@@ -36,14 +36,14 @@ public:
         int count = 0;
 
         if (Lchild != nullptr)
-            {
-                count++;
-            }
+        {
+            count++;
+        }
 
         if (Rchild != nullptr)
-            {
-                count++;
-            }
+        {
+            count++;
+        }
 
         return count;
     }
