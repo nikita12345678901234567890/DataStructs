@@ -63,7 +63,7 @@ void BST<T>::Insert(T value)
 			if (apple->Lchild == null)
 			{
 				apple->Lchild = std::make_shared<Node<T>>(value);
-				apple->Lchild->parent.lock() = apple;
+				apple->Lchild->parent = apple;
 				break;
 			}
 			apple = apple->Lchild;
@@ -73,7 +73,7 @@ void BST<T>::Insert(T value)
 			if (apple->Rchild == null)
 			{
 				apple->Rchild = std::make_shared<Node<T>>(value);
-				apple->Rchild->parent.lock() = apple;
+				apple->Rchild->parent = apple;
 				break;
 			}
 			apple = apple->Rchild;
@@ -89,19 +89,19 @@ bool BST<T>::Contains(T thing)
         return false;
     }
 	auto apple = Root;
-	while (apple->value != thing && (apple->Rchild != null || apple->Lchild != null))
+	while (apple != null && apple->value != thing && (apple->Rchild != null || apple->Lchild != null))
 	{
 		if (apple->value > thing)
 		{
 			apple = apple->Lchild;
 		}
-		if (apple->value < thing)
+		else if (apple->value < thing)
 		{
 			apple = apple->Rchild;
 		}
 	}
 
-	if (apple->value == thing)
+	if (apple != null && apple->value == thing)
 	{
 		return true;
 	}
@@ -325,11 +325,69 @@ std::vector<std::shared_ptr<Node<T>>> BST<T>::PreOrder()
 template <typename T>
 std::vector<std::shared_ptr<Node<T>>> BST<T>::InOrder()
 {
+    if (Root == null)
+    {
+        std::vector<std::shared_ptr<Node<T>>> empty{};
+        return empty;
+    }
 
+    std::vector<std::shared_ptr<Node<T>>> list{};
+    auto Counter = Root;
+
+    while (list.size() < count && Counter != null)
+    {
+        if (Counter->Lchild != null && !Contains(list, Counter->Lchild))
+        {
+            Counter = Counter->Lchild;
+        }
+        else if (!Contains(list, Counter))
+        {
+            list.push_back(Counter);
+        }
+        else if (Counter->Rchild != null && !Contains(list, Counter->Rchild))
+        {
+            Counter = Counter->Rchild;
+        }
+        else
+        {
+            Counter = Counter->parent.lock();
+        }
+    }
+
+    return list;
 }
 
 template <typename T>
 std::vector<std::shared_ptr<Node<T>>> BST<T>::PostOrder()
 {
+    if (Root == null)
+    {
+        std::vector<std::shared_ptr<Node<T>>> empty{};
+        return empty;
+    }
 
+    std::vector<std::shared_ptr<Node<T>>> list{};
+    auto Counter = Root;
+
+    while (list.size() < count && Counter != null)
+    {
+        if (Counter->Lchild != null && !Contains(list, Counter->Lchild))
+        {
+            Counter = Counter->Lchild;
+        }
+        else if (Counter->Rchild != null && !Contains(list, Counter->Rchild))
+        {
+            Counter = Counter->Rchild;
+        }
+        else if (!Contains(list, Counter))
+        {
+            list.push_back(Counter);
+        }
+        else
+        {
+            Counter = Counter->parent.lock();
+        }
+    }
+
+    return list;
 }
