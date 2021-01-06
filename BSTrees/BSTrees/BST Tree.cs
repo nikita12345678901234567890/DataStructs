@@ -229,7 +229,7 @@ namespace Trees
             }
         }
 
-        public T[] PreOrder()
+        /*public T[] PreOrder()
         {
             if (Root == null)
             {
@@ -245,12 +245,12 @@ namespace Trees
                     list.Add(Counter.value);
                 }
 
-                if (Counter.ChildCount == 0)
+                else if (Counter.ChildCount == 0)
                 {
                     Counter = Counter.Parent;
                 }
 
-                if (Counter.ChildCount == 1)
+                else if (Counter.ChildCount == 1)
                 {
                     if (Counter.LChild != null && !list.Contains(Counter.LChild.value))
                     {
@@ -262,7 +262,7 @@ namespace Trees
                     }
                 }
 
-                if (Counter.ChildCount == 2)
+                else if (Counter.ChildCount == 2)
                 {
                     if (list.Contains(Counter.value) && list.Contains(Counter.LChild.value) && list.Contains(Counter.RChild.value))
                     {
@@ -281,6 +281,33 @@ namespace Trees
 
 
             return list.ToArray();
+        }*/
+
+        public IEnumerable<T> PreOrder()
+        {
+            Queue<T> nodes = new Queue<T>();
+
+            Stack<Node<T>> stack = new Stack<Node<T>>();
+            stack.Push(Root);
+
+            while (stack.Count > 0)
+            {
+                Node<T> curr = stack.Pop();
+
+                nodes.Enqueue(curr.value);
+
+                if (curr.RChild != null)
+                {
+                    stack.Push(curr.RChild);
+                }
+
+                if (curr.LChild != null)
+                {
+                    stack.Push(curr.LChild);
+                }
+            }
+
+            return nodes;
         }
 
         public T[] InOrder()

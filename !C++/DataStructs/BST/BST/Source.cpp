@@ -14,7 +14,7 @@ int main()
 
     while (true)
     {
-        std::cout << "I = insert, D = delete, m = minimum, M = maximum, S = search, PO = pre-order, IO = in-order, pO = post-order, BF = breadth first" << std::endl;
+        std::cout << "I = insert, D = delete, S = search, PO = pre-order, IO = in-order, pO = post-order" << std::endl;
         
         //input = Console.ReadLine();
         std::cin >> input;
@@ -35,20 +35,6 @@ int main()
             std::cout << "OK" << std::endl;
         }
 
-        /*if (input == "m")
-        {
-            std::cout << "Of what sub-tree?" << std::endl;
-            std::cin >> value;
-            std::cout << tree.Minimum(value).ToString() << std::endl;
-        }
-
-        if (input == "M")
-        {
-            std::cout << "Of what sub-tree?" << std::endl;
-            std::cin >> value;
-            std::cout << tree.Maximum(value).ToString() << std::endl;
-        }*/
-
         if (input == "S")
         {
             std::cout << "What doth thee wanteth to searcheth f'r?" << std::endl;
@@ -61,71 +47,67 @@ int main()
             else
             {
                 std::cout << "" << std::endl;
-                std::cout << "Err'r numb'r 666." << std::endl;
-                std::cout << "Eith'r this value is not in the tree, 'r thee oweth me wage." << std::endl;
-                std::cout << "Whatev'r the case, i suggesteth yond thee starteth running." << std::endl;
+                std::cout << "This item is missing" << std::endl;
             }
         }
 
         if (input == "PO")
         {
             std::cout << std::endl;
-            auto thing = tree.PreOrder();
+
+            auto thing = tree.PreOrder();            
+            for (auto&& item : thing)
+            {
+                std::cout << item->value << ", ";
+            }
+            std::cout << std::endl;
+
+            //for (int i = 0; i < thing.size(); i++)
+            //{
+            //    std::cout << thing[i]->value << ", " << std::endl;
+            //}
+        }
+
+        if (input == "IO")
+        {
+            auto thing = tree.InOrder();
             for (int i = 0; i < thing.size(); i++)
             {
                 std::cout << thing[i]->value << ", " << std::endl;
             }
         }
 
-        /*if (input == "IO")
-        {
-            std::cout << "" << std::endl;
-            int[] array = new int[tree.InOrder().Length];
-            for (int i = 0; i < array.Length; i++)
-            {
-                array[i] = tree.InOrder()[i];
-            }
-            for (int i = 0; i < array.Length; i++)
-            {
-                std::cout << array[i] + ", " << std::endl;
-            }
-        }
-
         if (input == "pO")
         {
-            std::cout << "" << std::endl;
-            int[] array = new int[tree.PostOrder().Length];
-            for (int i = 0; i < array.Length; i++)
+            auto thing = tree.PostOrder();
+            for (int i = 0; i < thing.size(); i++)
             {
-                array[i] = tree.PostOrder()[i];
-            }
-            for (int i = 0; i < array.Length; i++)
-            {
-                std::cout << array[i] + ", " << std::endl;
+                std::cout << thing[i]->value << ", " << std::endl;
             }
         }
-
-        if (input == "BF")
-        {
-            std::cout << "" << std::endl;
-            int[] array = new int[tree.BreadthFirst().Length];
-            for (int i = 0; i < array.Length; i++)
-            {
-                array[i] = tree.BreadthFirst()[i];
-            }
-            for (int i = 0; i < array.Length; i++)
-            {
-                std::cout << array[i] + ", " << std::endl;
-            }
-        }*/
 
         if (input == "z")
         {
+<<<<<<< HEAD
             tree.Insert(10);
             tree.Insert(2);
+=======
+            tree.Insert(2);
+            tree.Insert(10);
+>>>>>>> b2dc5702952169246fe8191433e2e19269f2a585
             tree.Insert(5);
             tree.Insert(20);
             tree.Insert(1);
+            tree.Insert(0);
+            tree.Insert(9);
+            tree.Insert(7);
+            tree.Insert(12);
+            tree.Insert(3);
+            tree.Insert(18);
+            tree.Insert(8);
+            tree.Insert(6);
+            tree.Insert(17);
+            tree.Insert(4);
         }
 
 

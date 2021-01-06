@@ -68,15 +68,22 @@ namespace Trees
                 if (input == "PO")
                 {
                     Console.WriteLine("");
-                    int[] array = new int[tree.PreOrder().Length];
-                    for (int i = 0; i < array.Length; i++)
+
+                    foreach (var item in tree.PreOrder())
                     {
-                        array[i] = tree.PreOrder()[i];
+                        Console.WriteLine($"{item},  ");
                     }
-                    for (int i = 0; i < array.Length; i++)
-                    {
-                        Console.Write(array[i] + ", ");
-                    }
+
+                    //int[] array = new int[tree.PreOrder().;
+                    //for (int i = 0; i < array.Length; i++)
+                    //{
+                    //    array[i] = tree.PreOrder()[i];
+                    //}
+
+                    //for (int i = 0; i < array.Length; i++)
+                    //{
+                    //    Console.Write(array[i] + ", ");
+                    //}
                 }
 
                 if (input == "IO")
@@ -123,24 +130,21 @@ namespace Trees
 
                 if (input == "z")
                 {
-                    for (int i = 0; i < 10; i++)
-                    {
-                        int thing = random.Next(0, 1000);
-                        tree.Insert(thing);
-                        Console.WriteLine(thing);
-                    }
-
-                    for (int i = 0; i < 5; i++)
-                    {
-                        Console.WriteLine("");
-                    }
-
-                    int[] array = tree.BreadthFirst();
-
-                    for (int i = 0; i < array.Length; i++)
-                    {
-                        Console.WriteLine(array[i]);
-                    }
+                    tree.Insert(2);
+                    tree.Insert(10);
+                    tree.Insert(5);
+                    tree.Insert(20);
+                    tree.Insert(1);
+                    tree.Insert(0);
+                    tree.Insert(9);
+                    tree.Insert(7);
+                    tree.Insert(12);
+                    tree.Insert(3);
+                    tree.Insert(18);
+                    tree.Insert(8);
+                    tree.Insert(6);
+                    tree.Insert(17);
+                    tree.Insert(4);
                 }
 
 
