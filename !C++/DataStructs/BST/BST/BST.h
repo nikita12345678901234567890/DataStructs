@@ -89,19 +89,19 @@ bool BST<T>::Contains(T thing)
         return false;
     }
 	auto apple = Root;
-	while (apple->value != thing && (apple->Rchild != null || apple->Lchild != null))
+    while (apple != null && apple->value != thing && (apple->Rchild != null || apple->Lchild != null))
 	{
 		if (apple->value > thing)
 		{
 			apple = apple->Lchild;
 		}
-		if (apple->value < thing)
+		else if (apple->value < thing)
 		{
 			apple = apple->Rchild;
 		}
 	}
 
-	if (apple->value == thing)
+	if (apple != null && apple->value == thing)
 	{
 		return true;
 	}
@@ -275,51 +275,33 @@ std::vector<std::shared_ptr<Node<T>>> BST<T>::PreOrder()
         return empty;
     }
 
-    std::vector<std::shared_ptr<Node<T>>> list{};
-    auto Counter = Root;
-    while (list.size() < count && Counter != null)
+    std::vector<std::shared_ptr<Node<T>>> values;
+    if (count > 0)
     {
-        if (!Contains(list, Counter))
-        {
-            list.push_back(Counter);
-        }
+        std::stack<std::shared_ptr<Node<T>>> stack;
+        stack.push(Root);
 
-        else if (Counter->ChildCount() == 0)
-        {
-            Counter = Counter->parent.lock();
-        }
+        std::shared_ptr<Node<T>> current;
 
-        else if (Counter->ChildCount() == 1)
+        while (stack.size() > 0)
         {
-            if (Counter->Lchild != null && !Contains(list, Counter->Lchild))
+            current = stack.top();
+            stack.pop();
+            values.push_back(current);
+            if (current->Rchild)
             {
-                Counter = Counter->Lchild;
+                stack.push(current->Rchild);
             }
-            else
+            if (current->Lchild)
             {
-                Counter = Counter->Rchild;
-            }
-        }
-
-        else if (Counter->ChildCount() == 2)
-        {
-            if (Contains(list, Counter) && Contains(list, Counter->Lchild) && Contains(list, Counter->Rchild))
-            {
-                Counter = Counter->parent.lock();
-            }
-            else if (!Contains(list, Counter->Lchild))
-            {
-                Counter = Counter->Lchild;
-            }
-            else
-            {
-                Counter = Counter->Rchild;
+                stack.push(current->Lchild);
             }
         }
     }
 
 
-    return list;
+
+    return values;
 }
 
 template <typename T>

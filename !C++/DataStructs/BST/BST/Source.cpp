@@ -121,10 +121,10 @@ int main()
 
         if (input == "z")
         {
-            tree.Insert(20);
             tree.Insert(10);
-            tree.Insert(5);
             tree.Insert(2);
+            tree.Insert(5);
+            tree.Insert(20);
             tree.Insert(1);
         }
 
