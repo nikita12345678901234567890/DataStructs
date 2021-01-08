@@ -64,7 +64,7 @@ void BST<T>::Insert(T value)
 			{
 				apple->Lchild = std::make_shared<Node<T>>(value);
 				apple->Lchild->parent = apple;
-				break;
+				return;
 			}
 			apple = apple->Lchild;
 		}
@@ -74,7 +74,7 @@ void BST<T>::Insert(T value)
 			{
 				apple->Rchild = std::make_shared<Node<T>>(value);
 				apple->Rchild->parent = apple;
-				break;
+				return;
 			}
 			apple = apple->Rchild;
 		}
@@ -89,11 +89,7 @@ bool BST<T>::Contains(T thing)
         return false;
     }
 	auto apple = Root;
-<<<<<<< HEAD
     while (apple != null && apple->value != thing && (apple->Rchild != null || apple->Lchild != null))
-=======
-	while (apple != null && apple->value != thing && (apple->Rchild != null || apple->Lchild != null))
->>>>>>> b2dc5702952169246fe8191433e2e19269f2a585
 	{
 		if (apple->value > thing)
 		{
@@ -303,8 +299,6 @@ std::vector<std::shared_ptr<Node<T>>> BST<T>::PreOrder()
         }
     }
 
-
-
     return values;
 }
 
@@ -317,30 +311,30 @@ std::vector<std::shared_ptr<Node<T>>> BST<T>::InOrder()
         return empty;
     }
 
-    std::vector<std::shared_ptr<Node<T>>> list{};
+    std::vector<std::shared_ptr<Node<T>>> values;
     auto Counter = Root;
 
-    while (list.size() < count && Counter != null)
+    while (values.size() < count)
     {
-        if (Counter->Lchild != null && !Contains(list, Counter->Lchild))
+        if (Counter != null && Counter->Lchild != null && !Contains(values, Counter->Lchild))
         {
             Counter = Counter->Lchild;
         }
-        else if (!Contains(list, Counter))
+        else if (!Contains(values, Counter))
         {
-            list.push_back(Counter);
+            values.push_back(Counter);
         }
-        else if (Counter->Rchild != null && !Contains(list, Counter->Rchild))
+        else if (Counter != null && Counter->Rchild != null && !Contains(values, Counter->Rchild))
         {
             Counter = Counter->Rchild;
         }
-        else
+        else if(Counter != null)
         {
             Counter = Counter->parent.lock();
         }
     }
 
-    return list;
+    return values;
 }
 
 template <typename T>
@@ -352,22 +346,22 @@ std::vector<std::shared_ptr<Node<T>>> BST<T>::PostOrder()
         return empty;
     }
 
-    std::vector<std::shared_ptr<Node<T>>> list{};
+    std::vector<std::shared_ptr<Node<T>>> values;
     auto Counter = Root;
 
-    while (list.size() < count && Counter != null)
+    while (values.size() < count)
     {
-        if (Counter->Lchild != null && !Contains(list, Counter->Lchild))
+        if (Counter != null && Counter->Lchild != null && !Contains(values, Counter->Lchild))
         {
             Counter = Counter->Lchild;
         }
-        else if (Counter->Rchild != null && !Contains(list, Counter->Rchild))
+        else if (Counter != null && Counter->Rchild != null && !Contains(values, Counter->Rchild))
         {
             Counter = Counter->Rchild;
         }
-        else if (!Contains(list, Counter))
+        else if (Counter != null && !Contains(values, Counter))
         {
-            list.push_back(Counter);
+            values.push_back(Counter);
         }
         else
         {
@@ -375,5 +369,5 @@ std::vector<std::shared_ptr<Node<T>>> BST<T>::PostOrder()
         }
     }
 
-    return list;
+    return values;
 }
