@@ -3,13 +3,23 @@
 #include <string>
 #include <random>
 #include <vector>
+#include <time.h>
 #include "SortQuick.h"
+
 
 int main()
 {
+	srand(time(nullptr));
+
 	SortQuick<int> quick{};
 
-	std::vector<int> array = { 7, 4, 3, 6, 2, 1, 5 };
+	std::vector<int> array{};
+	
+	for (size_t i = 0; i < 100; i++)
+	{
+		array.push_back(std::rand() % 1000 + 1);
+	}
+
 
 	quick.Sort(array, 0, array.size() - 1);
 
