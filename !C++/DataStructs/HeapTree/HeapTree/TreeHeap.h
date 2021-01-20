@@ -6,7 +6,7 @@ class TreeHeap
 {
 private:
 
-	std::vector<T> array();
+	std::vector<T> array{};
 
 	void HeapifyUp(int index);
 	void HeapifyDown(int index);
@@ -18,7 +18,7 @@ public:
 
 	bool min;
 
-	TreeHeap(bool min) : min(min);
+	TreeHeap(bool min) : min(min) {}
 
 	void Insert(T value);
 	T Pop();
@@ -65,14 +65,14 @@ void TreeHeap<T>::HeapifyDown(int index)
 	{
 		if (min)
 		{
-			if ((FindLeft(index) < array.size()))
+			if ((FindLeft(index) < array.size() && FindRight(index) < array.size() && array[FindLeft(index)] < array[FindRight(index)]) || FindLeft(index) < array.size() && FindRight(index) >= array.size() || (FindLeft(index) < array.size() && FindRight(index) >= array.size() && array[index] > array[FindLeft(index)]) || (FindLeft(index) >= array.size() && FindRight(index) < array.size() && array[index] > array[FindRight(index)]))
 			{
 				T thing = array[index];
 				array[index] = array[FindLeft(index)];
 				array[FindLeft(index)] = thing;
 				index = FindLeft(index);
 			}
-			if ()
+			if ((FindLeft(index) < array.size() && FindRight(index) < array.size() && array[FindLeft(index)] > array[FindRight(index)]) || FindLeft(index) >= array.size() && FindRight(index) < array.size() || (FindLeft(index) < array.size() && FindRight(index) >= array.size() && array[index] > array[FindLeft(index)]) || (FindLeft(index) >= array.size() && FindRight(index) < array.size() && array[index] > array[FindRight(index)]))
 			{
 				T thing = array[index];
 				array[index] = array[FindRight(index)];
@@ -82,14 +82,14 @@ void TreeHeap<T>::HeapifyDown(int index)
 		}
 		else
 		{
-			if ()
+			if ((FindLeft(index) < array.size() && FindRight(index) < array.size() && array[FindLeft(index)] > array[FindRight(index)]) || FindLeft(index) < array.size() && FindRight(index) >= array.size())
 			{
 				T thing = array[index];
 				array[index] = array[FindLeft(index)];
 				array[FindLeft(index)] = thing;
 				index = FindLeft(index);
 			}
-			if ()
+			if ((FindLeft(index) < array.size() && FindRight(index) < array.size() && array[FindLeft(index)] < array[FindRight(index)]) || FindLeft(index) >= array.size() && FindRight(index) < array.size())
 			{
 				T thing = array[index];
 				array[index] = array[FindRight(index)];
@@ -103,29 +103,37 @@ void TreeHeap<T>::HeapifyDown(int index)
 template<typename T>
 int TreeHeap<T>::FindParent(int index)
 {
-
+	return (index - 1) / 2;
 }
 
 template<typename T>
 int TreeHeap<T>::FindLeft(int index)
 {
-
+	return index + (index + 1);
 }
 
 template<typename T>
 int TreeHeap<T>::FindRight(int index)
 {
-
+	return index + (index + 2);
 }
 
 template<typename T>
 void TreeHeap<T>::Insert(T value)
 {
-
+	array.push_back(value);
+	if (array.size() > 1)
+	{
+		HeapifyUp(array.size() - 1);
+	}
 }
 
 template<typename T>
 T TreeHeap<T>::Pop()
 {
-
+	T thing = array[0];
+	array[0] = array[array.size() - 1];
+	array.erase(array.begin() + (array.size() - 1));
+	HeapifyDown(0);
+	return thing;
 }
