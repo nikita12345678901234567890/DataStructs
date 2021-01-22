@@ -61,7 +61,46 @@ void TreeHeap<T>::HeapifyUp(int index)
 template<typename T>
 void TreeHeap<T>::HeapifyDown(int index)
 {
-	for (size_t i = 0; i < array.size(); i++)
+	if (min)
+	{
+		if (FindLeft(index) >= array.size())
+		{
+			return;
+		}
+
+		int swap = 0;
+
+		if (FindRight(index) >= array.size())
+		{
+			swap = FindLeft(index);
+		}
+		else
+		{
+			if (array[FindLeft(index)] < array[FindRight(index)])
+			{
+				swap = FindLeft(index);
+			}
+			else
+			{
+				swap = FindRight(index);
+			}
+		}
+
+		if (array[swap] < array[index])
+		{
+			T temp = array[index];
+			array[index] = array[swap];
+			array[swap];
+			array[swap] = temp;
+		}
+
+		HeapifyDown(swap);
+	}
+
+
+
+
+	/*for (size_t i = 0; i < array.size(); i++)
 	{
 		if (min)
 		{
@@ -97,7 +136,7 @@ void TreeHeap<T>::HeapifyDown(int index)
 				index = FindRight(index);
 			}
 		}
-	}
+	}*/
 }
 
 template<typename T>
