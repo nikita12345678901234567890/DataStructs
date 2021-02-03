@@ -6,16 +6,16 @@ namespace Huffman
 {
     class Node
     {
-        public char character;
-        public int number;
-        public Node Rchild;
-        public Node Lchild;
-        public Node parent;
+        public char letter;
+        public int frequency;
 
-        public Node(char character, int number)
+        public Node left;
+        public Node right;
+
+        public Node(char letter, int frequency)
         {
-            this.character = character;
-            this.number = number;
+            this.letter = letter;
+            this.frequency = frequency;
         }
     }
 }

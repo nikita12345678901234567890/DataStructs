@@ -9,12 +9,13 @@ namespace Huffman
     {
         public Coder()
         {
-            
+            //change all "NodeNode" to Node!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         }
 
 
         public string Encode(string text)
         {
+            //This works, don't touch it:
             Dictionary<char, int> frequency = new Dictionary<char, int>();
 
             for (int i = 0; i < text.Length; i++)
@@ -28,15 +29,32 @@ namespace Huffman
                     frequency[text[i]]++;
                 }
             }
+            //end of working stuff
 
 
-            Node start = new Node(Smallest(frequency), frequency[Smallest(frequency)]);
-            frequency.Remove(Smallest(frequency));
-            
-            for (int i = 0; i < frequency.Count; i++)
+            var heap = new Heap<NodeNode>(new NodeNodeComparer());
+
+            foreach (var kvp in frequency)
             {
-                
+                heap.Add(new NodeNode(kvp.Key, kvp.Value));
             }
+
+
+
+            while (heap.Count > 1)
+            {
+                var big = heap.Pop();
+                var smol = heap.Pop();
+                var comb = new NodeNode('$', big.frequency + smol.frequency);
+                comb.left = big;
+                comb.right = smol;
+
+                heap.Add(comb);
+            }
+            var root = heap.Pop();
+
+
+            return "";
         }
 
         private char Smallest(Dictionary<char, int> dict)
