@@ -9,7 +9,7 @@ namespace Huffman
     {
         public Coder()
         {
-            //change all "NodeNode" to Node!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            
         }
 
 
@@ -32,43 +32,61 @@ namespace Huffman
             //end of working stuff
 
 
-            var heap = new Heap<NodeNode>(new NodeNodeComparer());
+            var heap = new Heap<Node>(new NodeComparer());
 
             foreach (var kvp in frequency)
             {
-                heap.Add(new NodeNode(kvp.Key, kvp.Value));
+                heap.Add(new Node(kvp.Key, kvp.Value));
             }
 
 
-
+            //combining stuff
             while (heap.Count > 1)
             {
+                //var big = heap.Pop(); //if using max heap
+                //var smol = heap.Pop();
+
+                var smol = heap.Pop(); //if using min heap
                 var big = heap.Pop();
-                var smol = heap.Pop();
-                var comb = new NodeNode('$', big.frequency + smol.frequency);
-                comb.left = big;
-                comb.right = smol;
+
+                var comb = new Node('$', big.frequency + smol.frequency);
+                //comb.left = big; //if doing max heap
+                //comb.right = smol;
+
+                comb.right = big; //if doing min heap
+                comb.left = smol;
 
                 heap.Add(comb);
             }
+
+            //tree:
             var root = heap.Pop();
 
 
-            return "";
-        }
+            //making the tree into a string:
+            string tree = "";
 
-        private char Smallest(Dictionary<char, int> dict)
-        {
-            var small = dict.ElementAt(0);
-            for (int i = 0; i < dict.Count; i++)
+            Node Counter;
+            Queue<Node> queue = new Queue<Node>();
+            queue.Enqueue(root);
+
+            while (queue.Count != 0)
             {
-                if (dict.ElementAt(i).Value < small.Value)
+                Counter = queue.Dequeue();
+
+                //add to string
+                //Do that line^!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                if (Counter.left != null)
                 {
-                    small = dict.ElementAt(i);
+                    queue.Enqueue(Counter.left);
+                }
+                if (Counter.right != null)
+                {
+                    queue.Enqueue(Counter.right);
                 }
             }
 
-            return small.Key;
+            return tree;
         }
     }
 }
