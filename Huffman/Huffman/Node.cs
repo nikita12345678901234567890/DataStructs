@@ -11,6 +11,7 @@ namespace Huffman
 
         public Node left;
         public Node right;
+        public string code;
 
         public Node(char letter, int frequency)
         {

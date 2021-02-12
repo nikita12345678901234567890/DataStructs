@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using System.Diagnostics;
 
 namespace Huffman
 {
@@ -13,9 +14,10 @@ namespace Huffman
         }
 
 
-        public string Encode(string text)
+        //return a tuple of (string, Dictionary<char, string>) representing the encoded message and the table along with it
+        public (string message, Dictionary<char, string> table) Encode(string text)
         {
-            //This works, don't touch it:
+            //Putting chars and frequencies into dictionary:
             Dictionary<char, int> frequency = new Dictionary<char, int>();
 
             for (int i = 0; i < text.Length; i++)
@@ -29,7 +31,7 @@ namespace Huffman
                     frequency[text[i]]++;
                 }
             }
-            //end of working stuff
+
 
 
             var heap = new Heap<Node>(new NodeComparer());
@@ -63,30 +65,78 @@ namespace Huffman
             var root = heap.Pop();
 
 
-            //making the tree into a string:
-            string tree = "";
+            //putting the tree into a dictionary:
+            Dictionary<char, string> tree = new Dictionary<char, string>();
 
             Node Counter;
             Queue<Node> queue = new Queue<Node>();
             queue.Enqueue(root);
 
+
             while (queue.Count != 0)
             {
                 Counter = queue.Dequeue();
 
-                //add to string
-                //Do that line^!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                if (Counter != root && Counter.letter != '$')
+                {
+                    tree.Add(Counter.letter, Counter.code);
+                }
+
                 if (Counter.left != null)
                 {
+                    Counter.left.code = Counter.code + "0";
                     queue.Enqueue(Counter.left);
                 }
                 if (Counter.right != null)
                 {
+                    Counter.right.code = Counter.code + "1";
                     queue.Enqueue(Counter.right);
                 }
             }
 
-            return tree;
+            //comverting the string into binary:
+            string binary = "";
+
+            StringBuilder binaryStringBuilder = new StringBuilder();
+
+            for (int i = 0; i < text.Length; i++)
+            {
+                foreach (var c in tree)
+                {
+                    if(text[i] == c.Key)
+                    {
+                        binaryStringBuilder.Append(c.Value);
+                    }
+                }
+            }
+
+            return (binaryStringBuilder.ToString(), tree);
+        }
+
+        public string Decode((string message, Dictionary<char, string> table) item)
+        {
+            string message = item.message;
+            var table = item.table;
+
+            StringBuilder text = new StringBuilder();
+
+            StringBuilder thing = new StringBuilder();
+
+            for (int i = 0; i < message.Length; i++)
+            {
+                thing.Append(message[i]);
+
+                foreach (var yeet in table)
+                {
+                    if (thing.ToString() == yeet.Value)
+                    {
+                        text.Append(yeet.Key);
+                        thing.Clear();
+                    }
+                }
+            }
+
+            return text.ToString();
         }
     }
 }

@@ -63,9 +63,7 @@ namespace Huffman
 
             var coder = new Coder();
 
-            coder.Encode("this is a test");
-
-
+            Console.WriteLine(coder.Decode(coder.Encode("this is a test")));
         }
     }
 }
