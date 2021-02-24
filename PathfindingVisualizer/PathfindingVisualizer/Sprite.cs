@@ -15,7 +15,13 @@ namespace PathfindingVisualizer
         public Vector2 position { get; set; }
         public Vector2 origin { get; set; }
         public Vector2 scale{ get; set; }
-
+        public Rectangle HitBox
+        {
+            get
+            {
+                return new Rectangle((int)position.X, (int)position.Y, (int)(texture.Width * scale.X), (int)(texture.Height * scale.Y));
+            }
+        }
         public float rotation { get; set; }
         public SpriteEffects effect { get; set; }
         public float layerDepth { get; set; }

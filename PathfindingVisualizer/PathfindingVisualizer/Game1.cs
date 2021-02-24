@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-
 using System;
 using System.Collections.Generic;
 
@@ -18,6 +17,11 @@ namespace PathfindingVisualizer
         List<Sprite> sprites;
         Random random = new Random();
 
+        Sprite[,] grid = new Sprite[20, 20];
+
+        Vector2 mousecell = new Vector2();
+
+        Texture2D pixel;
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -36,7 +40,7 @@ namespace PathfindingVisualizer
 
             IsMouseVisible = true;
             graphics.PreferredBackBufferWidth = 800;
-            graphics.PreferredBackBufferHeight = 600;
+            graphics.PreferredBackBufferHeight = 800;
             graphics.ApplyChanges();
 
             base.Initialize();
@@ -51,14 +55,24 @@ namespace PathfindingVisualizer
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            sprites = new List<Sprite>();
+            pixel = new Texture2D(GraphicsDevice, 1, 1);
+            pixel.SetData(new Color[] { Color.White });
 
-            var texture = Content.Load<Texture2D>("circle");
+            var square = Content.Load<Texture2D>("square");
 
-            for (int i = 0; i < 4; i++)
+            int size = (graphics.PreferredBackBufferWidth / grid.GetLength(1));
+            Vector2 scale = new Vector2(size / (float)square.Width, size / (float)square.Height);
+
+            for (int y = 0; y < 20; y++)
             {
-                sprites.Add(new Sprite(texture, new Vector2(random.Next(0, GraphicsDevice.Viewport.Width), random.Next(0, GraphicsDevice.Viewport.Height)), Vector2.One, new Vector2(texture.Width / 2, texture.Height / 2)));
+                for (int x = 0; x < 20; x++)
+                {
+                    grid[y, x] = new Sprite(square, new Vector2(0 + (x * size), 0 + (y * size)), scale, Vector2.Zero);
+                }
             }
+
+            pixel = new Texture2D(GraphicsDevice, 1, 1);
+            pixel.SetData(new Color[] { Color.White });
 
             // TODO: use this.Content to load your game content here
         }
@@ -66,6 +80,17 @@ namespace PathfindingVisualizer
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
+
+            var ms = Mouse.GetState();
+
+            int indexX = (ms.X / grid[0, 0].HitBox.Width);
+            int indexY = (ms.Y / grid[0, 0].HitBox.Height);
+
+            mousecell.X = indexX * (grid[0, 0].HitBox.Width + 1);
+            mousecell.Y = indexY * (grid[0, 0].HitBox.Height + 1);
+
+            Window.Title = $"X:{indexX}, Y:{indexY}";
+
 
             // TODO: Add your update logic here
 
@@ -85,10 +110,15 @@ namespace PathfindingVisualizer
 
             spriteBatch.Begin();
 
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < grid.GetLength(0); i++)
             {
-                sprites[i].Draw(spriteBatch);
+                for (int j = 0; j < grid.GetLength(1); j++)
+                {
+                   grid[i, j].Draw(spriteBatch);
+                }
             }
+
+            spriteBatch.Draw(pixel, new Rectangle((int)mousecell.X + 2, (int)mousecell.Y + 2, grid[0, 0].HitBox.Width - 3, grid[0, 0].HitBox.Height - 3), Color.Yellow);
 
             spriteBatch.End();
 
