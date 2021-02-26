@@ -14,14 +14,16 @@ namespace PathfindingVisualizer
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        List<Sprite> sprites;
         Random random = new Random();
 
-        Sprite[,] grid = new Sprite[20, 20];
+        Node[,] grid = new Node[20, 20];
 
-        Vector2 mousecell = new Vector2();
-
+        Point mousecell;
+        
         Texture2D pixel;
+
+        Vector2 end;
+        Vector2 start;
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -67,15 +69,55 @@ namespace PathfindingVisualizer
             {
                 for (int x = 0; x < 20; x++)
                 {
-                    grid[y, x] = new Sprite(square, new Vector2(0 + (x * size), 0 + (y * size)), scale, Vector2.Zero);
+                    grid[y, x] = new Node(square, new Vector2(0 + (x * size), 0 + (y * size)), scale, Vector2.Zero);
                 }
             }
 
             pixel = new Texture2D(GraphicsDevice, 1, 1);
             pixel.SetData(new Color[] { Color.White });
 
+            start = new Vector2(5, 10);
+            end = new Vector2(15, 10);
+
             // TODO: use this.Content to load your game content here
         }
+
+        //Make an A* function that returns a Stack<Point> which will represent the INDICIES to take to get to the end point
+        //The A* function will take in a Point for start and a Point for ending representing the INDICIES
+        public Stack<Point> Astar(Point start, Point end)
+        {
+            //Step 1:
+            for (int y = 0; y < grid.GetLength(0); y++)
+            {
+                for (int x = 0; x < grid.GetLength(1); x++)
+                {
+                    grid[y, x].Reset();
+                }
+            }
+
+
+            //Step 2:
+            grid[start.Y, start.X].Distance = 0;
+            TreeHeap<Node> heapTree = new TreeHeap<Node>(true);
+            heapTree.Insert(grid[start.Y, start.X]);
+
+            //Step 3:
+            while (heapTree.Count > 0)
+            { 
+                //WE DO NOT NEED AN ACTUAL GRAPH CLASS
+                //THE WAY WE WILL GET NEIGHBORS IS DYNAMICALLY
+
+                //EVERYTIME U POP, YOU WILL HAVE A FUNCTION THAT TAKES IN A NODE
+                //AND RETURNS A List<Node> which are its neighbors
+            }
+
+
+
+            return null;
+        }
+
+
+
         protected override void Update(GameTime gameTime)
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
@@ -86,8 +128,7 @@ namespace PathfindingVisualizer
             int indexX = (ms.X / grid[0, 0].HitBox.Width);
             int indexY = (ms.Y / grid[0, 0].HitBox.Height);
 
-            mousecell.X = indexX * (grid[0, 0].HitBox.Width + 1);
-            mousecell.Y = indexY * (grid[0, 0].HitBox.Height + 1);
+            mousecell = convert(indexX, indexY);
 
             Window.Title = $"X:{indexX}, Y:{indexY}";
 
@@ -97,6 +138,13 @@ namespace PathfindingVisualizer
 
             base.Update(gameTime);
         }
+
+        //make a function that takes in (indexY, indexX) and return position
+        public Point convert(float indexX, float indexY)
+        {
+            return new Point((int)indexX * (grid[0, 0].HitBox.Width + 1) + 2, (int)indexY * (grid[0, 0].HitBox.Height + 1) + 2);
+        }
+
 
         /// <summary>
         /// This is called when the game should draw itself.
@@ -118,7 +166,13 @@ namespace PathfindingVisualizer
                 }
             }
 
-            spriteBatch.Draw(pixel, new Rectangle((int)mousecell.X + 2, (int)mousecell.Y + 2, grid[0, 0].HitBox.Width - 3, grid[0, 0].HitBox.Height - 3), Color.Yellow);
+            spriteBatch.Draw(pixel, new Rectangle(mousecell.X, mousecell.Y, grid[0, 0].HitBox.Width - 3, grid[0, 0].HitBox.Height - 3), Color.Yellow);
+
+            var position = convert((int)start.X, (int)start.Y);
+            spriteBatch.Draw(pixel, new Rectangle(position.X, position.Y, grid[0, 0].HitBox.Width - 3, grid[0, 0].HitBox.Height - 3), Color.Green);
+
+            position = convert((int)end.X, (int)end.Y);
+            spriteBatch.Draw(pixel, new Rectangle(position.X, position.Y, grid[0, 0].HitBox.Width - 3, grid[0, 0].HitBox.Height - 3), Color.Red);
 
             spriteBatch.End();
 
