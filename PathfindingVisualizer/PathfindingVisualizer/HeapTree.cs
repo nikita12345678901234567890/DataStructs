@@ -4,14 +4,14 @@ using System.Text;
 
 namespace PathfindingVisualizer
 {
-    class TreeHeap<T> where T : IComparable<T>
+    class HeapTree<T> where T : IComparable<T>
     {
         List<T> array;
 
         public int Count => array.Count;
 
         bool min;
-        public TreeHeap(bool min)
+        public HeapTree(bool min)
         {
             array = new List<T>();
             this.min = min;
@@ -125,7 +125,7 @@ namespace PathfindingVisualizer
 
         public static List<T> YEETSort(List<T> yeet)
         {
-            TreeHeap<T> tree = new TreeHeap<T>(true);
+            HeapTree<T> tree = new HeapTree<T>(true);
             for (int i = 0; i < yeet.Count; i++)
             {
                 tree.Insert(yeet[i]);
@@ -137,5 +137,8 @@ namespace PathfindingVisualizer
             }
             return yeeter;  
         }
+
+        public bool Contains(T item)
+            => array.Contains(item);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+
 using System;
 using System.Collections.Generic;
 
@@ -19,7 +20,7 @@ namespace PathfindingVisualizer
         Node[,] grid = new Node[20, 20];
 
         Point mousecell;
-        
+
         Texture2D pixel;
 
         Vector2 end;
@@ -69,7 +70,7 @@ namespace PathfindingVisualizer
             {
                 for (int x = 0; x < 20; x++)
                 {
-                    grid[y, x] = new Node(square, new Vector2(0 + (x * size), 0 + (y * size)), scale, Vector2.Zero);
+                    grid[y, x] = new Node(square, new Vector2(0 + (x * size), 0 + (y * size)), scale, Vector2.Zero, new Point(x, y));
                 }
             }
 
@@ -79,12 +80,14 @@ namespace PathfindingVisualizer
             start = new Vector2(5, 10);
             end = new Vector2(15, 10);
 
+            Astar(start.ToPoint(), end.ToPoint(), false);
+
             // TODO: use this.Content to load your game content here
         }
 
         //Make an A* function that returns a Stack<Point> which will represent the INDICIES to take to get to the end point
         //The A* function will take in a Point for start and a Point for ending representing the INDICIES
-        public Stack<Point> Astar(Point start, Point end)
+        public Stack<Point> Astar(Point start, Point end, bool includeDiagonals)
         {
             //Step 1:
             for (int y = 0; y < grid.GetLength(0); y++)
@@ -98,12 +101,39 @@ namespace PathfindingVisualizer
 
             //Step 2:
             grid[start.Y, start.X].Distance = 0;
-            TreeHeap<Node> heapTree = new TreeHeap<Node>(true);
+            HeapTree<Node> heapTree = new HeapTree<Node>(true);
             heapTree.Insert(grid[start.Y, start.X]);
 
             //Step 3:
-            while (heapTree.Count > 0)
-            { 
+            while (heapTree.Count > 0)   //THIS IS DJYCSTRA'S, THIS SHOULD BE A STAR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            {
+                Node temp = heapTree.Pop();
+
+                var Neighbors = neighbors(temp, includeDiagonals);
+                for (int i = 0; i < Neighbors.Count; i++)
+                {
+                    double tentative = temp.Distance + 1;
+
+                    if (tentative < Neighbors[i].Distance)
+                    {
+                        Neighbors[i].Distance = tentative;
+                        Neighbors[i].Founder = temp;
+                        Neighbors[i].Visited = false;
+                    }
+
+                    if (Neighbors[i].Visited == false && !heapTree.Contains(Neighbors[i]))
+                    {
+                        heapTree.Insert(Neighbors[i]);
+                    }
+                }
+
+                temp.Visited = true;
+
+                if (grid[end.Y, end.X].Visited)
+                {
+                    break;
+                }
+
                 //WE DO NOT NEED AN ACTUAL GRAPH CLASS
                 //THE WAY WE WILL GET NEIGHBORS IS DYNAMICALLY
 
@@ -111,11 +141,45 @@ namespace PathfindingVisualizer
                 //AND RETURNS A List<Node> which are its neighbors
             }
 
+            //make a stack following from the end's founder back to the start
+            Stack<Point> stack = new Stack<Point>();
+            
+            while (end != start)
+            {
+                stack.Push(new Point(end.X, end.Y));
+                end = grid[end.Y, end.X].Founder.index;
+            }
 
-
-            return null;
+            return stack;
         }
 
+        List<Node> neighbors(Node node, bool includeDiagonals)
+        {
+            List<Node> list = new List<Node>();
+            for (int y = node.index.Y - 1; y <= node.index.Y + 1; y++)
+            {
+                for (int x = node.index.X - 1; x <= node.index.X + 1; x++)
+                {
+                    if ((node.index.X != x && node.index.Y != y) && includeDiagonals == false) continue;
+
+                    if ((node.index.X == x && node.index.Y == y) || !inBounds(x, y))
+                    {
+                        continue;
+                    }
+
+                    list.Add(grid[y, x]);
+                }
+            }
+
+            return list;
+        }
+
+        //write a function that takes in a location in the 2d array
+        //return a boolean stating whether that position is in bounds or not
+        bool inBounds(int x, int y)
+        {
+            return x >= 0 && x < grid.GetLength(1) && y >= 0 && y < grid.GetLength(0);
+        }
 
 
         protected override void Update(GameTime gameTime)
@@ -140,7 +204,7 @@ namespace PathfindingVisualizer
         }
 
         //make a function that takes in (indexY, indexX) and return position
-        public Point convert(float indexX, float indexY)
+        Point convert(float indexX, float indexY)
         {
             return new Point((int)indexX * (grid[0, 0].HitBox.Width + 1) + 2, (int)indexY * (grid[0, 0].HitBox.Height + 1) + 2);
         }
@@ -162,7 +226,7 @@ namespace PathfindingVisualizer
             {
                 for (int j = 0; j < grid.GetLength(1); j++)
                 {
-                   grid[i, j].Draw(spriteBatch);
+                    grid[i, j].Draw(spriteBatch);
                 }
             }
 
