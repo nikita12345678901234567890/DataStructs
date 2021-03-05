@@ -25,7 +25,7 @@ namespace PathfindingVisualizer
 
         public int CompareTo(Node other)
         {
-            return Distance.CompareTo(other.Distance);
+            return FinalDistance.CompareTo(other.FinalDistance);
         }
 
         public void Reset()
@@ -33,6 +33,7 @@ namespace PathfindingVisualizer
             Visited = false;
             Distance = double.PositiveInfinity;
             Founder = null;
+            FinalDistance = double.PositiveInfinity;
         }
     }
 }

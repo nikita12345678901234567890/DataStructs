@@ -16,7 +16,7 @@ namespace PathfindingVisualizer
             array = new List<T>();
             this.min = min;
         }
-
+        //Do not touch under any circumatsnces!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         public void Insert(T value)
         {
             array.Add(value);
@@ -37,74 +37,63 @@ namespace PathfindingVisualizer
 
         private void HeapifyUp(int index)
         {
+            //Get the parent index
+            int parent = (index - 1) / 2;
+
+            //Base case when there is no more parent
             if (index == 0)
             {
                 return;
             }
-            for (int i = 0; i < array.Count; i++)
+
+            //If the index is less than the parent swap them
+            if (array[index].CompareTo(array[parent]) < 0)
             {
-                if (min)
-                {
-                    if (array[index].CompareTo(array[FindParent(index)]) < 0)
-                    {
-                        T thing = array[index];
-                        array[index] = array[FindParent(index)];
-                        array[FindParent(index)] = thing;
-                        index = FindParent(index);
-                    }
-                }
-                else
-                {
-                    if (array[index].CompareTo(array[FindParent(index)]) > 0)
-                    {
-                        T thing = array[index];
-                        array[index] = array[FindParent(index)];
-                        array[FindParent(index)] = thing;
-                        index = FindParent(index);
-                    }
-                }
+                T temp = array[index];
+                array[index] = array[parent];
+                array[parent] = temp;
             }
+
+            //Go up to the parent recursively
+            HeapifyUp(parent);
         }
 
         private void HeapifyDown(int index)
         {
-            for (int i = 0; i < array.Count; i++)
+            //Getting the left and right child
+            int leftChild = index * 2 + 1;
+
+            //If you don't have a left child, you can't have a right child
+            //If there are no children, recursion stops
+            if (leftChild >= Count)
             {
-                if (min)
-                {
-                    if ((FindLeft(index) < array.Count && FindRight(index) < array.Count && array[FindLeft(index)].CompareTo(array[FindRight(index)]) < 0) || FindLeft(index) < array.Count && FindRight(index) >= array.Count || (FindLeft(index) < array.Count && FindRight(index) >= array.Count && array[index].CompareTo(array[FindLeft(index)]) > 0) || (FindLeft(index) >= array.Count && FindRight(index) < array.Count && array[index].CompareTo(array[FindRight(index)]) > 0))
-                    {
-                        T thing = array[index];
-                        array[index] = array[FindLeft(index)];
-                        array[FindLeft(index)] = thing;
-                        index = FindLeft(index);
-                    }
-                    if ((FindLeft(index) < array.Count && FindRight(index) < array.Count && array[FindLeft(index)].CompareTo(array[FindRight(index)]) > 0) || FindLeft(index) >= array.Count && FindRight(index) < array.Count || (FindLeft(index) < array.Count && FindRight(index) >= array.Count && array[index].CompareTo(array[FindLeft(index)]) > 0) || (FindLeft(index) >= array.Count && FindRight(index) < array.Count && array[index].CompareTo(array[FindRight(index)]) > 0))
-                    {
-                        T thing = array[index];
-                        array[index] = array[FindRight(index)];
-                        array[FindRight(index)] = thing;
-                        index = FindRight(index);
-                    }
-                }
-                else
-                {
-                    if ((FindLeft(index) < array.Count && FindRight(index) < array.Count && array[FindLeft(index)].CompareTo(array[FindRight(index)]) > 0) || FindLeft(index) < array.Count && FindRight(index) >= array.Count)
-                    {
-                        T thing = array[index];
-                        array[index] = array[FindLeft(index)];
-                        array[FindLeft(index)] = thing;
-                        index = FindLeft(index);
-                    }
-                    if ((FindLeft(index) < array.Count && FindRight(index) < array.Count && array[FindLeft(index)].CompareTo(array[FindRight(index)]) < 0) || FindLeft(index) >= array.Count && FindRight(index) < array.Count)
-                    {
-                        T thing = array[index];
-                        array[index] = array[FindRight(index)];
-                        array[FindRight(index)] = thing;
-                        index = FindRight(index);
-                    }
-                }
+                return;
             }
+
+            int rightChild = index * 2 + 2;
+            int swapIndex = 0;
+
+            //If there is no right child at this point, the smaller child is the left child
+            if (rightChild >= Count)
+            {
+                swapIndex = leftChild;
+            }
+            else
+            {
+                //If both children exist, pick the smaller one
+                swapIndex = array[leftChild].CompareTo(array[rightChild]) < 0 ? leftChild : rightChild;
+            }
+
+            //If the recieved child is smaller than the index then swap them
+            if (array[swapIndex].CompareTo(array[index]) < 0)
+            {
+                T temp = array[index];
+                array[index] = array[swapIndex];
+                array[swapIndex] = temp;
+            }
+
+            //Move down to the next children recursively
+            HeapifyDown(swapIndex);
         }
 
         private int FindParent(int index)
@@ -135,7 +124,7 @@ namespace PathfindingVisualizer
             {
                 yeeter.Add(tree.Pop());
             }
-            return yeeter;  
+            return yeeter;
         }
 
         public bool Contains(T item)

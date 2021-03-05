@@ -48,7 +48,7 @@ namespace PathfindingVisualizer
 
             base.Initialize();
         }
-
+        //Part 3 of A*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         /// <summary>
         /// LoadContent will be called once per game and is the place to load
         /// all of your content.
@@ -101,11 +101,13 @@ namespace PathfindingVisualizer
 
             //Step 2:
             grid[start.Y, start.X].Distance = 0;
+            grid[start.Y, start.X].FinalDistance = Manhattan(grid[start.Y, start.X], grid[end.Y, end.X]);
             HeapTree<Node> heapTree = new HeapTree<Node>(true);
             heapTree.Insert(grid[start.Y, start.X]);
 
+
             //Step 3:
-            while (heapTree.Count > 0)   //THIS IS DJYCSTRA'S, THIS SHOULD BE A STAR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            while (heapTree.Count > 0)
             {
                 Node temp = heapTree.Pop();
 
@@ -126,13 +128,13 @@ namespace PathfindingVisualizer
                         heapTree.Insert(Neighbors[i]);
                     }
                 }
-
                 temp.Visited = true;
 
                 if (grid[end.Y, end.X].Visited)
                 {
                     break;
                 }
+
 
                 //WE DO NOT NEED AN ACTUAL GRAPH CLASS
                 //THE WAY WE WILL GET NEIGHBORS IS DYNAMICALLY
@@ -143,15 +145,24 @@ namespace PathfindingVisualizer
 
             //make a stack following from the end's founder back to the start
             Stack<Point> stack = new Stack<Point>();
-            
+
             while (end != start)
             {
                 stack.Push(new Point(end.X, end.Y));
                 end = grid[end.Y, end.X].Founder.index;
             }
 
+            stack.Push(start);
+
             return stack;
         }
+
+        int Manhattan(Node node, Node goal)
+        {
+            int dx = Math.Abs(node.index.X - goal.index.X);
+            int dy = Math.Abs(node.index.Y - goal.index.Y);
+            return (dx + dy);
+        } //only for mo diagonals
 
         List<Node> neighbors(Node node, bool includeDiagonals)
         {

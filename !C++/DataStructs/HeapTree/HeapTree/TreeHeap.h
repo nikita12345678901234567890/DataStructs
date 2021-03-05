@@ -22,7 +22,7 @@ public:
 
 	void Insert(T value);
 	T Pop();
-
+	std::vector<T> YEETSort(std::vector<T> yeet);
 };
 
 
@@ -90,7 +90,6 @@ void TreeHeap<T>::HeapifyDown(int index)
 		{
 			T temp = array[index];
 			array[index] = array[swap];
-			array[swap];
 			array[swap] = temp;
 		}
 
@@ -175,4 +174,20 @@ T TreeHeap<T>::Pop()
 	array.erase(array.begin() + (array.size() - 1));
 	HeapifyDown(0);
 	return thing;
+}
+
+template<typename T>
+std::vector<T> TreeHeap<T>::YEETSort(std::vector<T> yeet)
+{
+	TreeHeap<T> tree = new TreeHeap<T>(true);
+	for (int i = 0; i < yeet.size(); i++)
+	{
+		tree.Insert(yeet[i]);
+	}
+	std::vector<T> yeeter = { };
+	for (int i = 0; i < yeet.size(); i++)
+	{
+		yeeter.push_back(tree.Pop());
+	}
+	return yeeter;
 }
