@@ -26,13 +26,16 @@ namespace PathfindingVisualizer
         public SpriteEffects effect { get; set; }
         public float layerDepth { get; set; }
 
-        public Sprite(Texture2D texture, Vector2 position, Vector2 scale, Vector2 origin)
+        public Color color;
+
+        public Sprite(Texture2D texture, Vector2 position, Vector2 scale, Vector2 origin, Color color)
         {
             this.texture = texture;
             this.origin = origin;
 
             this.position = position;
             this.scale = scale;
+            this.color = color;
         }
 
         public void Update()
@@ -42,7 +45,7 @@ namespace PathfindingVisualizer
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, position, null, Color.CornflowerBlue, rotation, origin, scale, effect, layerDepth);
+            spriteBatch.Draw(texture, position, null, color, rotation, origin, scale, effect, layerDepth);
         }
     }
 }

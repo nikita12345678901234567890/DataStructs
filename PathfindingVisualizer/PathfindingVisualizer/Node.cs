@@ -17,8 +17,8 @@ namespace PathfindingVisualizer
         public Node Founder = null;
         public Point index;
 
-        public Node(Texture2D texture, Vector2 position, Vector2 scale, Vector2 origin, Point index)
-            : base(texture, position, scale, origin)
+        public Node(Texture2D texture, Vector2 position, Vector2 scale, Vector2 origin, Point index, Color color)
+            : base(texture, position, scale, origin, color)
         {
             this.index = index;
         }

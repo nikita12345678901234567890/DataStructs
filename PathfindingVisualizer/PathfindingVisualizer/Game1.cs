@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Input;
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace PathfindingVisualizer
 {
@@ -25,6 +26,11 @@ namespace PathfindingVisualizer
 
         Vector2 end;
         Vector2 start;
+
+        List<Sprite> highlightedSquares = new List<Sprite>();
+        List<Line> lines = new List<Line>();
+
+        KeyboardState lastKeyboardState;
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -70,17 +76,18 @@ namespace PathfindingVisualizer
             {
                 for (int x = 0; x < 20; x++)
                 {
-                    grid[y, x] = new Node(square, new Vector2(0 + (x * size), 0 + (y * size)), scale, Vector2.Zero, new Point(x, y));
+                    grid[y, x] = new Node(square, new Vector2(0 + (x * size), 0 + (y * size)), scale, Vector2.Zero, new Point(x, y), Color.CornflowerBlue);
                 }
             }
 
             pixel = new Texture2D(GraphicsDevice, 1, 1);
             pixel.SetData(new Color[] { Color.White });
 
-            start = new Vector2(5, 10);
+            start = new Vector2(4, 2);
             end = new Vector2(15, 10);
 
-            Astar(start.ToPoint(), end.ToPoint(), false);
+            var path = Astar(start.ToPoint(), end.ToPoint(), false);
+            HighlightSquares(path.ToList());
 
             // TODO: use this.Content to load your game content here
         }
@@ -119,6 +126,7 @@ namespace PathfindingVisualizer
                     if (tentative < Neighbors[i].Distance)
                     {
                         Neighbors[i].Distance = tentative;
+                        Neighbors[i].FinalDistance = tentative + Manhattan(Neighbors[i], grid[end.Y, end.X]);
                         Neighbors[i].Founder = temp;
                         Neighbors[i].Visited = false;
                     }
@@ -157,6 +165,16 @@ namespace PathfindingVisualizer
             return stack;
         }
 
+        //HighlightSqures(List<Point> points)
+        void HighlightSquares(List<Point> points)
+        {
+            for (int i = 1; i < points.Count - 1; i++)
+            {
+                var pos = convertToScreen(points[i].X, points[i].Y).ToVector2();
+                highlightedSquares.Add(new Sprite(pixel, pos, new Vector2(grid[0, 0].HitBox.Width - 3), Vector2.Zero, Color.Yellow));
+            }
+        }
+
         int Manhattan(Node node, Node goal)
         {
             int dx = Math.Abs(node.index.X - goal.index.X);
@@ -192,6 +210,29 @@ namespace PathfindingVisualizer
             return x >= 0 && x < grid.GetLength(1) && y >= 0 && y < grid.GetLength(0);
         }
 
+        //takes in list of grid based points and gemerate lines between each pair of points:
+        void GenerateLines(List<Point> points)
+        {
+            for (int i = 0; i < points.Count - 1; i++)
+            {
+                var pos = convertToScreen(points[i].X, points[i].Y);
+                var posOfNext = convertToScreen(points[i + 1].X, points[i + 1].Y);
+
+                lines.Add(MakeLine(pos, posOfNext));
+            }
+        }
+
+        //function that takes in to points on the grid and returns a line:
+        Line MakeLine(Point start, Point end)
+        {
+            int offsetX = grid[0, 0].HitBox.Width / 2;
+            int offsetY = grid[0, 0].HitBox.Height / 2;
+
+            Vector2 Start = new Vector2(start.X + offsetX, start.Y + offsetY);
+            Vector2 End = new Vector2(end.X + offsetX, end.Y + offsetY);
+
+            return new Line(Start, End);
+        }
 
         protected override void Update(GameTime gameTime)
         {
@@ -199,14 +240,23 @@ namespace PathfindingVisualizer
                 Exit();
 
             var ms = Mouse.GetState();
+            var kb = Keyboard.GetState();
 
+            //pathfind if space pressed:
+            if(kb.IsKeyDown(Keys.Space) && lastKeyboardState.IsKeyUp(Keys.Up))
+            {
+                var path = Astar(start.ToPoint(), end.ToPoint(), false);
+                //HighlightSquares(path.ToList());
+                GenerateLines(path.ToList());
+            }
+            
+            //Get the grid index the mouse is in:
             int indexX = (ms.X / grid[0, 0].HitBox.Width);
             int indexY = (ms.Y / grid[0, 0].HitBox.Height);
 
-            mousecell = convert(indexX, indexY);
+            mousecell = convertToScreen(indexX, indexY);
 
-            Window.Title = $"X:{indexX}, Y:{indexY}";
-
+            lastKeyboardState = kb;
 
             // TODO: Add your update logic here
 
@@ -215,7 +265,7 @@ namespace PathfindingVisualizer
         }
 
         //make a function that takes in (indexY, indexX) and return position
-        Point convert(float indexX, float indexY)
+        Point convertToScreen(float indexX, float indexY)
         {
             return new Point((int)indexX * (grid[0, 0].HitBox.Width + 1) + 2, (int)indexY * (grid[0, 0].HitBox.Height + 1) + 2);
         }
@@ -233,6 +283,7 @@ namespace PathfindingVisualizer
 
             spriteBatch.Begin();
 
+            //Draw grid:
             for (int i = 0; i < grid.GetLength(0); i++)
             {
                 for (int j = 0; j < grid.GetLength(1); j++)
@@ -241,14 +292,28 @@ namespace PathfindingVisualizer
                 }
             }
 
+            //Draw mouse square:
             spriteBatch.Draw(pixel, new Rectangle(mousecell.X, mousecell.Y, grid[0, 0].HitBox.Width - 3, grid[0, 0].HitBox.Height - 3), Color.Yellow);
 
-            var position = convert((int)start.X, (int)start.Y);
+            //Draw start:
+            var position = convertToScreen((int)start.X, (int)start.Y);
             spriteBatch.Draw(pixel, new Rectangle(position.X, position.Y, grid[0, 0].HitBox.Width - 3, grid[0, 0].HitBox.Height - 3), Color.Green);
 
-            position = convert((int)end.X, (int)end.Y);
+            //Draw end:
+            position = convertToScreen((int)end.X, (int)end.Y);
             spriteBatch.Draw(pixel, new Rectangle(position.X, position.Y, grid[0, 0].HitBox.Width - 3, grid[0, 0].HitBox.Height - 3), Color.Red);
 
+            //Draw highligted squares:
+            //for (int i = 0; i < highlightedSquares.Count; i++)
+            //{
+            //    highlightedSquares[i].Draw(spriteBatch);
+            //}
+
+            foreach(var line in lines)
+            {
+                spriteBatch.DrawLine(pixel, line, 3, Color.Yellow);
+            }
+            //make start and end movable!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             spriteBatch.End();
 
             base.Draw(gameTime);
