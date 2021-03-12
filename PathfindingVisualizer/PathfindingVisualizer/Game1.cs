@@ -31,6 +31,9 @@ namespace PathfindingVisualizer
         List<Line> lines = new List<Line>();
 
         KeyboardState lastKeyboardState;
+
+        bool startFollow = false;
+        bool endFollow = false;
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -80,14 +83,9 @@ namespace PathfindingVisualizer
                 }
             }
 
-            pixel = new Texture2D(GraphicsDevice, 1, 1);
-            pixel.SetData(new Color[] { Color.White });
-
             start = new Vector2(4, 2);
             end = new Vector2(15, 10);
 
-            var path = Astar(start.ToPoint(), end.ToPoint(), false);
-            HighlightSquares(path.ToList());
 
             // TODO: use this.Content to load your game content here
         }
@@ -240,11 +238,16 @@ namespace PathfindingVisualizer
                 Exit();
 
             var ms = Mouse.GetState();
+
+            if (ms.X < 0 || ms.X > GraphicsDevice.Viewport.Width || ms.Y < 0 || ms.Y > GraphicsDevice.Viewport.Height) return;
+            
+            
             var kb = Keyboard.GetState();
 
             //pathfind if space pressed:
             if(kb.IsKeyDown(Keys.Space) && lastKeyboardState.IsKeyUp(Keys.Up))
             {
+                lines.Clear();
                 var path = Astar(start.ToPoint(), end.ToPoint(), false);
                 //HighlightSquares(path.ToList());
                 GenerateLines(path.ToList());
@@ -254,13 +257,60 @@ namespace PathfindingVisualizer
             int indexX = (ms.X / grid[0, 0].HitBox.Width);
             int indexY = (ms.Y / grid[0, 0].HitBox.Height);
 
+            Vector2 mouseIndex = new Vector2(indexX, indexY);
+
             mousecell = convertToScreen(indexX, indexY);
 
             lastKeyboardState = kb;
 
-            // TODO: Add your update logic here
 
 
+            //move start:
+            if (ms.LeftButton == ButtonState.Pressed && indexX == start.X && indexY == start.Y)
+            {
+                if (!endFollow)
+                {
+                    startFollow = true;
+                }
+            }
+
+            if (startFollow && ms.X > 0 && ms.X < GraphicsDevice.Viewport.Width - grid[0, 0].HitBox.Width && ms.Y > 0 && ms.Y < GraphicsDevice.Viewport.Height - grid[0, 0].HitBox.Height)
+            {
+                start.X = indexX;
+                start.Y = indexY;
+            }
+
+            if (ms.LeftButton == ButtonState.Released && startFollow)
+            {
+                startFollow = false;
+            }
+
+            //move end:
+            if (ms.LeftButton == ButtonState.Pressed && indexX == end.X && indexY == end.Y)
+            {
+                if (!startFollow)
+                {
+                    endFollow = true;
+                }
+            }
+
+            if (endFollow && ms.X > 0 && ms.X < GraphicsDevice.Viewport.Width - grid[0, 0].HitBox.Width && ms.Y > 0 && ms.Y < GraphicsDevice.Viewport.Height - grid[0, 0].HitBox.Height)
+            {
+                end.X = indexX;
+                end.Y = indexY;
+            }
+
+            if (ms.LeftButton == ButtonState.Released && endFollow)
+            {
+                endFollow = false;
+            }
+
+            //Building a wall:
+            if (ms.LeftButton == ButtonState.Pressed && mouseIndex != start && mouseIndex != end)
+            {
+                grid[indexY, indexX].Wall = !grid[indexY, indexX].Wall;
+            }
+            //Fix unselecting walls!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             base.Update(gameTime);
         }
 
@@ -284,11 +334,15 @@ namespace PathfindingVisualizer
             spriteBatch.Begin();
 
             //Draw grid:
-            for (int i = 0; i < grid.GetLength(0); i++)
+            for (int y = 0; y < grid.GetLength(0); y++)
             {
-                for (int j = 0; j < grid.GetLength(1); j++)
+                for (int x = 0; x < grid.GetLength(1); x++)
                 {
-                    grid[i, j].Draw(spriteBatch);
+                    if(grid[y, x].Wall)
+                    {
+                        grid[y, x].color = Color.Gray;
+                    }
+                    grid[y, x].Draw(spriteBatch);
                 }
             }
 
@@ -309,11 +363,11 @@ namespace PathfindingVisualizer
             //    highlightedSquares[i].Draw(spriteBatch);
             //}
 
-            foreach(var line in lines)
+            foreach (var line in lines)
             {
                 spriteBatch.DrawLine(pixel, line, 3, Color.Yellow);
             }
-            //make start and end movable!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            
             spriteBatch.End();
 
             base.Draw(gameTime);
