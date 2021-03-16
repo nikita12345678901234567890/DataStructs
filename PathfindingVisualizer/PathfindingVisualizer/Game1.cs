@@ -31,6 +31,9 @@ namespace PathfindingVisualizer
         List<Line> lines = new List<Line>();
 
         KeyboardState lastKeyboardState;
+      
+        MouseState lastMouseState;
+        Point lastMouseCell;
 
         bool startFollow = false;
         bool endFollow = false;
@@ -119,7 +122,9 @@ namespace PathfindingVisualizer
                 var Neighbors = neighbors(temp, includeDiagonals);
                 for (int i = 0; i < Neighbors.Count; i++)
                 {
-                    double tentative = temp.Distance + 1;
+                    if (Neighbors[i].Wall) continue;
+
+                    double tentative = temp.Distance + Weight(temp, Neighbors[i]);
 
                     if (tentative < Neighbors[i].Distance)
                     {
@@ -161,6 +166,16 @@ namespace PathfindingVisualizer
             stack.Push(start);
 
             return stack;
+        }
+
+        //Create a function that takes in two nodes and determines their relationship in terms of our NeighborType enum
+        double Weight(Node node, Node neighbor)
+        {
+            if (node.index.X == neighbor.index.X || node.index.Y == neighbor.index.Y)
+            {
+                return 1;
+            }
+            return Math.Sqrt(2);
         }
 
         //HighlightSqures(List<Point> points)
@@ -248,7 +263,7 @@ namespace PathfindingVisualizer
             if(kb.IsKeyDown(Keys.Space) && lastKeyboardState.IsKeyUp(Keys.Up))
             {
                 lines.Clear();
-                var path = Astar(start.ToPoint(), end.ToPoint(), false);
+                var path = Astar(start.ToPoint(), end.ToPoint(), true);
                 //HighlightSquares(path.ToList());
                 GenerateLines(path.ToList());
             }
@@ -306,11 +321,21 @@ namespace PathfindingVisualizer
             }
 
             //Building a wall:
-            if (ms.LeftButton == ButtonState.Pressed && mouseIndex != start && mouseIndex != end)
+
+            bool firstCondition = ms.LeftButton == ButtonState.Pressed && mouseIndex.ToPoint() != lastMouseCell && mouseIndex != start && mouseIndex != end;
+            bool secondCondition = ms.LeftButton == ButtonState.Pressed && lastMouseState.LeftButton == ButtonState.Released;
+
+            if (firstCondition || secondCondition)
             {
                 grid[indexY, indexX].Wall = !grid[indexY, indexX].Wall;
             }
-            //Fix unselecting walls!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+
+
+            lastMouseState = ms;
+            lastMouseCell = new Point(indexX, indexY);
+            
             base.Update(gameTime);
         }
 
@@ -338,9 +363,13 @@ namespace PathfindingVisualizer
             {
                 for (int x = 0; x < grid.GetLength(1); x++)
                 {
-                    if(grid[y, x].Wall)
+                    if (grid[y, x].Wall)
                     {
                         grid[y, x].color = Color.Gray;
+                    }
+                    else
+                    {
+                        grid[y, x].color = Color.CornflowerBlue;
                     }
                     grid[y, x].Draw(spriteBatch);
                 }
