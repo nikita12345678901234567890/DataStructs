@@ -60,7 +60,7 @@ namespace PathfindingVisualizer
 
             base.Initialize();
         }
-        //Part 3 of A*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        
         /// <summary>
         /// LoadContent will be called once per game and is the place to load
         /// all of your content.
