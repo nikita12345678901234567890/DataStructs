@@ -17,9 +17,6 @@ namespace FiffteenPuzzleGame
 
         Random random = new Random();
 
-        int gridSize = 4;
-        Tile[,] grid;
-
         Point mousecell;
 
         Texture2D pixel;
@@ -31,6 +28,9 @@ namespace FiffteenPuzzleGame
 
         Texture2D square;
         Texture2D tile;
+
+
+        SpriteFont font;
 
         public Game1()
         {
@@ -63,34 +63,22 @@ namespace FiffteenPuzzleGame
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            grid = new Tile[gridSize, gridSize];
+            
+
+            font = Content.Load<SpriteFont>("SpriteFont");
 
             pixel = new Texture2D(GraphicsDevice, 1, 1);
             pixel.SetData(new Color[] { Color.White });
 
             tile = Content.Load<Texture2D>("tile");
             square = Content.Load<Texture2D>("Box");
-
-            int size = (graphics.PreferredBackBufferWidth / grid.GetLength(1));
-            Vector2 scale = new Vector2(size / (float)square.Width, size / (float)square.Height);
-
-            for (int y = 0; y < gridSize; y++)
-            {
-                for (int x = 0; x < gridSize; x++)
-                {
-                    if (y == gridSize - 1 && x == gridSize - 1)
-                    {
-                        grid[y, x] = new Tile(square, Vector2.Zero, scale, Vector2.Zero, new Point(x, y), Color.CornflowerBlue, true);
-                    }
-                    else
-                    {
-                        grid[y, x] = new Tile(tile, Vector2.Zero, scale, Vector2.Zero, new Point(x, y), Color.CornflowerBlue, false);
-                    }
-                }
-            }
         }
 
+        //Create function called randomize grid that takes in an amount of moves
+        //Also make a function that gives u the valid tiles to be clicked for a move to be done
+
         
+
 
         /// <summary>
         /// Allows the game to run logic such as updating the world,
@@ -102,81 +90,13 @@ namespace FiffteenPuzzleGame
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            var ms = Mouse.GetState();
-            var kb = Keyboard.GetState();
-
-            //Get the grid index the mouse is in:
-            int indexX = (ms.X / grid[0, 0].HitBox.Width);
-            int indexY = (ms.Y / grid[0, 0].HitBox.Height);
-            Vector2 mouseIndex = new Vector2(indexX, indexY);
-
-
-            if (ms.LeftButton == ButtonState.Pressed && lastMouseState.LeftButton == ButtonState.Released)
-            {
-                Tile currentTile = null;
-                for (int y = 0; y < gridSize; y++)
-                {
-                    for (int x = 0; x < gridSize; x++)
-                    {
-                        if (x == mouseIndex.X && y == mouseIndex.Y)
-                        {
-                            currentTile = grid[y, x];
-
-                            y = gridSize;
-                            break;
-                        }
-                    }
-                }
-
-                if (currentTile == null) return;
-
-                Tile neighbor = GetEmptyCell(currentTile);
-
-                if (neighbor == null) return;
-
-                var temp = currentTile.index;
-                currentTile.index = neighbor.index;
-                neighbor.index = temp;
-
-                var temp2 = grid[currentTile.index.Y, currentTile.index.X];
-                grid[currentTile.index.Y, currentTile.index.X] = grid[neighbor.index.Y, neighbor.index.X];
-                grid[neighbor.index.Y, neighbor.index.X] = temp2;
-            }
+            KeyboardState kb = Keyboard.GetState();
 
 
 
             lastKeyboardState = kb;
-            lastMouseState = ms;
-            lastMouseCell = new Point(indexX, indexY);
 
             base.Update(gameTime);
-        }
-
-        bool inBounds(int x, int y)
-        {
-            return x >= 0 && x < grid.GetLength(1) && y >= 0 && y < grid.GetLength(0);
-        }
-        Tile GetEmptyCell(Tile node)
-        {
-            for (int y = node.index.Y - 1; y <= node.index.Y + 1; y++)
-            {
-                for (int x = node.index.X - 1; x <= node.index.X + 1; x++)
-                {
-                    if ((node.index.X != x && node.index.Y != y)) continue;
-
-                    if ((node.index.X == x && node.index.Y == y) || !inBounds(x, y))
-                    {
-                        continue;
-                    }
-
-                    if (grid[y, x].empty)
-                    {
-                        return grid[y, x];
-                    }
-                }
-            }
-
-            return null;
         }
 
         /// <summary>
