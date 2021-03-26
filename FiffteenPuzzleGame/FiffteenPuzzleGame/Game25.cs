@@ -13,10 +13,14 @@ namespace FiffteenPuzzleGame
     class Game25
     {
         int gridSize = 4;
-        Tile[,] grid;
+        public Tile[,] grid;
         Random random;
+
+        public double distance;
+        public double finalDistance;
+        public Game25 founder;
+        public bool visited;
        
-        //finish refactoring!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         public Game25(GraphicsDeviceManager graphics, Random random, Texture2D square, Texture2D tile, SpriteFont font)
         {
             this.random = random;
@@ -39,8 +43,6 @@ namespace FiffteenPuzzleGame
                     grid[y, x] = new Tile(texture, Vector2.Zero, scale, Vector2.Zero, new Point(x, y), tint, isEmpty, number, font);
                 }
             }
-
-            randomizeGrid(1000);
         }
 
         public void update(MouseState ms, MouseState lastMouseState)
@@ -73,8 +75,17 @@ namespace FiffteenPuzzleGame
             }
         }
 
-
-
+        public void draw(SpriteBatch spriteBatch)
+        {
+            //Draw grid:
+            for (int y = 0; y < grid.GetLength(0); y++)
+            {
+                for (int x = 0; x < grid.GetLength(1); x++)
+                {
+                    grid[y, x].Draw(spriteBatch);
+                }
+            }
+        }
         void randomizeGrid(int iterations)
         {
             for (int i = 0; i < iterations; i++)
@@ -142,6 +153,16 @@ namespace FiffteenPuzzleGame
             }
 
             return null;
+        }
+
+
+
+        public void reset()
+        {
+            visited = false;
+            distance = double.PositiveInfinity;
+            finalDistance = double.PositiveInfinity;
+            founder = null;
         }
     }
 }

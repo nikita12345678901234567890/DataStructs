@@ -41,8 +41,10 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AStar.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Game25.cs" />
+    <Compile Include="HeapTree.cs" />
     <Compile Include="Tile.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

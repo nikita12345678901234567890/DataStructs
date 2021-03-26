@@ -32,6 +32,8 @@ namespace FiffteenPuzzleGame
 
         SpriteFont font;
 
+        Game25 game;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -63,7 +65,6 @@ namespace FiffteenPuzzleGame
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            
 
             font = Content.Load<SpriteFont>("SpriteFont");
 
@@ -72,6 +73,9 @@ namespace FiffteenPuzzleGame
 
             tile = Content.Load<Texture2D>("tile");
             square = Content.Load<Texture2D>("Box");
+
+
+            game = new Game25(graphics, random, square, tile, font);
         }
 
         //Create function called randomize grid that takes in an amount of moves
@@ -91,10 +95,12 @@ namespace FiffteenPuzzleGame
                 Exit();
 
             KeyboardState kb = Keyboard.GetState();
+            MouseState ms = Mouse.GetState();
 
-
+            game.update(ms, lastMouseState);
 
             lastKeyboardState = kb;
+            lastMouseState = ms;
 
             base.Update(gameTime);
         }
@@ -109,14 +115,7 @@ namespace FiffteenPuzzleGame
 
             spriteBatch.Begin();
 
-            //Draw grid:
-            for (int y = 0; y < grid.GetLength(0); y++)
-            {
-                for (int x = 0; x < grid.GetLength(1); x++)
-                {
-                    grid[y, x].Draw(spriteBatch);
-                }
-            }
+            game.draw(spriteBatch);
 
             spriteBatch.End();
 
