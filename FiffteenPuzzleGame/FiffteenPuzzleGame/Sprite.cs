@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace FiffteenPuzzleGame
 {
-    class Sprite
+    public class Sprite
     {
         public Texture2D texture { get; set; }
         public virtual Vector2 Position { get; set; }

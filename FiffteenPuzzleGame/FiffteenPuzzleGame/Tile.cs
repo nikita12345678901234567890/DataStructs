@@ -9,14 +9,14 @@ using System.Threading.Tasks;
 
 namespace FiffteenPuzzleGame
 {
-    class Tile : Sprite
+    public class Tile : Sprite
     {
         public Point index;
         public bool empty;
 
         public int number;
 
-        SpriteFont font;
+        public SpriteFont font;
 
         public override Vector2 Position => new Vector2(0 + (index.X * texture.Width * scale.X), 0 + (index.Y * texture.Height * scale.Y));
 

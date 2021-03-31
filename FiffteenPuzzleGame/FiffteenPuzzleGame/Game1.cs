@@ -76,6 +76,14 @@ namespace FiffteenPuzzleGame
 
 
             game = new Game25(graphics, random, square, tile, font);
+
+            var works = AStar.SolvePuzzle(game, new int[,]
+            {
+                { 1, 2, 3, 4 },
+                { 5, 6, 7, 8 },
+                { 9, 10, 11, 12 },
+                { 13, 14, 15, 0 }
+            });
         }
 
         //Create function called randomize grid that takes in an amount of moves

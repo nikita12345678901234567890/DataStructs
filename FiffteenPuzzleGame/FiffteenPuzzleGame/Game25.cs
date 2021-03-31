@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace FiffteenPuzzleGame
 {
-    class Game25
+    public class Game25
     {
         int gridSize = 4;
         public Tile[,] grid;
@@ -20,10 +20,21 @@ namespace FiffteenPuzzleGame
         public double finalDistance;
         public Game25 founder;
         public bool visited;
-       
+
+        private GraphicsDeviceManager graphics;
+        private Texture2D square;
+        private Texture2D tile;
+        private SpriteFont font;
+
+
+
         public Game25(GraphicsDeviceManager graphics, Random random, Texture2D square, Texture2D tile, SpriteFont font)
         {
+            this.graphics = graphics;
             this.random = random;
+            this.square = square;
+            this.tile = tile;
+            this.font = font;
 
             grid = new Tile[gridSize, gridSize];
             int size = (graphics.PreferredBackBufferWidth / grid.GetLength(1));
@@ -97,7 +108,7 @@ namespace FiffteenPuzzleGame
                 moveTile(moves[move]);
             }
         }
-        List<Tile> getMoves()
+        public List<Tile> getMoves()
         {
             List<Tile> list = new List<Tile>();
             for (int y = 0; y < gridSize; y++)
@@ -112,7 +123,7 @@ namespace FiffteenPuzzleGame
             }
             return list;
         }
-        void moveTile(Tile currentTile)
+        public void moveTile(Tile currentTile)
         {
             if (currentTile == null) return;
 
@@ -154,15 +165,27 @@ namespace FiffteenPuzzleGame
 
             return null;
         }
-
-
-
         public void reset()
         {
             visited = false;
             distance = double.PositiveInfinity;
             finalDistance = double.PositiveInfinity;
             founder = null;
+        }
+
+        public Game25 Copy()
+        {
+            Game25 copy = new Game25(graphics, random, square, tile, font);
+
+            for (int y = 0; y < gridSize; y++)
+            {
+                for (int x = 0; x < gridSize; x++)
+                {
+                    copy.grid[y, x] = new Tile(grid[y, x].texture, grid[y,x].Position, grid[y,x].scale, grid[y, x].origin, grid[y, x].index, grid[y, x].color, grid[y, x].empty, grid[y, x].number, grid[y, x].font);
+                }
+            }
+
+            return copy;
         }
     }
 }
