@@ -15,7 +15,7 @@ namespace FiffteenPuzzleGame
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        Random random = new Random();
+        Random random = new Random(3);
 
         Point mousecell;
 
@@ -77,13 +77,9 @@ namespace FiffteenPuzzleGame
 
             game = new Game25(graphics, random, square, tile, font);
 
-            var works = AStar.SolvePuzzle(game, new int[,]
-            {
-                { 1, 2, 3, 4 },
-                { 5, 6, 7, 8 },
-                { 9, 10, 11, 12 },
-                { 13, 14, 15, 0 }
-            });
+            game.randomizeGrid(50);
+
+            
         }
 
         //Create function called randomize grid that takes in an amount of moves
@@ -104,6 +100,26 @@ namespace FiffteenPuzzleGame
 
             KeyboardState kb = Keyboard.GetState();
             MouseState ms = Mouse.GetState();
+
+            if(kb.IsKeyDown(Keys.Space))
+            {
+                /*
+                var works = AStar.SolvePuzzle(game, new int[,]
+                {
+                    { 1, 2, 3, 4 },
+                    { 5, 6, 7, 8 },
+                    { 9, 10, 11, 12 },
+                    { 13, 14, 15, 16 }
+                });
+                */
+
+                var works = AStar.SolvePuzzle(game, new int[,]
+                {
+                    { 1, 2, 3 },
+                    { 4, 5, 6 },
+                    { 7, 8, 9 }
+                });
+            }
 
             game.update(ms, lastMouseState);
 

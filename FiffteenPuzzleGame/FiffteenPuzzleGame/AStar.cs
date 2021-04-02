@@ -10,8 +10,17 @@ namespace FiffteenPuzzleGame
 {
     public static class AStar
     {
-        public static Stack<Game25> SolvePuzzle(Game25 start, int[,] end)
+        public static Stack<Game25> SolvePuzzle(Game25 start, int[,] endNumbers)
         {
+            Tile[,] end = new Tile[endNumbers.GetLength(0), endNumbers.GetLength(1)];
+            for (int y = 0; y < end.GetLength(0); y++)
+            {
+                for (int x = 0; x < end.GetLength(1); x++)
+                {
+                    end[y, x] = new Tile(null, Vector2.Zero, Vector2.Zero, Vector2.Zero, Point.Zero, Color.White, endNumbers[y, x] == 0, endNumbers[y, x], null);
+                }
+            }
+
             Comparison<Game25> comparison = new Comparison<Game25>((x, y) => x.finalDistance.CompareTo(y.finalDistance));
             HeapTree<Game25> heap = new HeapTree<Game25>(Comparer<Game25>.Create(comparison));
 
@@ -39,6 +48,7 @@ namespace FiffteenPuzzleGame
 
                 for (int i = 0; i < neighbors.Count; i++)
                 {
+                    //final step to make this work is figure out a different condition on when to set founder;
                     double tentative = current.distance + 1;
 
                     if (tentative < neighbors[i].distance)
@@ -48,7 +58,7 @@ namespace FiffteenPuzzleGame
                         neighbors[i].finalDistance = neighbors[i].distance + heuristic(neighbors[i]);
                     }
 
-                    if(heap.Contains(neighbors[i]) == false && neighbors[i].visited == false)
+                    if(neighbors[i].visited == false && heap.Contains(neighbors[i], Game25Equal) == false)
                     {
                         heap.Insert(neighbors[i]);
                     }
@@ -57,7 +67,7 @@ namespace FiffteenPuzzleGame
 
             Stack<Game25> result = new Stack<Game25>();
 
-            while (!result.Contains(start))
+            while (endGame != null)
             {
                 result.Push(endGame);
                 endGame = endGame.founder;
@@ -70,9 +80,9 @@ namespace FiffteenPuzzleGame
         {
             Dictionary<int, Point> map = new Dictionary<int, Point>();
 
-            for (int i = 1; i <= 16; i++)
+            for (int i = 0; i < game.gridSize * game.gridSize; i++)
             {
-                map[i] = new Point((i % 4), (i / 4));
+                map[i + 1] = new Point((i % game.gridSize), (i / game.gridSize));
             }
 
             double number = 0;
@@ -81,8 +91,8 @@ namespace FiffteenPuzzleGame
                 for (int y = 0; y < game.grid.GetLength(0); y++)
                 {
                     var CurrentTile = game.grid[y, x];
-                    double xDistance = Math.Abs(CurrentTile.Position.X - map[CurrentTile.number].X);
-                    double yDistance = Math.Abs(CurrentTile.Position.Y - map[CurrentTile.number].Y);
+                    double xDistance = Math.Abs(CurrentTile.index.X - map[CurrentTile.number].X);
+                    double yDistance = Math.Abs(CurrentTile.index.Y - map[CurrentTile.number].Y);
 
                     number += Math.Sqrt(Math.Pow(xDistance, 2) + Math.Pow(yDistance, 2)); 
                 }
@@ -100,22 +110,25 @@ namespace FiffteenPuzzleGame
             {
                 Game25 copy = current.Copy();
 
-                //Make sure to populate copy's astar stuff in here
-
                 copy.moveTile(moves[i]);
+
+          //      copy.distance++;
+                copy.visited = false;
+                copy.finalDistance = copy.distance + heuristic(copy);
+
                 list.Add(copy);
             }
 
             return list;
         }
 
-        public static bool AreEqual(Game25 node, int[,] correct)
+        public static bool AreEqual(Game25 node, Tile[,] correct)
         {
-            for (int x = 0; x < 4; x++)
+            for (int x = 0; x < node.gridSize; x++)
             {
-                for (int y = 0; y < 4; y++)
+                for (int y = 0; y < node.gridSize; y++)
                 {
-                    if (node.grid[y, x].number != correct[y, x])
+                    if (node.grid[y, x].number != correct[y, x].number)
                     {
                         return false;
                     }
@@ -123,5 +136,8 @@ namespace FiffteenPuzzleGame
             }
             return true;
         }
+
+        public static bool Game25Equal(Game25 a, Game25 b)
+            => AreEqual(a, b.grid);
     }
 }

@@ -12,7 +12,7 @@ namespace FiffteenPuzzleGame
 {
     public class Game25
     {
-        int gridSize = 4;
+        public int gridSize = 3;
         public Tile[,] grid;
         Random random;
 
@@ -44,7 +44,7 @@ namespace FiffteenPuzzleGame
             {
                 for (int x = 0; x < gridSize; x++)
                 {
-                    int number = (y * 4) + x + 1;
+                    int number = (y * gridSize) + x + 1;
 
                     bool isEmpty = y == gridSize - 1 && x == gridSize - 1;
 
@@ -97,7 +97,7 @@ namespace FiffteenPuzzleGame
                 }
             }
         }
-        void randomizeGrid(int iterations)
+        public void randomizeGrid(int iterations)
         {
             for (int i = 0; i < iterations; i++)
             {
@@ -184,6 +184,8 @@ namespace FiffteenPuzzleGame
                     copy.grid[y, x] = new Tile(grid[y, x].texture, grid[y,x].Position, grid[y,x].scale, grid[y, x].origin, grid[y, x].index, grid[y, x].color, grid[y, x].empty, grid[y, x].number, grid[y, x].font);
                 }
             }
+
+            copy.distance = distance;
 
             return copy;
         }

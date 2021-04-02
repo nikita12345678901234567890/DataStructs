@@ -111,6 +111,21 @@ namespace FiffteenPuzzleGame
         }
 
         public bool Contains(T item)
-            => array.Contains(item);
+        {
+            return array.Contains(item);
+        }
+
+        public bool Contains(T item, Func<T, T, bool> areEqual)
+        {
+            for (int i = 0; i < array.Count; i++)
+            {
+                if(areEqual(array[i], item))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
     }
 }
