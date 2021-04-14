@@ -51,7 +51,7 @@ namespace FiffteenPuzzleGame
                     Texture2D texture = isEmpty ? square : tile;
                     Color tint = isEmpty ? Color.White : Color.Gray;
 
-                    grid[y, x] = new Tile(texture, Vector2.Zero, scale, Vector2.Zero, new Point(x, y), tint, isEmpty, number, font);
+                    grid[y, x] = new Tile(texture, scale, Vector2.Zero, new Point(x, y), tint, isEmpty, number, font);
                 }
             }
         }
@@ -181,12 +181,9 @@ namespace FiffteenPuzzleGame
             {
                 for (int x = 0; x < gridSize; x++)
                 {
-                    copy.grid[y, x] = new Tile(grid[y, x].texture, grid[y,x].Position, grid[y,x].scale, grid[y, x].origin, grid[y, x].index, grid[y, x].color, grid[y, x].empty, grid[y, x].number, grid[y, x].font);
+                    copy.grid[y, x] = new Tile(grid[y, x].texture, grid[y,x].scale, grid[y, x].origin, grid[y, x].index, grid[y, x].color, grid[y, x].empty, grid[y, x].number, grid[y, x].font);
                 }
             }
-
-            copy.distance = distance;
-
             return copy;
         }
     }

@@ -17,7 +17,7 @@ namespace FiffteenPuzzleGame
             {
                 for (int x = 0; x < end.GetLength(1); x++)
                 {
-                    end[y, x] = new Tile(null, Vector2.Zero, Vector2.Zero, Vector2.Zero, Point.Zero, Color.White, endNumbers[y, x] == 0, endNumbers[y, x], null);
+                    end[y, x] = new Tile(null, Vector2.Zero, Vector2.Zero, Point.Zero, Color.White, endNumbers[y, x] == 0, endNumbers[y, x], null);
                 }
             }
 
@@ -45,6 +45,11 @@ namespace FiffteenPuzzleGame
                 }
 
                 List<Game25> neighbors = GetNeighbors(current);
+                if(neighbors.Count == 0 || neighbors.Count > 4)
+                {
+
+                }
+
 
                 for (int i = 0; i < neighbors.Count; i++)
                 {
@@ -94,7 +99,7 @@ namespace FiffteenPuzzleGame
                     double xDistance = Math.Abs(CurrentTile.index.X - map[CurrentTile.number].X);
                     double yDistance = Math.Abs(CurrentTile.index.Y - map[CurrentTile.number].Y);
 
-                    number += Math.Sqrt(Math.Pow(xDistance, 2) + Math.Pow(yDistance, 2)); 
+                    number += xDistance + yDistance;
                 }
             }
 
@@ -106,20 +111,46 @@ namespace FiffteenPuzzleGame
             List<Game25> list = new List<Game25>();
 
             var moves = current.getMoves();
+
+            if(moves.Count > 4)
+            {
+
+            }
+
             for (int i = 0; i < moves.Count; i++)
             {
                 Game25 copy = current.Copy();
 
-                copy.moveTile(moves[i]);
+                //Find this tile in this other grid
+
+                //Make a function that takes in a number and a grid and returns the tile that matches that number
+
+                copy.moveTile(Match(moves[i].number, copy));
 
           //      copy.distance++;
                 copy.visited = false;
-                copy.finalDistance = copy.distance + heuristic(copy);
+                copy.finalDistance = double.PositiveInfinity;
+                copy.distance = double.PositiveInfinity;
 
                 list.Add(copy);
             }
 
             return list;
+        }
+
+        public static Tile Match(int number, Game25 game)
+        {
+            for (int x = 0; x < game.gridSize; x++)
+            {
+                for (int y = 0; y < game.gridSize; y++)
+                {
+                    if (game.grid[y, x].number == number)
+                    {
+                        return game.grid[y, x];
+                    }
+                }
+            }
+            return null;
         }
 
         public static bool AreEqual(Game25 node, Tile[,] correct)

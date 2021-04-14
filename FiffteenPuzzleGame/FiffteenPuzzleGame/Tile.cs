@@ -20,8 +20,8 @@ namespace FiffteenPuzzleGame
 
         public override Vector2 Position => new Vector2(0 + (index.X * texture.Width * scale.X), 0 + (index.Y * texture.Height * scale.Y));
 
-        public Tile(Texture2D texture, Vector2 position, Vector2 scale, Vector2 origin, Point index, Color color, bool empty, int number, SpriteFont font)
-            : base(texture, position, scale, origin, color)
+        public Tile(Texture2D texture, Vector2 scale, Vector2 origin, Point index, Color color, bool empty, int number, SpriteFont font)
+            : base(texture, Vector2.Zero, scale, origin, color)
         {
             this.index = index;
             this.empty = empty;
