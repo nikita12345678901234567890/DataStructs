@@ -12,7 +12,7 @@ namespace FiffteenPuzzleGame
 {
     public class Game25
     {
-        public int gridSize = 3;
+        public int gridSize = 4;
         public Tile[,] grid;
         Random random;
 

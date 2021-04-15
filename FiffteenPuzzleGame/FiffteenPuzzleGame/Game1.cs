@@ -15,7 +15,7 @@ namespace FiffteenPuzzleGame
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        Random random = new Random(3);
+        Random random = new Random();
 
         Point mousecell;
 
@@ -33,6 +33,11 @@ namespace FiffteenPuzzleGame
         SpriteFont font;
 
         Game25 game;
+
+        Stack<Game25> solution;
+
+        TimeSpan elapsedTime = TimeSpan.Zero;
+        TimeSpan delayTime = TimeSpan.FromMilliseconds(500);
 
         public Game1()
         {
@@ -79,13 +84,13 @@ namespace FiffteenPuzzleGame
 
             game.randomizeGrid(50);
 
-            
+
         }
 
         //Create function called randomize grid that takes in an amount of moves
         //Also make a function that gives u the valid tiles to be clicked for a move to be done
 
-        
+
 
 
         /// <summary>
@@ -98,27 +103,44 @@ namespace FiffteenPuzzleGame
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            elapsedTime += gameTime.ElapsedGameTime;
+
+            if (solution != null && solution.Count != 0)
+            {
+                if (elapsedTime >= delayTime)
+                {
+                    game = solution.Pop();
+
+                    elapsedTime = TimeSpan.Zero;
+                }
+            }
+
             KeyboardState kb = Keyboard.GetState();
             MouseState ms = Mouse.GetState();
 
-            if(kb.IsKeyDown(Keys.Space))
+            if (kb.IsKeyDown(Keys.Space))
             {
-                /*
-                var works = AStar.SolvePuzzle(game, new int[,]
+                if (game.gridSize == 3)
                 {
-                    { 1, 2, 3, 4 },
-                    { 5, 6, 7, 8 },
-                    { 9, 10, 11, 12 },
-                    { 13, 14, 15, 16 }
-                });
-                */
+                    solution = AStar.SolvePuzzle(game, new int[,]
+                    {
+                        { 1, 2, 3 },
+                        { 4, 5, 6 },
+                        { 7, 8, 9 }
+                    });
+                }
+                else
+                {
+                    solution = AStar.SolvePuzzle(game, new int[,]
+                    {
+                        { 1, 2, 3, 4 },
+                        { 5, 6, 7, 8 },
+                        { 9, 10, 11, 12 },
+                        { 13, 14, 15, 16 }
+                    });
+                }
 
-                var works = AStar.SolvePuzzle(game, new int[,]
-                {
-                    { 1, 2, 3 },
-                    { 4, 5, 6 },
-                    { 7, 8, 9 }
-                });
+                //         solution.Pop();
             }
 
             game.update(ms, lastMouseState);

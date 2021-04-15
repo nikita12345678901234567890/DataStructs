@@ -45,11 +45,6 @@ namespace FiffteenPuzzleGame
                 }
 
                 List<Game25> neighbors = GetNeighbors(current);
-                if(neighbors.Count == 0 || neighbors.Count > 4)
-                {
-
-                }
-
 
                 for (int i = 0; i < neighbors.Count; i++)
                 {
@@ -111,11 +106,6 @@ namespace FiffteenPuzzleGame
             List<Game25> list = new List<Game25>();
 
             var moves = current.getMoves();
-
-            if(moves.Count > 4)
-            {
-
-            }
 
             for (int i = 0; i < moves.Count; i++)
             {
