@@ -12,7 +12,9 @@ namespace FiffteenPuzzleGame
 {
     public class Game25
     {
-        public int gridSize = 4;
+        public int gridSizeX = 3;
+        public int gridSizeY = 4;
+
         public Tile[,] grid;
         Random random;
 
@@ -36,17 +38,18 @@ namespace FiffteenPuzzleGame
             this.tile = tile;
             this.font = font;
 
-            grid = new Tile[gridSize, gridSize];
-            int size = (graphics.PreferredBackBufferWidth / grid.GetLength(1));
-            Vector2 scale = new Vector2(size / (float)square.Width, size / (float)square.Height);
+            grid = new Tile[gridSizeY, gridSizeX];
+            int sizex = (graphics.PreferredBackBufferWidth / grid.GetLength(1));
+            int sizey = (graphics.PreferredBackBufferHeight / grid.GetLength(0));
+            Vector2 scale = new Vector2(sizex / (float)square.Width, sizey / (float)square.Height);
 
-            for (int y = 0; y < gridSize; y++)
+            for (int y = 0; y < gridSizeY; y++)
             {
-                for (int x = 0; x < gridSize; x++)
+                for (int x = 0; x < gridSizeX; x++)
                 {
-                    int number = (y * gridSize) + x + 1;
+                    int number = (y * gridSizeX) + x + 1;
 
-                    bool isEmpty = y == gridSize - 1 && x == gridSize - 1;
+                    bool isEmpty = y == gridSizeY - 1 && x == gridSizeX - 1;
 
                     Texture2D texture = isEmpty ? square : tile;
                     Color tint = isEmpty ? Color.White : Color.Gray;
@@ -68,15 +71,15 @@ namespace FiffteenPuzzleGame
             if (ms.LeftButton == ButtonState.Pressed && lastMouseState.LeftButton == ButtonState.Released)
             {
                 Tile currentTile = null;
-                for (int y = 0; y < gridSize; y++)
+                for (int y = 0; y < gridSizeY; y++)
                 {
-                    for (int x = 0; x < gridSize; x++)
+                    for (int x = 0; x < gridSizeX; x++)
                     {
                         if (x == mouseIndex.X && y == mouseIndex.Y)
                         {
                             currentTile = grid[y, x];
 
-                            y = gridSize;
+                            y = gridSizeY;
                             break;
                         }
                     }
@@ -111,9 +114,9 @@ namespace FiffteenPuzzleGame
         public List<Tile> getMoves()
         {
             List<Tile> list = new List<Tile>();
-            for (int y = 0; y < gridSize; y++)
+            for (int y = 0; y < gridSizeY; y++)
             {
-                for (int x = 0; x < gridSize; x++)
+                for (int x = 0; x < gridSizeX; x++)
                 {
                     if (GetEmptyCell(grid[y, x]) != null)
                     {
@@ -177,9 +180,9 @@ namespace FiffteenPuzzleGame
         {
             Game25 copy = new Game25(graphics, random, square, tile, font);
 
-            for (int y = 0; y < gridSize; y++)
+            for (int y = 0; y < gridSizeY; y++)
             {
-                for (int x = 0; x < gridSize; x++)
+                for (int x = 0; x < gridSizeX; x++)
                 {
                     copy.grid[y, x] = new Tile(grid[y, x].texture, grid[y,x].scale, grid[y, x].origin, grid[y, x].index, grid[y, x].color, grid[y, x].empty, grid[y, x].number, grid[y, x].font);
                 }

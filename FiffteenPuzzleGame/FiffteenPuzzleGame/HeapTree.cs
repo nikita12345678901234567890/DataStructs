@@ -4,6 +4,7 @@ using System.Text;
 
 namespace FiffteenPuzzleGame
 {
+    //Possibly make this not generic to get slightly faster performance
     class HeapTree<T>
     {
         List<T> array;

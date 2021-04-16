@@ -82,7 +82,7 @@ namespace FiffteenPuzzleGame
 
             game = new Game25(graphics, random, square, tile, font);
 
-            game.randomizeGrid(50);
+           // game.randomizeGrid(100);
 
 
         }
@@ -120,27 +120,19 @@ namespace FiffteenPuzzleGame
 
             if (kb.IsKeyDown(Keys.Space))
             {
-                if (game.gridSize == 3)
+                int counter = 1;
+                int[,] array = new int[game.gridSizeY, game.gridSizeX];
+
+                for (int y = 0; y < game.gridSizeY; y++)
                 {
-                    solution = AStar.SolvePuzzle(game, new int[,]
+                    for (int x = 0; x < game.gridSizeX; x++)
                     {
-                        { 1, 2, 3 },
-                        { 4, 5, 6 },
-                        { 7, 8, 9 }
-                    });
-                }
-                else
-                {
-                    solution = AStar.SolvePuzzle(game, new int[,]
-                    {
-                        { 1, 2, 3, 4 },
-                        { 5, 6, 7, 8 },
-                        { 9, 10, 11, 12 },
-                        { 13, 14, 15, 16 }
-                    });
+                        array[y, x] = counter;
+                        counter++;
+                    }
                 }
 
-                //         solution.Pop();
+                solution = AStar.SolvePuzzle(game, array);
             }
 
             game.update(ms, lastMouseState);

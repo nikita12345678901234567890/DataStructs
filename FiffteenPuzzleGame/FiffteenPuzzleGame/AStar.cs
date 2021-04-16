@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -79,10 +78,11 @@ namespace FiffteenPuzzleGame
         public static double heuristic(Game25 game)
         {
             Dictionary<int, Point> map = new Dictionary<int, Point>();
+            
 
-            for (int i = 0; i < game.gridSize * game.gridSize; i++)
+            for (int i = 0; i < game.gridSizeX * game.gridSizeY; i++)
             {
-                map[i + 1] = new Point((i % game.gridSize), (i / game.gridSize));
+                map[i + 1] = new Point((i % game.gridSizeX), (i / game.gridSizeY));
             }
 
             double number = 0;
@@ -104,7 +104,7 @@ namespace FiffteenPuzzleGame
         public static List<Game25> GetNeighbors(Game25 current)
         {
             List<Game25> list = new List<Game25>();
-
+             
             var moves = current.getMoves();
 
             for (int i = 0; i < moves.Count; i++)
@@ -130,9 +130,9 @@ namespace FiffteenPuzzleGame
 
         public static Tile Match(int number, Game25 game)
         {
-            for (int x = 0; x < game.gridSize; x++)
+            for (int x = 0; x < game.gridSizeX; x++)
             {
-                for (int y = 0; y < game.gridSize; y++)
+                for (int y = 0; y < game.gridSizeY; y++)
                 {
                     if (game.grid[y, x].number == number)
                     {
@@ -145,9 +145,9 @@ namespace FiffteenPuzzleGame
 
         public static bool AreEqual(Game25 node, Tile[,] correct)
         {
-            for (int x = 0; x < node.gridSize; x++)
+            for (int x = 0; x < node.gridSizeX; x++)
             {
-                for (int y = 0; y < node.gridSize; y++)
+                for (int y = 0; y < node.gridSizeY; y++)
                 {
                     if (node.grid[y, x].number != correct[y, x].number)
                     {
