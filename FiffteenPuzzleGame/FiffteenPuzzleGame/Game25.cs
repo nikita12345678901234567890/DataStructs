@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,8 +11,8 @@ namespace FiffteenPuzzleGame
 {
     public class Game25
     {
-        public int gridSizeX = 3;
-        public int gridSizeY = 4;
+        public int gridSizeX = StaticVariables.gridSizeX;
+        public int gridSizeY = StaticVariables.gridSizeY;
 
         public Tile[,] grid;
         Random random;

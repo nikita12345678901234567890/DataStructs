@@ -15,8 +15,6 @@ namespace FiffteenPuzzleGame
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        Random random = new Random();
-
         Point mousecell;
 
         Texture2D pixel;
@@ -80,16 +78,43 @@ namespace FiffteenPuzzleGame
             square = Content.Load<Texture2D>("Box");
 
 
-            game = new Game25(graphics, random, square, tile, font);
+            var start = new Game26();
+            start.grid = setupGrid(start.gridSizeX, start.gridSizeY);
+            start.randomizeGrid(500);
 
-           // game.randomizeGrid(100);
+            //Maintan
+
+            Stack<Game26> result = BStar.SolvePuzzle(start, setupGrid(start.gridSizeX, start.gridSizeY));
+
+            ;
+            //solution = new Stack<Game25>();
+
+            //while (result.Count > 0)
+            //{
+            //    Game25 yeet = new Game25(graphics, StaticVariables.Random, square, tile, font);
+
+            //    var yoot = result.Pop();
+
+
+            //    for (int y = 0; y < yoot.gridSizeY; y++)
+            //    {
+            //        for (int x = 0; x < yoot.gridSizeX; x++)
+            //        {
+            //            yeet.grid[y, x].number = yoot.grid[y, x];
+            //        }
+            //    }
+
+            //    solution.Push(yeet);
+            //}
+
+            ;
+
+            //      game = new Game25(graphics, random, square, tile, font);
+
+            //      game.randomizeGrid(100);
 
 
         }
-
-        //Create function called randomize grid that takes in an amount of moves
-        //Also make a function that gives u the valid tiles to be clicked for a move to be done
-
 
 
 
@@ -118,29 +143,37 @@ namespace FiffteenPuzzleGame
             KeyboardState kb = Keyboard.GetState();
             MouseState ms = Mouse.GetState();
 
+            /*
             if (kb.IsKeyDown(Keys.Space))
             {
-                int counter = 1;
-                int[,] array = new int[game.gridSizeY, game.gridSizeX];
 
-                for (int y = 0; y < game.gridSizeY; y++)
-                {
-                    for (int x = 0; x < game.gridSizeX; x++)
-                    {
-                        array[y, x] = counter;
-                        counter++;
-                    }
-                }
-
-                solution = AStar.SolvePuzzle(game, array);
+                solution = AStar.SolvePuzzle(game, setupGrid(game.gridSizeX, game.gridSizeY));
             }
+            */
 
-            game.update(ms, lastMouseState);
+            //   game.update(ms, lastMouseState);
 
             lastKeyboardState = kb;
             lastMouseState = ms;
 
             base.Update(gameTime);
+        }
+
+        int[,] setupGrid(int gridSizeX, int gridSizeY)
+        {
+            int counter = 1;
+            int[,] array = new int[gridSizeY, gridSizeX];
+
+            for (int y = 0; y < gridSizeY; y++)
+            {
+                for (int x = 0; x < gridSizeX; x++)
+                {
+                    array[y, x] = counter;
+                    counter++;
+                }
+            }
+
+            return array;
         }
 
         /// <summary>
@@ -153,7 +186,7 @@ namespace FiffteenPuzzleGame
 
             spriteBatch.Begin();
 
-            game.draw(spriteBatch);
+            game?.draw(spriteBatch);
 
             spriteBatch.End();
 
