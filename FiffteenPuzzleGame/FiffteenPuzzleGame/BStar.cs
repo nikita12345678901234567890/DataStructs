@@ -20,13 +20,11 @@ namespace FiffteenPuzzleGame
                 map[i + 1] = new Point((i % start.gridSizeX), (i / start.gridSizeY));
             }
 
+            Game26[] visited = new Game26[10];
+            int index = 0;
 
             Comparison<Game26> comparison = new Comparison<Game26>((x, y) => x.finalDistance.CompareTo(y.finalDistance));
             HeapTree<Game26> heap = new HeapTree<Game26>(Comparer<Game26>.Create(comparison));
-
-            //Add a list of all game26s that have ever been made
-            //if you generated a grid that is contained in this list DO NOT ADD IT TO THE HEAP
-            //if you do this you can also get rid of the heap.contains function
 
             //Initialize:
             start.reset();
@@ -40,7 +38,9 @@ namespace FiffteenPuzzleGame
             {
                 var current = heap.Pop();
 
-                current.visited = true;
+                visited[index] = current;
+                index++;
+                index %= visited.Length;
 
                 if (AreEqual(current, end))
                 {
@@ -62,7 +62,18 @@ namespace FiffteenPuzzleGame
                         neighbors[i].finalDistance = neighbors[i].distance + heuristic(neighbors[i], map);
                     }
 
-                    if (neighbors[i].visited == false && heap.Contains(neighbors[i], Game26Equal) == false)
+                    bool iscontained = false;
+                    foreach(var game in visited)
+                    {
+                        if (game == null) continue;
+
+                        if(AreEqual(game, neighbors[i].grid))
+                        {
+                            iscontained = true;
+                        }
+                    }
+
+                    if (!iscontained && !heap.Contains(neighbors[i], Game26Equal))
                     {
                         heap.Insert(neighbors[i]);
                     }
@@ -110,7 +121,6 @@ namespace FiffteenPuzzleGame
 
                 copy.moveTile(moves[i].x, moves[i].y);
 
-                copy.visited = false;
                 copy.finalDistance = double.PositiveInfinity;
                 copy.distance = double.PositiveInfinity;
 

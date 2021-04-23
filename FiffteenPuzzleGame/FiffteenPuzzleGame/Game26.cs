@@ -19,7 +19,6 @@ namespace FiffteenPuzzleGame
         public double distance;
         public double finalDistance;
         public Game26 founder;
-        public bool visited;
 
         int EmptyCell;
         public Game26()
@@ -93,7 +92,6 @@ namespace FiffteenPuzzleGame
         }
         public void reset()
         {
-            visited = false;
             distance = double.PositiveInfinity;
             finalDistance = double.PositiveInfinity;
             founder = null;
@@ -107,6 +105,17 @@ namespace FiffteenPuzzleGame
 
             Array.Copy(grid, copy.grid, grid.Length);
             return copy;
+        }
+
+        public void MatchGrid(Game25 game)
+        {
+            for (int y = 0; y < gridSizeY; y++)
+            {
+                for (int x = 0; x < gridSizeX; x++)
+                {
+                    grid[y, x] = game.grid[y, x].number;
+                }
+            }
         }
     }
 }

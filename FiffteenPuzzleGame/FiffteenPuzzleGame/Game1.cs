@@ -31,8 +31,11 @@ namespace FiffteenPuzzleGame
         SpriteFont font;
 
         Game25 game;
+        Game26 start;
 
-        Stack<Game25> solution;
+        Queue<Game25> solution;
+
+        Vector2 scale;
 
         TimeSpan elapsedTime = TimeSpan.Zero;
         TimeSpan delayTime = TimeSpan.FromMilliseconds(500);
@@ -77,43 +80,21 @@ namespace FiffteenPuzzleGame
             tile = Content.Load<Texture2D>("tile");
             square = Content.Load<Texture2D>("Box");
 
-
-            var start = new Game26();
-            start.grid = setupGrid(start.gridSizeX, start.gridSizeY);
-            start.randomizeGrid(500);
-
-            //Maintan
-
-            Stack<Game26> result = BStar.SolvePuzzle(start, setupGrid(start.gridSizeX, start.gridSizeY));
-
-            ;
-            //solution = new Stack<Game25>();
-
-            //while (result.Count > 0)
-            //{
-            //    Game25 yeet = new Game25(graphics, StaticVariables.Random, square, tile, font);
-
-            //    var yoot = result.Pop();
+            start = new Game26();
+            start.grid = new int[,]  //setupGrid(start.gridSizeX, start.gridSizeY);
+            {
+                {6, 2, 12, 4 },
+                {14, 7, 10, 8 },
+                {9, 3, 1, 11 },
+                {16, 13, 15, 5 }
+            };
 
 
-            //    for (int y = 0; y < yoot.gridSizeY; y++)
-            //    {
-            //        for (int x = 0; x < yoot.gridSizeX; x++)
-            //        {
-            //            yeet.grid[y, x].number = yoot.grid[y, x];
-            //        }
-            //    }
+            int sizex = (graphics.PreferredBackBufferWidth / start.grid.GetLength(1));
+            int sizey = (graphics.PreferredBackBufferHeight / start.grid.GetLength(0));
+            scale = new Vector2(sizex / (float)square.Width, sizey / (float)square.Height);
 
-            //    solution.Push(yeet);
-            //}
-
-            ;
-
-            //      game = new Game25(graphics, random, square, tile, font);
-
-            //      game.randomizeGrid(100);
-
-
+            game = new Game25(graphics, StaticVariables.Random, square, tile, font, start.grid, scale);
         }
 
 
@@ -134,7 +115,7 @@ namespace FiffteenPuzzleGame
             {
                 if (elapsedTime >= delayTime)
                 {
-                    game = solution.Pop();
+                    game = solution.Dequeue();
 
                     elapsedTime = TimeSpan.Zero;
                 }
@@ -143,15 +124,42 @@ namespace FiffteenPuzzleGame
             KeyboardState kb = Keyboard.GetState();
             MouseState ms = Mouse.GetState();
 
-            /*
-            if (kb.IsKeyDown(Keys.Space))
+            if ((solution == null || solution.Count == 0) && (kb.IsKeyDown(Keys.R) && lastKeyboardState.IsKeyUp(Keys.R)))
             {
-
-                solution = AStar.SolvePuzzle(game, setupGrid(game.gridSizeX, game.gridSizeY));
+                start.MatchGrid(game);
+                start.randomizeGrid(50);
+                game.matchGrid(start.grid);
             }
-            */
 
-            //   game.update(ms, lastMouseState);
+            if (kb.IsKeyDown(Keys.Space) && (solution == null || solution.Count == 0))
+            {
+                Window.Title = "Loading";
+                start.MatchGrid(game);
+                Stack<Game26> result = BStar.SolvePuzzle(start, setupGrid(start.gridSizeX, start.gridSizeY));
+
+                solution = new Queue<Game25>();
+
+                Game25 last = null;
+
+                while (result.Count > 0)
+                {
+                    var yoot = result.Pop();
+
+                    Game25 yeet = new Game25(graphics, StaticVariables.Random, square, tile, font, yoot.grid, scale);
+
+                    solution.Enqueue(yeet);
+                    last = yeet;
+                }
+
+                start.MatchGrid(last);
+
+                Window.Title = "";
+            }
+
+            if ((solution == null || solution.Count == 0))
+            {
+                game?.update(ms, lastMouseState);
+            }
 
             lastKeyboardState = kb;
             lastMouseState = ms;

@@ -27,9 +27,9 @@ namespace FiffteenPuzzleGame
         private Texture2D tile;
         private SpriteFont font;
 
+        Vector2 scale;
 
-
-        public Game25(GraphicsDeviceManager graphics, Random random, Texture2D square, Texture2D tile, SpriteFont font)
+        public Game25(GraphicsDeviceManager graphics, Random random, Texture2D square, Texture2D tile, SpriteFont font, int[,] numbers, Vector2 scale)
         {
             this.graphics = graphics;
             this.random = random;
@@ -38,24 +38,9 @@ namespace FiffteenPuzzleGame
             this.font = font;
 
             grid = new Tile[gridSizeY, gridSizeX];
-            int sizex = (graphics.PreferredBackBufferWidth / grid.GetLength(1));
-            int sizey = (graphics.PreferredBackBufferHeight / grid.GetLength(0));
-            Vector2 scale = new Vector2(sizex / (float)square.Width, sizey / (float)square.Height);
+            this.scale = scale;
 
-            for (int y = 0; y < gridSizeY; y++)
-            {
-                for (int x = 0; x < gridSizeX; x++)
-                {
-                    int number = (y * gridSizeX) + x + 1;
-
-                    bool isEmpty = y == gridSizeY - 1 && x == gridSizeX - 1;
-
-                    Texture2D texture = isEmpty ? square : tile;
-                    Color tint = isEmpty ? Color.White : Color.Gray;
-
-                    grid[y, x] = new Tile(texture, scale, Vector2.Zero, new Point(x, y), tint, isEmpty, number, font);
-                }
-            }
+            matchGrid(numbers);
         }
 
         public void update(MouseState ms, MouseState lastMouseState)
@@ -175,18 +160,22 @@ namespace FiffteenPuzzleGame
             founder = null;
         }
 
-        public Game25 Copy()
+        public void matchGrid(int[,] numbers)
         {
-            Game25 copy = new Game25(graphics, random, square, tile, font);
-
             for (int y = 0; y < gridSizeY; y++)
             {
                 for (int x = 0; x < gridSizeX; x++)
                 {
-                    copy.grid[y, x] = new Tile(grid[y, x].texture, grid[y,x].scale, grid[y, x].origin, grid[y, x].index, grid[y, x].color, grid[y, x].empty, grid[y, x].number, grid[y, x].font);
+                    int number = numbers[y, x];
+
+                    bool isEmpty = number == gridSizeX * gridSizeY;
+
+                    Texture2D texture = isEmpty ? square : tile;
+                    Color tint = isEmpty ? Color.White : Color.Gray;
+
+                    grid[y, x] = new Tile(texture, scale, Vector2.Zero, new Point(x, y), tint, isEmpty, number, font);
                 }
             }
-            return copy;
         }
     }
 }
