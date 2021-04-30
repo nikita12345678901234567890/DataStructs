@@ -43,7 +43,7 @@ namespace FifteenPuzzleV2
             square = content.Load<Texture2D>("Box");
 
             start = new Game26();
-            start.grid = setupGrid(start.gridSizeX, start.gridSizeY);
+            start.grid = setupGrid(StaticVariables.gridSizeX, StaticVariables.gridSizeY);
 
             int sizex = (graphics.PreferredBackBufferWidth / start.grid.GetLength(1));
             int sizey = (graphics.PreferredBackBufferHeight / start.grid.GetLength(0));
@@ -69,12 +69,17 @@ namespace FifteenPuzzleV2
             return array;
         }
 
-        public override void Update(GameTime gameTime)
+        public override int Update(GameTime gameTime)
         {
+            Game1.WindowText = "Press R to randomize, press space to solve";
+
             elapsedTime += gameTime.ElapsedGameTime;
 
+            //Visualizing solve:
             if (solution != null && solution.Count != 0)
             {
+                Game1.WindowText = "Solving";
+
                 if (elapsedTime >= delayTime)
                 {
                     game = solution.Dequeue();
@@ -83,6 +88,7 @@ namespace FifteenPuzzleV2
                 }
             }
 
+            //Randomizing:
             if ((solution == null || solution.Count == 0) && (InputManager.KeyboardState.IsKeyDown(Keys.R) && InputManager.LastKeyboardState.IsKeyUp(Keys.R)))
             {
                 start.MatchGrid(game);
@@ -90,9 +96,11 @@ namespace FifteenPuzzleV2
                 game.matchGrid(start.grid);
             }
 
+            //Solving:
             if (InputManager.KeyboardState.IsKeyDown(Keys.Space) && (solution == null || solution.Count == 0))
             {
                 Game1.WindowText = "Loading";
+
                 start.MatchGrid(game);
                 Stack<Game26> result = BStar.SolvePuzzle(start, setupGrid(start.gridSizeX, start.gridSizeY));
 
@@ -123,8 +131,9 @@ namespace FifteenPuzzleV2
             InputManager.LastKeyboardState = InputManager.KeyboardState;
             InputManager.LastMouseState = InputManager.MouseState;
 
-
             base.Update(gameTime);
+
+            return 0;
         }
 
         public override void Draw(SpriteBatch spriteBatch)

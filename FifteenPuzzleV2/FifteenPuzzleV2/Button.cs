@@ -10,7 +10,7 @@ namespace FifteenPuzzleV2
 {
     public class Button : Sprite
     {
-        string text;
+        public string text;
         SpriteFont font;
 
         public Button(string text, Texture2D texture, Vector2 position, Vector2 scale, Vector2 origin, Color color, SpriteFont font)
@@ -47,8 +47,8 @@ namespace FifteenPuzzleV2
 
             var textSize = font.MeasureString(text);
 
-            //logic for drawing number:
-            Vector2 pos = (Position + ((texture.Width * scale) / 2)) - (textSize / 2);
+            //logic for drawing text:
+            Vector2 pos = new Vector2(Position.X + ((texture.Width * scale.X) / 2) - (textSize.X / 2), Position.Y + ((texture.Height * scale.Y) / 2) - (textSize.Y / 2));
 
             spriteBatch.DrawString(font, text, pos, Color.Black);
 

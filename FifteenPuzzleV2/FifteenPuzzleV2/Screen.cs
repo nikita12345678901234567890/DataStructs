@@ -23,12 +23,14 @@ namespace FifteenPuzzleV2
             Sprites = new List<Sprite>();
         }
 
-        public virtual void Update(GameTime gameTime)
+        public virtual int Update(GameTime gameTime)
         {
             foreach (Sprite sprite in Sprites)
             {
                 sprite.Update();
             }
+
+            return 0;
         }
          
         public virtual void Draw(SpriteBatch spriteBatch)

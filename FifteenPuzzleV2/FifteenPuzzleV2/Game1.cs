@@ -39,7 +39,6 @@ namespace FifteenPuzzleV2
 
             screens = new Dictionary<ScreenStates, Screen>();
             screens.Add(ScreenStates.Menu, new MenuScreen(Content, graphics));
-            screens.Add(ScreenStates.Game, new GameScreen(Content, graphics));
         }
 
         protected override void Update(GameTime gameTime)
@@ -47,12 +46,27 @@ namespace FifteenPuzzleV2
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            if (currentScreen == ScreenStates.Game)
+            {
+                
+            }
+            else
+            {
+                WindowText = "Choose your grid size";
+            }
+
             Window.Title = WindowText;
 
             InputManager.KeyboardState = Keyboard.GetState();
             InputManager.MouseState = Mouse.GetState();
 
-            screens[currentScreen].Update(gameTime);
+            int number = screens[currentScreen].Update(gameTime);
+
+            if (number == 1)
+            {
+                screens.Add(ScreenStates.Game, new GameScreen(Content, graphics));
+                currentScreen++;
+            }
 
             InputManager.LastKeyboardState = InputManager.KeyboardState;
             InputManager.LastMouseState = InputManager.MouseState;
