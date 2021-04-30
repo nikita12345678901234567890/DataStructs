@@ -1,23 +1,3 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace HashMap
-{
-    class Pair<TKey, TValue>
-    {
-        public TKey key;
-        public TValue value;
-
-        private Pair(TKey Key, TValue Value)
-        {
-            key = Key;
-            value = Value;
-        }
-
-        public static Pair<TKey, TValue> Create(TKey key, TValue value)
-        {
-            return new Pair<TKey, TValue>(key, value);
-        }
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:78f531d10379ce66291950d55bf686f72fd2109dbca24e66afc5e9ad606365b5
+size 451

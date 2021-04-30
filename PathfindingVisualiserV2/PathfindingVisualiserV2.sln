@@ -1,25 +1,3 @@
-﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31025.194
-MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PathfindingVisualiserV2", "PathfindingVisualiserV2.csproj", "{27CD140B-D3F8-48A0-AA8D-FC0B838B14A2}"
-EndProject
-Global
-	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Any CPU = Debug|Any CPU
-		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{27CD140B-D3F8-48A0-AA8D-FC0B838B14A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{27CD140B-D3F8-48A0-AA8D-FC0B838B14A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{27CD140B-D3F8-48A0-AA8D-FC0B838B14A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{27CD140B-D3F8-48A0-AA8D-FC0B838B14A2}.Release|Any CPU.Build.0 = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {088ED4DC-792A-49AF-B43A-5843DE933AA3}
-	EndGlobalSection
-EndGlobal
+version https://git-lfs.github.com/spec/v1
+oid sha256:8625e5792ef5f60af7e6fbafefcd1438ab97f93c6f87a9fc11de0be27a6dcc25
+size 1126

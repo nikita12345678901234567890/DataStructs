@@ -1,25 +1,3 @@
-﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.28803.352
-MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestLinkedListForCircularity", "TestLinkedListForCircularity\TestLinkedListForCircularity.csproj", "{4400B4BF-C24B-491A-8C3E-798FE03F207A}"
-EndProject
-Global
-	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Any CPU = Debug|Any CPU
-		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{4400B4BF-C24B-491A-8C3E-798FE03F207A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4400B4BF-C24B-491A-8C3E-798FE03F207A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4400B4BF-C24B-491A-8C3E-798FE03F207A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4400B4BF-C24B-491A-8C3E-798FE03F207A}.Release|Any CPU.Build.0 = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {18F7C269-6C3B-4753-A5CF-683D1BFF2353}
-	EndGlobalSection
-EndGlobal
+version https://git-lfs.github.com/spec/v1
+oid sha256:873fee38f1e4f132c9160006e419e0849523a29d62979ad4af5f57654d77f7e7
+size 1165

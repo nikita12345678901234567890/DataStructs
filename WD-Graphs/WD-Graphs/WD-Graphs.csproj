@@ -1,9 +1,3 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
-  <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-    <RootNamespace>WD_Graphs</RootNamespace>
-  </PropertyGroup>
-
-</Project>
+version https://git-lfs.github.com/spec/v1
+oid sha256:57688d12df39c6fb285ccf1bb1a69dd20b681e1cfafb78e4c650bd40b67cfe74
+size 215

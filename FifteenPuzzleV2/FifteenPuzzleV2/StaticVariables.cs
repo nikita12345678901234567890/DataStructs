@@ -1,14 +1,3 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace FifteenPuzzleV2
-{
-    public static class StaticVariables
-    {
-        public static Random Random = new Random();
-
-        public static int gridSizeX = 4;
-        public static int gridSizeY = 4;
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:570d3eda3af05c4ad87c0351052e05504e8c10328c34a5ce0b77492c07acc9e6
+size 288

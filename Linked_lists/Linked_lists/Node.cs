@@ -1,23 +1,3 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Linked_lists
-{
-    class Node<T>
-    {
-        public T Value;
-        public Node<T> Next;
-
-        public Node(T value)
-        {
-            Value = value;
-        }
-        public Node(T value, Node<T> next)
-        {
-
-            Value = value;
-            Next = next;
-        }
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:f974ec3da55eae71d3560b6b713cde3f59236fa49b959828062a2a65d8de5d77
+size 374

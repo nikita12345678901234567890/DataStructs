@@ -1,29 +1,3 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace SkipList
-{
-    class HeadNode<T>
-    {
-        public int Height
-        {
-            get
-            {
-                return Nexts.Count;
-            }
-            set
-            {
-                Height = value;
-
-            }
-        }
-        public List<Node<T>> Nexts;
-
-        public HeadNode(int height)
-        {
-            this.Height = height;
-            Nexts = new List<Node<T>>();
-        }
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:2831263c1dc109ee8422609cdf4d783e83303f34c4b3ed665c2492ec17a4bc98
+size 498

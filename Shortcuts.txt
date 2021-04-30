@@ -1,4 +1,3 @@
-Visual Studio:
-Ctrl+F4 - close tab
-F5 - run program
-shift+F5 - stop program
+version https://git-lfs.github.com/spec/v1
+oid sha256:bfa1a4ae2f18d6a8d3dcc095d89c4c1d650d0b1141f37673470e5e02747d0d8a
+size 75

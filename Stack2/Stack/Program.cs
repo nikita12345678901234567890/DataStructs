@@ -1,17 +1,3 @@
-﻿using System;
-
-namespace Stack
-{
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            Stuck<bool> stuck = new Stuck<bool>();
-            stuck.Push(false);
-            stuck.Push(true);
-            Console.WriteLine(stuck.Peek().ToString());
-            stuck.Popopopopopopopopopopopopop();
-            stuck.BigRedButton();
-        }
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:c5672eeee45d5b61f69fc6f38014e2e05c34a3dc29168e5056f6c98ffcb81186
+size 378

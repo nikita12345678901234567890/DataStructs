@@ -1,25 +1,3 @@
-﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30320.27
-MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LRUCache", "LRUCache\LRUCache.csproj", "{DD594891-8958-442E-AA6F-DA0E4ED2FF73}"
-EndProject
-Global
-	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Any CPU = Debug|Any CPU
-		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{DD594891-8958-442E-AA6F-DA0E4ED2FF73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DD594891-8958-442E-AA6F-DA0E4ED2FF73}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DD594891-8958-442E-AA6F-DA0E4ED2FF73}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DD594891-8958-442E-AA6F-DA0E4ED2FF73}.Release|Any CPU.Build.0 = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {E374B688-DB1D-48D6-B45C-FB432BC9BCE1}
-	EndGlobalSection
-EndGlobal
+version https://git-lfs.github.com/spec/v1
+oid sha256:ce42c904bf4e18e617b323bf4e68f74730180fb84a4768b6a8d84ced23b87c2a
+size 1104

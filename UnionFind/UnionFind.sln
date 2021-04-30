@@ -1,25 +1,3 @@
-﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29609.76
-MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnionFind", "UnionFind\UnionFind.csproj", "{3FBBD0E1-EDF4-4547-A645-9D4CD09F3361}"
-EndProject
-Global
-	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Any CPU = Debug|Any CPU
-		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{3FBBD0E1-EDF4-4547-A645-9D4CD09F3361}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3FBBD0E1-EDF4-4547-A645-9D4CD09F3361}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3FBBD0E1-EDF4-4547-A645-9D4CD09F3361}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3FBBD0E1-EDF4-4547-A645-9D4CD09F3361}.Release|Any CPU.Build.0 = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {13CC6C03-D770-4DE1-A1C0-4181D7BC6F68}
-	EndGlobalSection
-EndGlobal
+version https://git-lfs.github.com/spec/v1
+oid sha256:5742ab20f8c1ee54625e197f938056f22a932db2b9e750241615f39df27da69d
+size 1107

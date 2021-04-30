@@ -1,23 +1,3 @@
-#pragma once
-#include <memory>
-
-template <typename T>
-class Node
-{
-	private:
-
-	public:
-	T value;
-	std::shared_ptr<Node<T>> next;
-	std::weak_ptr<Node<T>> prev;
-
-	Node(T value, std::shared_ptr<Node<T>> next, std::shared_ptr<Node<T>> prev) : value(value), next(next), prev(prev)
-	{
-
-	}
-
-	Node(T value) : value(value)
-	{
-
-	}
-};
+version https://git-lfs.github.com/spec/v1
+oid sha256:6ee101b844060b116e136cc08f64228b9b7a60cb845322d2b4e1386193db5d11
+size 323

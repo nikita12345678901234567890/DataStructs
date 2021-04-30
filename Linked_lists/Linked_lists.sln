@@ -1,25 +1,3 @@
-﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.28803.202
-MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Linked_lists", "Linked_lists\Linked_lists.csproj", "{02352A9C-516E-4897-977D-5EC9C4246BBF}"
-EndProject
-Global
-	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Any CPU = Debug|Any CPU
-		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{02352A9C-516E-4897-977D-5EC9C4246BBF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{02352A9C-516E-4897-977D-5EC9C4246BBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{02352A9C-516E-4897-977D-5EC9C4246BBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{02352A9C-516E-4897-977D-5EC9C4246BBF}.Release|Any CPU.Build.0 = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {24C85FE7-D13D-474F-A438-44BF5465AC28}
-	EndGlobalSection
-EndGlobal
+version https://git-lfs.github.com/spec/v1
+oid sha256:a28e2c51f14cce26cff589ad4b1f2a8176924cd86d8a78217c4c27da509bd29b
+size 1117

@@ -1,29 +1,3 @@
-#include "Car.h"
-std::string Car::GetMake()
-{
-	return Make;
-}
-std::string Car::GetModel()
-{
-	return Model;
-}
-int Car::GetYear()
-{
-	return year;
-}
-std::string Car::GetColor()
-{
-	return Color;
-}
-float Car::GetDisplacement()
-{
-	return displacement;
-}
-std::string Car::GetEngineType()
-{
-	return EngineType;
-}
-int Car::GetChrisFactor()
-{
-	return ChrisFactor;
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:02114bdf99b3aaa8d0ee5495dc71ec401df3bb92235016314307d9daead8b5c1
+size 355

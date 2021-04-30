@@ -1,21 +1,3 @@
-﻿using System;
-using System.IO;
-
-namespace UnionFind
-{
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            string[] file = File.ReadAllLines(@"\\GMRDC1\Folder Redirection\nikita.ulianov\Desktop\friends.txt");
-            QuickUnion blobfish = new QuickUnion(int.Parse(file[0]));
-            for (int i = 1; i < file.Length; i++)
-            {
-                string[] temp = file[i].Split(' ');
-                blobfish.Union(int.Parse(temp[0]), int.Parse(temp[1]));
-            }
-            var dog = blobfish.GetAllGroups();
-            ;
-        }
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:a459c0b5e16216a53c45aeac26e9a7ce1c6879e1318ac7b7fd6fed9e8e094550
+size 595

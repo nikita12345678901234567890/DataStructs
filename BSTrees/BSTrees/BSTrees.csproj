@@ -1,8 +1,3 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
-  <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
-  </PropertyGroup>
-
-</Project>
+version https://git-lfs.github.com/spec/v1
+oid sha256:ce942403b90ad66dc0b6634c169b2afe2e3fea3a168c1ba179c1f4fbe284e12c
+size 170

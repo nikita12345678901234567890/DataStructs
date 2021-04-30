@@ -1,27 +1,3 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Queue
-{
-    public class Node<T>
-    {
-        public Node<T> Next;
-        public Node<T> Prev;
-        public T Value;
-
-        public Node(T value)
-        {
-            Value = value;
-            Next = null;
-            Prev = null;
-        }
-
-        public Node(T value, Node<T> next, Node<T> prev)
-        {
-            Value = value;
-            Next = next;
-            Prev = prev;
-        }
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:dad095874d50347b51da98047843ce00e4efa03e4db9d0b68d70a4093a4700ce
+size 492
