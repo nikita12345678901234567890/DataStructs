@@ -16,6 +16,8 @@ namespace FifteenPuzzleV2
         TextLabel XLabel;
         TextLabel YLabel;
 
+        TextLabel help;
+
         List<Button> XButtons;
         List<Button> YButtons;
         SpriteFont font;
@@ -43,6 +45,7 @@ namespace FifteenPuzzleV2
             XLabel = new TextLabel("X", font, posX);
             YLabel = new TextLabel("Y", font, posY);
 
+            help = new TextLabel("Please follow instructions in the window title", font, new Vector2(0, graphics.GraphicsDevice.Viewport.Height - font.MeasureString("Please follow instructions in the window title").Y));
 
             int spacing = 10;
 
@@ -119,6 +122,8 @@ namespace FifteenPuzzleV2
 
             XLabel.Draw(spriteBatch);
             YLabel.Draw(spriteBatch);
+
+            help.Draw(spriteBatch);
 
             //Drawing grid:
             Vector2 start = new Vector2(450, 450);
