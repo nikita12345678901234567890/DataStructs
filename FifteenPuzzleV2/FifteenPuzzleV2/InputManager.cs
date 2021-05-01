@@ -1,3 +1,17 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:cb17d3f17252980efb0e4a1a153d3853435948ba74f387e587643b855d942f9a
-size 389
+﻿using Microsoft.Xna.Framework.Input;
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace FifteenPuzzleV2
+{
+    public static class InputManager
+    {
+        public static KeyboardState LastKeyboardState;
+        public static MouseState LastMouseState;
+
+        public static KeyboardState KeyboardState;
+        public static MouseState MouseState;
+    }
+}

@@ -1,3 +1,25 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:e0b17db884e80dd069973d0611e29a5750d1d6ba8c05ee119201d60711484753
-size 1123
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29201.188
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Balanced_Trees", "Balanced_Trees\Balanced_Trees.csproj", "{6688C74E-DCF6-4AAE-B16C-914943F7B009}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6688C74E-DCF6-4AAE-B16C-914943F7B009}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6688C74E-DCF6-4AAE-B16C-914943F7B009}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6688C74E-DCF6-4AAE-B16C-914943F7B009}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6688C74E-DCF6-4AAE-B16C-914943F7B009}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {339F22AF-AAB0-46DB-92A3-8ECBC1AC5810}
+	EndGlobalSection
+EndGlobal

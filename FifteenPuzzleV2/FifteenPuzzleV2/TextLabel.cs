@@ -1,3 +1,28 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:562940a532b6dc94fb1a8b8eae5ed3c1b89f90ba8535128b996b8bbfab8f33aa
-size 632
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace FifteenPuzzleV2
+{
+    class TextLabel
+    {
+        public string text;
+        public SpriteFont font;
+        public Vector2 position;
+
+        public TextLabel(string text, SpriteFont font, Vector2 position)
+        {
+            this.text = text;
+            this.font = font;
+            this.position = position;
+        }
+
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            spriteBatch.DrawString(font, text, position, Color.Black);
+        }
+    }
+}

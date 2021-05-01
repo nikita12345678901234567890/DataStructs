@@ -1,3 +1,25 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:3e3c2dc199ea9c270ec23902c0c1ec40dd7f381fef8ce2491b7a18ef18063674
-size 1108
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29519.181
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KWayMerge", "KWayMerge\KWayMerge.csproj", "{FD6F6EF9-A828-4729-BA6A-C17FA30B9F2F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FD6F6EF9-A828-4729-BA6A-C17FA30B9F2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD6F6EF9-A828-4729-BA6A-C17FA30B9F2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD6F6EF9-A828-4729-BA6A-C17FA30B9F2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD6F6EF9-A828-4729-BA6A-C17FA30B9F2F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {07448FDE-4336-46A9-8A77-3ACEEE6B1F3F}
+	EndGlobalSection
+EndGlobal

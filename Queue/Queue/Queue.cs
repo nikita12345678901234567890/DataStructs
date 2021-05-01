@@ -1,3 +1,41 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:0349347c794bf97b878ef6e3e1d8876f4614eee0ab6c156917a3906cd659f016
-size 851
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Queue
+{
+    class Queue<T>
+    {
+        public int count = 0;
+        private List<T> data = new List<T>();
+        private T thing;
+        public int Null;
+
+        public void Enqueue(T value)
+        {
+            data.AddLast(value);
+            count++;
+        }
+
+        public T Dequeue()
+        {
+            if (count == 0)
+            {
+                throw new Exception("The stack is exsufflicate!");
+            }
+            thing = data.Head.Value;
+            data.RemoveFirst();
+            count--;
+            return thing;
+        }
+
+        public T Peek()
+        {
+            if (count == 0)
+            {
+                throw new Exception("The stack is exsufflicate!");
+            }
+            return data.Head.Value;
+        }
+    }
+}

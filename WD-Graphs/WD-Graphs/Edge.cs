@@ -1,3 +1,20 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:79b6f0fdd557af058f0b934b80fecb096a390289776c04655fe885dde3685075
-size 478
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace WD_Graphs
+{
+    class Edge<T> where T : IComparable
+    {
+        public Vertex<T> StartingPoint;
+        public Vertex<T> EndingPoint;
+        public double Distance;
+
+        public Edge(Vertex<T> startingPoint, Vertex<T> endingPoint, double distance)
+        {
+            StartingPoint = startingPoint;
+            EndingPoint = endingPoint;
+            Distance = distance;
+        }
+    }
+}

@@ -1,3 +1,19 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:52e25033899fd0bd02d69370327f6927f79f4da05902507ad78c31308c55c3be
-size 365
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace WD_Graphs
+{
+    class Vertex<T> where T : IComparable
+    {
+        public T value;
+        public List<Edge<T>> Neighbors;
+        public bool visited;
+
+        public Vertex(T Value)
+        {
+            Neighbors = new List<Edge<T>>();
+            value = Value;
+        }
+    }
+}

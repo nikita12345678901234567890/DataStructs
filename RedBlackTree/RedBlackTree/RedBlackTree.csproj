@@ -1,3 +1,12 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:956028e465e9a15d5d6f3ee2278bfd00ab66d45c868d203fe8a7bffe5f887703
-size 268
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Colorful.Console" Version="1.2.9" />
+  </ItemGroup>
+
+</Project>

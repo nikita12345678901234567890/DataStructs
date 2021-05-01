@@ -1,3 +1,25 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:75b8ad107db59a48a2b7c697e26f16b6b3ccf1e1153da5268b4f374a15e0f6d4
-size 1097
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30128.74
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Queue2", "Stack\Queue2.csproj", "{F4C5B4AF-20DB-43F1-BAB0-8F7C44F55D15}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F4C5B4AF-20DB-43F1-BAB0-8F7C44F55D15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4C5B4AF-20DB-43F1-BAB0-8F7C44F55D15}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4C5B4AF-20DB-43F1-BAB0-8F7C44F55D15}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4C5B4AF-20DB-43F1-BAB0-8F7C44F55D15}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B6820842-4EE9-4CB4-A9DE-721F4B4C1E0A}
+	EndGlobalSection
+EndGlobal

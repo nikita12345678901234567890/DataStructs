@@ -1,3 +1,57 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:c9850ed2e7b1e77ca30c1e716ca0f04aada6e2104856bd8940b5652d4091fee8
-size 1292
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using Newtonsoft.Json;
+namespace Tries
+{
+    class Program
+    {
+
+        //class Word
+        //{
+        //    public int MyProperty { get; set; }
+        //}
+
+
+        static void Main(string[] args)
+        {
+            Tire tire = new Tire();
+            //tire.Insert("fish");
+            //tire.Insert("flop");
+            //var yeet = tire.GetAllMatchingPrefix("f");
+
+
+            var jsonstring = File.ReadAllText("fulldictionary.json");
+
+            var dict = JsonConvert.DeserializeObject<Dictionary<string, string>>(jsonstring);
+
+            foreach (var kvp in dict)
+            {
+                tire.Insert(kvp.Key);
+            }
+
+
+            while (true)
+            {
+                Console.Clear();
+                Console.WriteLine("Give me word now!!");
+                string fish = Console.ReadLine();
+
+                var yeet = tire.GetAllMatchingPrefix(fish);
+
+                if (tire.IsWord(fish))
+                {
+                    Console.WriteLine(fish + ": " + dict[fish]);
+                }
+                foreach (var item in yeet)
+                {
+                    Console.WriteLine(item);
+                }
+
+                Console.ReadKey();
+            }
+
+
+        }
+    }
+}

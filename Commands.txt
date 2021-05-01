@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:663c6d9c572e3bf050d59407a755f16a1615108ef84c2f10e24c5f464cc5e98f
-size 60
+git------>	status       	add .			commit -m ""	push	pull	yeet

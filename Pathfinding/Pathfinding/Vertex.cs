@@ -1,3 +1,33 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:271714826b0cbea4bb58304dac65eea1a2ad9e4a0e98f10a50549d6567dcf18c
-size 809
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Pathfinding
+{
+    class Vertex<T> : IComparable<Vertex<T>>
+    {
+        public T value;
+        public List<Edge<T>> Neighbors;
+        public bool visited;
+        public double startDistance;
+        public double endDistance;
+        public bool open = true;
+        public Vertex<T> founder;
+        public bool UseEndDistance = false;
+
+        public Vertex(T Value)
+        {
+            Neighbors = new List<Edge<T>>();
+            value = Value;
+        }
+
+        public int CompareTo(Vertex<T> other)
+        {
+            if(UseEndDistance)
+            {
+                return endDistance.CompareTo(other.endDistance);
+            }
+            return startDistance.CompareTo(other.startDistance);
+        }
+    }
+}

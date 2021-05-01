@@ -1,3 +1,19 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:3829a91a3fa5613fe564e252ce873e9cb2f775bd31a2e26e167037ba5d9730ce
-size 374
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Un_Graphs
+{
+    class Vertex<T> where T : IComparable
+    {
+        public T value;
+        public List<Vertex<T>> Neighbors;
+        public bool visited;
+
+        public Vertex(T value)
+        {
+            this.value = value;
+            Neighbors = new List<Vertex<T>>();
+        }
+    }
+}

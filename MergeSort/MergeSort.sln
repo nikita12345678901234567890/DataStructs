@@ -1,3 +1,25 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:7ed6b7c348fe4c420e8327ae0acf3c4eb64ff8d5c72115a9634d60a8edd43463
-size 1108
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28922.388
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MergeSort", "MergeSort\MergeSort.csproj", "{D1AD89DF-339B-44CF-A35F-9FBA9113889A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D1AD89DF-339B-44CF-A35F-9FBA9113889A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1AD89DF-339B-44CF-A35F-9FBA9113889A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1AD89DF-339B-44CF-A35F-9FBA9113889A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1AD89DF-339B-44CF-A35F-9FBA9113889A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E90509F9-3E25-47A1-AE2F-0B03431B62ED}
+	EndGlobalSection
+EndGlobal

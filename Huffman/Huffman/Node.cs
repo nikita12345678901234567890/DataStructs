@@ -1,3 +1,22 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:041c7347bc253cadba605225c3475d8cb3dc5e08a306da0a51ff4c5d317fe0b2
-size 403
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Huffman
+{
+    class Node
+    {
+        public char letter;
+        public int frequency;
+
+        public Node left;
+        public Node right;
+        public string code;
+
+        public Node(char letter, int frequency)
+        {
+            this.letter = letter;
+            this.frequency = frequency;
+        }
+    }
+}

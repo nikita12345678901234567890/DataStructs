@@ -1,3 +1,14 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:cff8b811385dfc31a002f9b75356780bfbab2c2ea4be365ba2e7535723be1a21
-size 311
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Update="tinyUF.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

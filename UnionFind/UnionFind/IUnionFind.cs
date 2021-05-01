@@ -1,3 +1,20 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:053f7c424121552e7645c71fb0c42214f3b0c851494da38e87b68466ced43c1f
-size 323
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace UnionFind
+{
+    interface IUnionFind<T>
+    {
+        T[] array2 { get; set; }
+        int[] array { get; set; }
+
+        void Union(int p, int q);
+
+        int Find(int p);
+
+        bool Connected(int p, int q);
+
+        int Count();
+    }
+}

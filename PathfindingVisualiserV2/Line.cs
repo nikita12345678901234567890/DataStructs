@@ -1,3 +1,30 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:4436a231da4aafb25555f7e6d0067b03a584bef020eb2ca62405b2969243ca41
-size 727
+﻿using Microsoft.Xna.Framework;
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace PathfindingVisualiserV2
+{
+    public class Line
+    {
+        public Vector2 Start { get; set; }
+        public Vector2 End { get; set; }
+        public float Angle { get; }
+        public float Length { get; }
+
+        public Line(Vector2 start, Vector2 end)
+        {
+            Start = start;
+            End = end;
+
+            float deltaX = end.X - start.X;
+            float deltaY = end.Y - start.Y;
+
+            Angle = (float)Math.Atan2(deltaY, deltaX);
+            Length = (float)Math.Sqrt(Math.Pow(deltaX, 2) + Math.Pow(deltaY, 2));
+        }
+    }
+}

@@ -1,3 +1,31 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:5882b66ad4259a86991ba6f880b29ff5528baf7983add0008142199671f47a1a
-size 1428
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30611.23
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SmartPointers", "SmartPointers\SmartPointers.vcxproj", "{6F2D0919-9605-48AB-B233-6B4AC006F59A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6F2D0919-9605-48AB-B233-6B4AC006F59A}.Debug|x64.ActiveCfg = Debug|x64
+		{6F2D0919-9605-48AB-B233-6B4AC006F59A}.Debug|x64.Build.0 = Debug|x64
+		{6F2D0919-9605-48AB-B233-6B4AC006F59A}.Debug|x86.ActiveCfg = Debug|Win32
+		{6F2D0919-9605-48AB-B233-6B4AC006F59A}.Debug|x86.Build.0 = Debug|Win32
+		{6F2D0919-9605-48AB-B233-6B4AC006F59A}.Release|x64.ActiveCfg = Release|x64
+		{6F2D0919-9605-48AB-B233-6B4AC006F59A}.Release|x64.Build.0 = Release|x64
+		{6F2D0919-9605-48AB-B233-6B4AC006F59A}.Release|x86.ActiveCfg = Release|Win32
+		{6F2D0919-9605-48AB-B233-6B4AC006F59A}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B81896D7-1300-4C18-AD6D-747F9C426D3D}
+	EndGlobalSection
+EndGlobal

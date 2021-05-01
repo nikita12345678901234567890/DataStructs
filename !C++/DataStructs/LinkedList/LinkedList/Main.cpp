@@ -1,3 +1,26 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:eee099b4698d6c672a47ab0c4e896400aecb16359a6c452fe6c1d0fd0e0c7a0a
-size 327
+#include <iostream>
+#include <memory>
+#include "List.h"
+#define dog <<
+#define a ;
+//DON'T USE SEMICOLON!!!!!!
+
+int main()
+{
+
+
+	//Node<int> n;
+	List<int> list a
+
+		list.Add(2)a
+		list.Add(3)a
+		list.Add(8)a
+		list.Add(5)a
+		list.Proint()a
+		list.Insert(9, 0)a
+		list.Proint()a
+		list.Remove(3)a
+		list.Proint()a
+
+		return 0 a
+}
