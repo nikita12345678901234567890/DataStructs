@@ -20,9 +20,6 @@ namespace FifteenPuzzleV2
             this.font = font;
         }
 
-        //Make a function that takes in a position
-        //And returns true/false depending on whether that position is inside of the button's hitbox
-
         public bool isClicked(MouseState ms)
         {
             if (HitBox.Contains(ms.Position) && ms.LeftButton == ButtonState.Pressed)

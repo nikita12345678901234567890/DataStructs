@@ -65,6 +65,8 @@ int SortQuick<T>::Partition(std::vector<T>& array, int start, int end)
     return wall;
 }
 
+
+//Sort2 doesn't work, use Sort
 template<typename T>
 std::vector<T> SortQuick<T>::Sort2(std::vector<T>& array, int start, int end)
 {

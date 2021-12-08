@@ -20,7 +20,6 @@ int main()
 		array.push_back(std::rand() % 1000 + 1);
 	}
 
-
 	quick.Sort(array, 0, array.size() - 1);
 
 	for (size_t i = 0; i < array.size(); i++)
